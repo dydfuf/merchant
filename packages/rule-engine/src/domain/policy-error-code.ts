@@ -1,0 +1,52 @@
+export type PolicyErrorCode =
+  | "ECONOMY_PLAYER_NOT_FOUND"
+  | "ECONOMY_INVALID_TAKE_PATTERN"
+  | "ECONOMY_DOUBLE_TAKE_REQUIRES_FOUR_IN_BANK"
+  | "ECONOMY_BANK_TOKEN_UNAVAILABLE"
+  | "ECONOMY_INVALID_TOKEN_QUANTITY"
+  | "ECONOMY_RETURN_TOKEN_INVALID"
+  | "ECONOMY_UNNECESSARY_TOKEN_RETURN"
+  | "ECONOMY_TOKEN_LIMIT_EXCEEDED"
+  | "ECONOMY_INVALID_PAYMENT"
+  | "ECONOMY_OVERPAYMENT_NOT_ALLOWED"
+  | "ECONOMY_INSUFFICIENT_FUNDS"
+  | "MARKET_PLAYER_NOT_FOUND"
+  | "MARKET_RESERVE_LIMIT_REACHED"
+  | "MARKET_CARD_NOT_AVAILABLE"
+  | "MARKET_CARD_NOT_RESERVED"
+  | "MARKET_CARD_UNKNOWN"
+  | "MARKET_CARD_TIER_MISMATCH"
+  | "MARKET_DECK_EMPTY"
+  | "MARKET_GOLD_UNAVAILABLE"
+  | "TURN_NOT_CURRENT_PLAYER"
+  | "TURN_PLAYER_ORDER_INVALID"
+  | "TURN_END_NOT_ALLOWED"
+  | "NOBLE_PLAYER_NOT_FOUND"
+  | "NOBLE_TILE_NOT_FOUND"
+  | "NOBLE_NOT_ELIGIBLE"
+  | "SCORING_PLAYER_NOT_FOUND"
+  | "SCORING_CARD_NOT_FOUND"
+  | "SCORING_NOBLE_NOT_FOUND"
+  | "SCORING_FINAL_SCORES_INVALID"
+  | "SCORING_NO_PLAYERS"
+  | "SCORING_TIEBREAKER_UNRESOLVED";
+
+export interface PolicySuccess<T> {
+  ok: true;
+  value: T;
+}
+
+export interface PolicyFailure {
+  ok: false;
+  code: PolicyErrorCode;
+}
+
+export type PolicyResult<T> = PolicySuccess<T> | PolicyFailure;
+
+export function policySuccess<T>(value: T): PolicySuccess<T> {
+  return { ok: true, value };
+}
+
+export function policyFailure(code: PolicyErrorCode): PolicyFailure {
+  return { ok: false, code };
+}
