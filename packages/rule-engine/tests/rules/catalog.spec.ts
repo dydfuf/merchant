@@ -10,15 +10,15 @@ import { NOBLE_TILES } from "../../src/domain/nobles/noble.catalog.js";
 
 const GEM_COLORS = ["diamond", "sapphire", "emerald", "ruby", "onyx"] as const;
 
-describe("splendor catalog", () => {
-  it("contains 90 development cards with the expected tier split", () => {
+describe("스플렌더 카탈로그", () => {
+  it("개발 카드 90장과 예상된 티어 분할을 포함한다", () => {
     expect(DEVELOPMENT_CARDS).toHaveLength(90);
     expect(getCardsByTier(1)).toHaveLength(DEVELOPMENT_CARD_COUNT_BY_TIER[1]);
     expect(getCardsByTier(2)).toHaveLength(DEVELOPMENT_CARD_COUNT_BY_TIER[2]);
     expect(getCardsByTier(3)).toHaveLength(DEVELOPMENT_CARD_COUNT_BY_TIER[3]);
   });
 
-  it("contains a complete card set per bonus color across all tiers", () => {
+  it("모든 티어에서 보너스 색상별 카드 구성이 완전하다", () => {
     const countByBonus = DEVELOPMENT_CARDS.reduce<Record<string, number>>(
       (acc, card) => {
         acc[card.bonus] = (acc[card.bonus] ?? 0) + 1;
@@ -32,7 +32,7 @@ describe("splendor catalog", () => {
     }
   });
 
-  it("keeps cost vectors valid and non-empty", () => {
+  it("비용 벡터가 유효하며 비어 있지 않다", () => {
     for (const card of DEVELOPMENT_CARDS) {
       const totalCost = GEM_COLORS.reduce(
         (sum, color) => sum + card.cost[color],
@@ -47,7 +47,7 @@ describe("splendor catalog", () => {
     }
   });
 
-  it("matches a few known reference cards from the fixed physical deck", () => {
+  it("고정된 실물 덱의 알려진 참조 카드와 일치한다", () => {
     const onePointTier1 = DEVELOPMENT_CARDS.find((card) => card.id === "t1-08");
     const highPointTier3 = DEVELOPMENT_CARDS.find((card) => card.id === "t3-20");
 
@@ -80,7 +80,7 @@ describe("splendor catalog", () => {
     });
   });
 
-  it("contains 10 noble tiles with unique 3-color requirements", () => {
+  it("서로 다른 3색 요구조건을 가진 귀족 타일 10개를 포함한다", () => {
     expect(NOBLE_TILES).toHaveLength(10);
 
     const signatures = new Set<string>();
@@ -108,7 +108,7 @@ describe("splendor catalog", () => {
     expect(signatures.size).toBe(10);
   });
 
-  it("uses official 2-4 player setup values", () => {
+  it("공식 2-4인 세팅 값을 사용한다", () => {
     expect(PLAYER_SETUP_BY_COUNT[2]).toEqual({
       gemTokensPerColor: 4,
       goldTokens: 5,
