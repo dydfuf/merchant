@@ -75,14 +75,14 @@ pnpm test:coverage
   5. `docs/quality/QUALITY_SCORE.md`
 
 - 로컬 스킬 사용:
-  - 스킬 정의: `skills/sync-codebase-docs/SKILL.md`
-  - 체크리스트: `skills/sync-codebase-docs/references/doc-sync-checklist.md`
-  - 스캔 스크립트: `skills/sync-codebase-docs/scripts/scan-codebase.sh`
+  - 스킬 정의: `.codex/skills/sync-codebase-docs/SKILL.md`
+  - 체크리스트: `.codex/skills/sync-codebase-docs/references/doc-sync-checklist.md`
+  - 스캔 스크립트: `.codex/skills/sync-codebase-docs/scripts/scan-codebase.sh`
 
 문서 정합성 빠른 점검:
 
 ```bash
-skills/sync-codebase-docs/scripts/scan-codebase.sh .
+.codex/skills/sync-codebase-docs/scripts/scan-codebase.sh .
 ```
 
 ## 9. Git 작업 규칙
