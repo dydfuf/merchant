@@ -7,6 +7,7 @@ export default mergeConfig(
     test: {
       name: "web",
       environment: "jsdom",
+      passWithNoTests: true,
       include: [
         "app/**/*.{test,spec}.{ts,tsx}",
         "src/**/*.{test,spec}.{ts,tsx}",

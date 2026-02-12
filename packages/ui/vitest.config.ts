@@ -7,6 +7,7 @@ export default mergeConfig(
     test: {
       name: "ui",
       environment: "jsdom",
+      passWithNoTests: true,
       include: [
         "src/**/*.{test,spec}.{ts,tsx}",
         "tests/**/*.{test,spec}.{ts,tsx}",

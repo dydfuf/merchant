@@ -42,6 +42,7 @@
 - `apps/game-server`의 `application`/`presentation`에서 infra 구현 직접 import 차단
 - Turborepo `test`, `test:watch`, `test:coverage` 파이프라인 연결
 - Vitest workspace 기반 패키지 단위 테스트 실행 표준화
+- Vitest `passWithNoTests` 전역 비활성화, 필요한 패키지에만 명시적 예외 적용
 
 ### 2.5 Agent-Friendly Repository
 

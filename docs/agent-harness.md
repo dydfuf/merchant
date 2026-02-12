@@ -71,6 +71,7 @@
 - Vitest workspace: 루트 `vitest.workspace.ts` + 워크스페이스별 `vitest.config.ts` 적용
 - ESLint 경계 강제: `no-restricted-imports` 기반 패키지/레이어 규칙 적용
 - `apps/game-server` application/presentation에서 infra 구현 직접 import 금지 규칙 적용
+- Vitest `passWithNoTests`는 전역 비활성화하고, 테스트 미보유 패키지에만 개별 허용
 
 ## 7. 산출물 기준
 
