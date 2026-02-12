@@ -10,8 +10,8 @@ import {
   createPlayers,
 } from "../helpers/state.factory.js";
 
-describe("turn policy", () => {
-  it("computes next player and round metadata", () => {
+describe("턴 정책", () => {
+  it("다음 플레이어와 라운드 메타데이터를 계산한다", () => {
     const state = createGameState({
       currentPlayerId: "p1",
       turn: 4,
@@ -33,7 +33,7 @@ describe("turn policy", () => {
     });
   });
 
-  it("marks game end when final round loops to trigger player", () => {
+  it("파이널 라운드가 트리거 플레이어로 돌아오면 게임 종료를 표시한다", () => {
     const state = createGameState({
       currentPlayerId: "p2",
       finalRound: true,
@@ -51,7 +51,7 @@ describe("turn policy", () => {
     expect(result.value.nextPlayerId).toBe("p1");
   });
 
-  it("rejects non-current player", () => {
+  it("현재 턴이 아닌 플레이어를 거부한다", () => {
     const state = createGameState({
       currentPlayerId: "p1",
     });
@@ -63,7 +63,7 @@ describe("turn policy", () => {
     });
   });
 
-  it("rejects invalid player order", () => {
+  it("잘못된 플레이어 순서를 거부한다", () => {
     const state = createGameState({
       players: createPlayers(
         createPlayer("p1"),
@@ -80,7 +80,7 @@ describe("turn policy", () => {
     });
   });
 
-  it("triggers final round when current player reaches target score", () => {
+  it("현재 플레이어가 목표 점수에 도달하면 파이널 라운드를 시작한다", () => {
     const state = createGameState({
       currentPlayerId: "p1",
       turn: 8,
@@ -100,7 +100,7 @@ describe("turn policy", () => {
     });
   });
 
-  it("does not retrigger final round once already active", () => {
+  it("파이널 라운드가 이미 활성화되면 다시 시작하지 않는다", () => {
     const state = createGameState({
       finalRound: true,
       endTriggeredByPlayerId: "p1",

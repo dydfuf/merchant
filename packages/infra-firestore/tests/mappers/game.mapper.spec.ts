@@ -56,8 +56,8 @@ function createBaseSnapshot(): GameStateSnapshotInput {
   };
 }
 
-describe("mapSnapshotToGameState", () => {
-  it("injects finalRound=false when legacy snapshot omits it", () => {
+describe("스냅샷 게임 상태 매핑", () => {
+  it("레거시 스냅샷에 마지막 라운드 값이 없으면 거짓을 주입한다", () => {
     const legacySnapshot = createBaseSnapshot();
 
     const mapped = mapSnapshotToGameState(legacySnapshot);
@@ -65,7 +65,7 @@ describe("mapSnapshotToGameState", () => {
     expect(mapped.finalRound).toBe(false);
   });
 
-  it("preserves explicit finalRound value", () => {
+  it("명시된 마지막 라운드 값을 유지한다", () => {
     const currentSnapshot: GameStateSnapshotInput = {
       ...createBaseSnapshot(),
       finalRound: true,
@@ -76,7 +76,7 @@ describe("mapSnapshotToGameState", () => {
     expect(mapped.finalRound).toBe(true);
   });
 
-  it("keeps existing end-trigger metadata", () => {
+  it("기존 종료 트리거 메타데이터를 유지한다", () => {
     const currentSnapshot: GameStateSnapshotInput = {
       ...createBaseSnapshot(),
       finalRound: true,

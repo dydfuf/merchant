@@ -8,8 +8,8 @@ import {
   createPlayers,
 } from "../helpers/state.factory.js";
 
-describe("nobles policy", () => {
-  it("returns no granted noble when player is not eligible", () => {
+describe("귀족 정책", () => {
+  it("플레이어가 조건을 충족하지 않으면 부여된 귀족이 없다", () => {
     const state = createGameState({
       players: createPlayers(
         createPlayer("p1", {
@@ -39,7 +39,7 @@ describe("nobles policy", () => {
     });
   });
 
-  it("grants lexicographically smallest noble when multiple are eligible", () => {
+  it("여러 귀족이 가능하면 사전순으로 가장 작은 귀족을 부여한다", () => {
     const state = createGameState({
       players: createPlayers(
         createPlayer("p1", {
@@ -73,7 +73,7 @@ describe("nobles policy", () => {
     expect(result.value.scoreDelta).toBe(3);
   });
 
-  it("rejects unknown noble id in board state", () => {
+  it("보드 상태의 알 수 없는 귀족 식별자를 거부한다", () => {
     const state = createGameState({
       board: {
         openNobleIds: ["noble-unknown"],

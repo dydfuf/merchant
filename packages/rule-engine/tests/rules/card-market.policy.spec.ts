@@ -11,8 +11,8 @@ import {
   createPlayers,
 } from "../helpers/state.factory.js";
 
-describe("card-market policy", () => {
-  it("accepts reserving an open market card", () => {
+describe("카드 마켓 정책", () => {
+  it("오픈 마켓 카드 예약을 허용한다", () => {
     const state = createGameState();
     const result = evaluateReserveCard(state, "p1", {
       target: {
@@ -37,7 +37,7 @@ describe("card-market policy", () => {
     });
   });
 
-  it("rejects reserve when player already has three reserved cards", () => {
+  it("플레이어가 이미 예약 카드 3장을 보유하면 예약을 거부한다", () => {
     const state = createGameState({
       players: createPlayers(
         createPlayer("p1", {
@@ -62,7 +62,7 @@ describe("card-market policy", () => {
     });
   });
 
-  it("rejects deck-top reserve without deck context", () => {
+  it("덱 컨텍스트 없이 덱 상단 예약을 거부한다", () => {
     const state = createGameState();
     const result = evaluateReserveCard(state, "p1", {
       target: {
@@ -78,7 +78,7 @@ describe("card-market policy", () => {
     });
   });
 
-  it("accepts deck-top reserve with provided deck context", () => {
+  it("제공된 덱 컨텍스트로 덱 상단 예약을 허용한다", () => {
     const state = createGameState();
     const result = evaluateReserveCard(
       state,
@@ -108,7 +108,7 @@ describe("card-market policy", () => {
     });
   });
 
-  it("accepts buying from open market", () => {
+  it("오픈 마켓 구매를 허용한다", () => {
     const state = createGameState();
     const result = evaluateBuySource(state, "p1", {
       kind: "OPEN_MARKET",
@@ -127,7 +127,7 @@ describe("card-market policy", () => {
     });
   });
 
-  it("accepts buying from reserved cards", () => {
+  it("예약 카드 구매를 허용한다", () => {
     const state = createGameState({
       players: createPlayers(
         createPlayer("p1", {
@@ -154,7 +154,7 @@ describe("card-market policy", () => {
     });
   });
 
-  it("rejects reserved buy when card is not reserved by player", () => {
+  it("카드가 플레이어에게 예약되어 있지 않으면 예약 구매를 거부한다", () => {
     const state = createGameState();
     const result = evaluateBuySource(state, "p1", {
       kind: "RESERVED",
@@ -167,7 +167,7 @@ describe("card-market policy", () => {
     });
   });
 
-  it("returns deterministic deck-top selection for same input", () => {
+  it("동일한 입력에서 결정론적 덱 상단 선택 결과를 반환한다", () => {
     const input = {
       seed: "seed-42",
       version: 7,

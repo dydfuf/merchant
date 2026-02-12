@@ -5,8 +5,8 @@ import { selectDeckTopCardDeterministically } from "../../src/domain/card-market
 import { evaluateEndTurn } from "../../src/domain/turn/turn.policy.js";
 import { createGameState } from "../helpers/state.factory.js";
 
-describe("policy determinism", () => {
-  it("returns same take-token result for identical inputs", () => {
+describe("정책 결정론", () => {
+  it("동일한 입력에서 동일한 토큰 획득 결과를 반환한다", () => {
     const state = createGameState();
     const payload = {
       tokens: {
@@ -22,7 +22,7 @@ describe("policy determinism", () => {
     expect(first).toEqual(second);
   });
 
-  it("returns same deck-top selection for identical seed and deck", () => {
+  it("동일한 시드와 덱에서 동일한 덱 상단 선택 결과를 반환한다", () => {
     const input = {
       seed: "seed-10",
       version: 3,
@@ -36,7 +36,7 @@ describe("policy determinism", () => {
     expect(first).toEqual(second);
   });
 
-  it("returns same end-turn result for identical turn state", () => {
+  it("동일한 턴 상태에서 동일한 턴 종료 결과를 반환한다", () => {
     const state = createGameState({
       currentPlayerId: "p1",
       turn: 11,

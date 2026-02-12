@@ -10,8 +10,8 @@ import {
   createPlayers,
 } from "../helpers/state.factory.js";
 
-describe("scoring policy", () => {
-  it("computes score from purchased cards and nobles", () => {
+describe("점수 정책", () => {
+  it("구매 카드와 귀족으로 점수를 계산한다", () => {
     const state = createGameState({
       players: createPlayers(
         createPlayer("p1", {
@@ -37,7 +37,7 @@ describe("scoring policy", () => {
     });
   });
 
-  it("selects winner by highest score", () => {
+  it("최고 점수로 승자를 선택한다", () => {
     const state = createGameState({
       players: createPlayers(
         createPlayer("p1", { purchasedCardIds: ["t3-20"] }),
@@ -59,7 +59,7 @@ describe("scoring policy", () => {
     expect(result.value.tieBrokenByCardCount).toBe(false);
   });
 
-  it("breaks ties by fewer purchased cards", () => {
+  it("동점이면 구매 카드 수가 적은 플레이어를 우선한다", () => {
     const state = createGameState({
       players: createPlayers(
         createPlayer("p1", {
@@ -85,7 +85,7 @@ describe("scoring policy", () => {
     expect(result.value.tieBrokenByCardCount).toBe(true);
   });
 
-  it("returns shared winners when both score and card count are tied", () => {
+  it("점수와 카드 수가 모두 같으면 공동 승자를 반환한다", () => {
     const state = createGameState({
       players: createPlayers(
         createPlayer("p1", {
@@ -111,7 +111,7 @@ describe("scoring policy", () => {
     expect(result.value.tieBrokenByCardCount).toBe(false);
   });
 
-  it("rejects provided final scores when a player score is missing", () => {
+  it("플레이어 점수가 누락된 최종 점수 입력을 거부한다", () => {
     const state = createGameState({
       players: createPlayers(createPlayer("p1"), createPlayer("p2")),
     });
@@ -126,7 +126,7 @@ describe("scoring policy", () => {
     });
   });
 
-  it("rejects provided final scores with unknown player ids", () => {
+  it("알 수 없는 플레이어 식별자가 있는 최종 점수 입력을 거부한다", () => {
     const state = createGameState({
       players: createPlayers(createPlayer("p1"), createPlayer("p2")),
     });
@@ -143,7 +143,7 @@ describe("scoring policy", () => {
     });
   });
 
-  it("rejects unknown purchased card ids", () => {
+  it("알 수 없는 구매 카드 식별자를 거부한다", () => {
     const state = createGameState({
       players: createPlayers(
         createPlayer("p1", {

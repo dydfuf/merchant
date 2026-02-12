@@ -9,8 +9,8 @@ import {
   createTokenWallet,
 } from "../helpers/state.factory.js";
 
-describe("applyCommand determinism", () => {
-  it("returns identical result for identical RESERVE_CARD(DECK_TOP) input", () => {
+describe("명령 적용 결정론", () => {
+  it("동일한 카드 예약(덱 상단) 입력에 대해 동일한 결과를 반환한다", () => {
     const state = createGameState();
     const command: ReserveCardCommand = {
       type: "RESERVE_CARD",
@@ -42,7 +42,7 @@ describe("applyCommand determinism", () => {
     expect(second).toEqual(first);
   });
 
-  it("returns identical result for identical BUY_CARD with refill input", () => {
+  it("보충이 있는 동일한 카드 구매 입력에 대해 동일한 결과를 반환한다", () => {
     const state = createGameState({
       players: createPlayers(
         createPlayer("p1", {

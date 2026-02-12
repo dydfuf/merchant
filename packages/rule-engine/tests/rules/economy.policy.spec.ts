@@ -11,8 +11,8 @@ import {
   createTokenWallet,
 } from "../helpers/state.factory.js";
 
-describe("economy policy", () => {
-  it("accepts taking three different gems with valid returns", () => {
+describe("경제 정책", () => {
+  it("유효한 반환과 함께 서로 다른 보석 3개 가져오기를 허용한다", () => {
     const state = createGameState({
       players: createPlayers(
         createPlayer("p1", {
@@ -57,7 +57,7 @@ describe("economy policy", () => {
     expect(result.value.totalTokensAfter).toBe(10);
   });
 
-  it("rejects invalid take pattern", () => {
+  it("잘못된 가져오기 패턴을 거부한다", () => {
     const state = createGameState();
     const result = evaluateTakeTokens(state, "p1", {
       tokens: {
@@ -72,7 +72,7 @@ describe("economy policy", () => {
     });
   });
 
-  it("rejects double-take when fewer than four gems are in bank", () => {
+  it("은행 보석이 4개 미만이면 같은 색 2개 가져오기를 거부한다", () => {
     const state = createGameState({
       board: {
         bankTokens: createTokenWallet({
@@ -98,7 +98,7 @@ describe("economy policy", () => {
     });
   });
 
-  it("rejects takes that exceed token limit after returns", () => {
+  it("반환 후 토큰 한도를 초과하는 가져오기를 거부한다", () => {
     const state = createGameState({
       players: createPlayers(
         createPlayer("p1", {
@@ -129,7 +129,7 @@ describe("economy policy", () => {
     });
   });
 
-  it("rejects returned tokens when player does not exceed token limit", () => {
+  it("플레이어가 토큰 한도를 넘지 않으면 반환 토큰을 거부한다", () => {
     const state = createGameState({
       players: createPlayers(
         createPlayer("p1", {
@@ -163,7 +163,7 @@ describe("economy policy", () => {
     });
   });
 
-  it("accepts buy payment with gold substitution", () => {
+  it("골드 대체를 포함한 구매 지불을 허용한다", () => {
     const result = evaluateBuyPayment({
       playerTokens: createTokenWallet({
         diamond: 1,
@@ -210,7 +210,7 @@ describe("economy policy", () => {
     });
   });
 
-  it("rejects overpayment", () => {
+  it("초과 지불을 거부한다", () => {
     const result = evaluateBuyPayment({
       playerTokens: createTokenWallet({
         diamond: 2,
@@ -245,7 +245,7 @@ describe("economy policy", () => {
     });
   });
 
-  it("rejects payment when funds are insufficient", () => {
+  it("자금이 부족하면 지불을 거부한다", () => {
     const result = evaluateBuyPayment({
       playerTokens: createTokenWallet({
         diamond: 1,

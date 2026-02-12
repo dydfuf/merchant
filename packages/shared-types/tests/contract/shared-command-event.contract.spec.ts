@@ -8,8 +8,8 @@ import type {
   TurnEndedEvent,
 } from "../../src/index.js";
 
-describe("shared command/event contracts", () => {
-  it("allows RESERVE_CARD with OPEN_CARD target", () => {
+describe("공유 명령/이벤트 계약", () => {
+  it("오픈 카드 대상을 사용하는 카드 예약을 허용한다", () => {
     const command: ReserveCardCommand = {
       type: "RESERVE_CARD",
       gameId: "game-1",
@@ -32,7 +32,7 @@ describe("shared command/event contracts", () => {
     }
   });
 
-  it("allows RESERVE_CARD with DECK_TOP target and returnedTokens", () => {
+  it("덱 상단 대상과 반환 토큰을 포함한 카드 예약을 허용한다", () => {
     const command: ReserveCardCommand = {
       type: "RESERVE_CARD",
       gameId: "game-1",
@@ -55,7 +55,7 @@ describe("shared command/event contracts", () => {
     expect(command.payload.returnedTokens?.gold).toBe(1);
   });
 
-  it("allows TAKE_TOKENS with returnedTokens", () => {
+  it("반환 토큰을 포함한 토큰 가져오기를 허용한다", () => {
     const command: TakeTokensCommand = {
       type: "TAKE_TOKENS",
       gameId: "game-1",
@@ -78,7 +78,7 @@ describe("shared command/event contracts", () => {
     expect(command.payload.returnedTokens?.onyx).toBe(1);
   });
 
-  it("requires BUY_CARD source union", () => {
+  it("카드 구매의 원천 유니온을 요구한다", () => {
     const reservedSource: BuyCardCommand = {
       type: "BUY_CARD",
       gameId: "game-1",
@@ -117,7 +117,7 @@ describe("shared command/event contracts", () => {
     expect(openSource.payload.source.kind).toBe("OPEN_MARKET");
   });
 
-  it("includes TURN_ENDED turn metadata", () => {
+  it("턴 종료 이벤트 메타데이터를 포함한다", () => {
     const event: TurnEndedEvent = {
       type: "TURN_ENDED",
       gameId: "game-1",
@@ -135,7 +135,7 @@ describe("shared command/event contracts", () => {
     expect(event.payload.roundNumber).toBe(1);
   });
 
-  it("rejects invalid combinations at type level", () => {
+  it("타입 레벨에서 잘못된 조합을 거부한다", () => {
     const invalidReserve: ReserveCardCommand = {
       type: "RESERVE_CARD",
       gameId: "game-1",
@@ -190,7 +190,7 @@ describe("shared command/event contracts", () => {
     expect(Boolean(invalidGameEnded)).toBe(true);
   });
 
-  it("includes GAME_ENDED trigger metadata", () => {
+  it("게임 종료 트리거 메타데이터를 포함한다", () => {
     const event: GameEndedEvent = {
       type: "GAME_ENDED",
       gameId: "game-1",
@@ -212,7 +212,7 @@ describe("shared command/event contracts", () => {
     expect(event.payload.endTriggeredByPlayerId).toBe("player-1");
   });
 
-  it("includes CARD_RESERVED target metadata", () => {
+  it("카드 예약 대상 메타데이터를 포함한다", () => {
     const event: CardReservedEvent = {
       type: "CARD_RESERVED",
       gameId: "game-1",

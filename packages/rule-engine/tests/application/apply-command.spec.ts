@@ -17,8 +17,8 @@ import {
   createTokenWallet,
 } from "../helpers/state.factory.js";
 
-describe("applyCommand", () => {
-  it("rejects commands when game is not in progress", () => {
+describe("명령 적용", () => {
+  it("게임이 진행 중이 아니면 명령을 거부한다", () => {
     const state = createGameState({ status: "WAITING" });
     const command: TakeTokensCommand = {
       type: "TAKE_TOKENS",
@@ -46,7 +46,7 @@ describe("applyCommand", () => {
     });
   });
 
-  it("rejects malformed command envelopes", () => {
+  it("형식이 잘못된 명령 엔벌로프를 거부한다", () => {
     const state = createGameState();
     const malformedCommand = {
       type: "TAKE_TOKENS",
@@ -73,7 +73,7 @@ describe("applyCommand", () => {
     });
   });
 
-  it("applies TAKE_TOKENS and updates wallet, bank, and event version", () => {
+  it("토큰 가져오기 명령을 적용하고 지갑/은행/이벤트 버전을 갱신한다", () => {
     const state = createGameState({
       players: createPlayers(
         createPlayer("p1", {
@@ -157,7 +157,7 @@ describe("applyCommand", () => {
     expect(result.nextState.version).toBe(state.version + 1);
   });
 
-  it("rejects TAKE_TOKENS from non-current player", () => {
+  it("현재 턴이 아닌 플레이어의 토큰 가져오기 명령을 거부한다", () => {
     const state = createGameState({ currentPlayerId: "p1" });
     const command: TakeTokensCommand = {
       type: "TAKE_TOKENS",
@@ -185,7 +185,7 @@ describe("applyCommand", () => {
     });
   });
 
-  it("applies RESERVE_CARD from open market with deterministic refill", () => {
+  it("오픈 마켓의 카드 예약 명령을 적용하고 결정론적으로 보충한다", () => {
     const state = createGameState();
     const deckTierOne = ["t1-05", "t1-06", "t1-07"] as const;
 
@@ -252,7 +252,7 @@ describe("applyCommand", () => {
     ]);
   });
 
-  it("rejects OPEN_CARD reserve when deck context is missing", () => {
+  it("덱 컨텍스트가 없으면 오픈 카드 예약을 거부한다", () => {
     const state = createGameState();
     const command: ReserveCardCommand = {
       type: "RESERVE_CARD",
@@ -284,7 +284,7 @@ describe("applyCommand", () => {
     });
   });
 
-  it("applies RESERVE_CARD from DECK_TOP using deterministic selection", () => {
+  it("결정론적 선택으로 덱 상단 카드 예약 명령을 적용한다", () => {
     const state = createGameState();
     const deckTierTwo = ["t2-05", "t2-06", "t2-07"] as const;
 
@@ -349,7 +349,7 @@ describe("applyCommand", () => {
     ]);
   });
 
-  it("applies BUY_CARD from open market and updates bonus/token state", () => {
+  it("오픈 마켓의 카드 구매 명령을 적용하고 보너스/토큰 상태를 갱신한다", () => {
     const state = createGameState({
       players: createPlayers(
         createPlayer("p1", {
@@ -447,7 +447,7 @@ describe("applyCommand", () => {
     ]);
   });
 
-  it("does not reinsert purchased card when deck context contains open cards", () => {
+  it("덱 컨텍스트에 오픈 카드가 있으면 구매한 카드를 재삽입하지 않는다", () => {
     const state = createGameState({
       players: createPlayers(
         createPlayer("p1", {
@@ -503,7 +503,7 @@ describe("applyCommand", () => {
     expect(new Set(result.nextState.board.openMarketCardIds[1]).size).toBe(4);
   });
 
-  it("rejects OPEN_MARKET buy when deck context is missing", () => {
+  it("덱 컨텍스트가 없으면 오픈 마켓 구매를 거부한다", () => {
     const state = createGameState({
       players: createPlayers(
         createPlayer("p1", {
@@ -554,7 +554,7 @@ describe("applyCommand", () => {
     });
   });
 
-  it("grants noble and triggers final round on BUY_CARD when target score reached", () => {
+  it("목표 점수 도달 시 카드 구매에서 귀족을 부여하고 파이널 라운드를 시작한다", () => {
     const state = createGameState({
       turn: 9,
       players: createPlayers(
@@ -622,7 +622,7 @@ describe("applyCommand", () => {
     });
   });
 
-  it("applies END_TURN and advances turn metadata", () => {
+  it("턴 종료 명령을 적용하고 턴 메타데이터를 진행시킨다", () => {
     const state = createGameState({
       currentPlayerId: "p1",
       turn: 1,
@@ -669,7 +669,7 @@ describe("applyCommand", () => {
     expect(result.nextState.version).toBe(state.version + 1);
   });
 
-  it("emits TURN_ENDED and GAME_ENDED when final round closes", () => {
+  it("파이널 라운드가 종료되면 턴 종료와 게임 종료 이벤트를 발생시킨다", () => {
     const state = createGameState({
       version: 18,
       turn: 18,
@@ -731,7 +731,7 @@ describe("applyCommand", () => {
     expect(result.nextState.winnerPlayerIds).toEqual(["p1"]);
   });
 
-  it("rejects commands with mismatched game id", () => {
+  it("게임 식별자가 일치하지 않는 명령을 거부한다", () => {
     const state = createGameState({ gameId: "game-1" });
     const command: TakeTokensCommand = {
       type: "TAKE_TOKENS",

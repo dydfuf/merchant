@@ -59,6 +59,7 @@ pnpm test:coverage
 ## 7. 테스트 작성 기준
 
 - 새로운 정책/규칙 추가 시 최소 1개 이상의 단위 테스트를 함께 작성한다.
+- 테스트 케이스명(`describe`, `it`, `test`)은 한글로 작성한다.
 - 테스트는 변경 레이어에 맞는 위치에 둔다.
   - rule-engine: `packages/rule-engine/tests/**`
   - game-server: `apps/game-server/tests/**`
