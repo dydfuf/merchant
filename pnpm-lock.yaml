@@ -42,6 +42,9 @@ importers:
       '@repo/eslint-config':
         specifier: workspace:*
         version: link:../../packages/eslint-config
+      '@repo/test-fixtures':
+        specifier: workspace:*
+        version: link:../../packages/test-fixtures
       '@repo/typescript-config':
         specifier: workspace:*
         version: link:../../packages/typescript-config
