@@ -21,5 +21,6 @@
 ## 메모
 
 - ESLint `no-restricted-imports` 기반 경계 강제 적용
+- `apps/game-server`에서 application/presentation -> infra 구현 직접 import 차단 규칙 추가
 - Vitest workspace + Turbo 테스트 파이프라인(`test`, `test:watch`, `test:coverage`) 적용
 - rule-engine/game-server 샘플 테스트 각 1개 추가

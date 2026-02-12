@@ -39,6 +39,7 @@
 현재 적용된 guardrail:
 
 - ESLint `no-restricted-imports`로 레이어/패키지 경계 강제
+- `apps/game-server`의 `application`/`presentation`에서 infra 구현 직접 import 차단
 - Turborepo `test`, `test:watch`, `test:coverage` 파이프라인 연결
 - Vitest workspace 기반 패키지 단위 테스트 실행 표준화
 
@@ -82,7 +83,7 @@ flowchart LR
 - `packages/ui`: 공용 UI 컴포넌트
 - `packages/shared-types`: Command/Event/State 타입 경계
 - `packages/rule-engine`: 순수 룰 엔진 계층
-- `packages/infra-firestore`: Firestore adapter 계층
+- `packages/infra-firestore`: Firestore adapter 계층(저장소 구현 단일 위치)
 - `packages/test-fixtures`: 테스트 시나리오/빌더 계층
 - `packages/eslint-config`
 - `packages/typescript-config`

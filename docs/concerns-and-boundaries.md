@@ -103,6 +103,8 @@ application -> infrastructure (via interface/port)
 - `apps/web`에서 `@repo/infra-firestore` import 금지
 - `packages/rule-engine`에서 `firebase-*`, `next/*`, `react` import 금지
 - `apps/game-server`의 handler는 룰 계산을 직접 구현하지 않고 `rule-engine`만 호출
+- `apps/game-server/src/application`은 `infrastructure` 구현이나 `@repo/infra-firestore`를 직접 import하지 않고 port를 통해 접근
+- `apps/game-server/src/presentation`은 `@repo/infra-firestore` 직접 import 금지
 
 현재 반영된 강제 위치:
 

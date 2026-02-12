@@ -1,13 +1,14 @@
 import type { GameId } from "../common/game-id.js";
 import type { Version } from "../common/version.js";
-import type { GemColor } from "../state/player.state.js";
 
-export interface TokensTakenEvent {
-  type: "TOKENS_TAKEN";
+export interface TurnEndedEvent {
+  type: "TURN_ENDED";
   gameId: GameId;
   actorId: string;
   version: Version;
   payload: {
-    tokens: Partial<Record<GemColor, number>>;
+    previousPlayerId: string;
+    nextPlayerId: string;
+    turn: number;
   };
 }

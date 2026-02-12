@@ -42,6 +42,11 @@ export default [
               message:
                 "presentation layer must not import infrastructure directly.",
             },
+            {
+              group: ["@repo/infra-firestore", "@repo/infra-firestore/*"],
+              message:
+                "presentation layer must not import infra packages directly.",
+            },
           ],
         },
       ],
@@ -57,6 +62,15 @@ export default [
             {
               group: ["**/presentation/**"],
               message: "application layer must not import presentation layer.",
+            },
+            {
+              group: [
+                "**/infrastructure/**",
+                "@repo/infra-firestore",
+                "@repo/infra-firestore/*",
+              ],
+              message:
+                "application layer must access infrastructure through ports, not direct imports.",
             },
           ],
         },

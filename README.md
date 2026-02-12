@@ -15,13 +15,13 @@
 ## 모노레포 구조
 
 - `apps/web`: 플레이어 클라이언트(Next.js)
-- `apps/game-server`: 실시간 게임 서버(스캐폴딩)
+- `apps/game-server`: 실시간 게임 서버(애플리케이션/프레젠테이션 스캐폴딩)
 - `packages/ui`: 공유 UI 컴포넌트
 - `packages/eslint-config`: ESLint 설정
 - `packages/typescript-config`: TypeScript 설정
 - `packages/rule-engine`: 순수 룰 엔진
 - `packages/shared-types`: 공유 타입
-- `packages/infra-firestore`: Firestore 어댑터
+- `packages/infra-firestore`: Firestore 어댑터(저장소 구현 위치)
 - `packages/test-fixtures`: 테스트 픽스처
 
 ## 실행 명령
