@@ -1,4 +1,5 @@
 export * from "./application/validate-command.js";
+export * from "./application/apply-command.js";
 
 export * from "./domain/policy-error-code.js";
 export * from "./domain/card-market/card.catalog.js";

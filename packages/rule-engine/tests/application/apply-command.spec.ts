@@ -1,0 +1,760 @@
+import type {
+  BuyCardCommand,
+  Command,
+  EndTurnCommand,
+  ReserveCardCommand,
+  TakeTokensCommand,
+} from "@repo/shared-types";
+import { describe, expect, it } from "vitest";
+
+import { applyCommand } from "../../src/application/apply-command.js";
+import { selectDeckTopCardDeterministically } from "../../src/domain/card-market/card-market.policy.js";
+import {
+  createBonusWallet,
+  createGameState,
+  createPlayer,
+  createPlayers,
+  createTokenWallet,
+} from "../helpers/state.factory.js";
+
+describe("applyCommand", () => {
+  it("rejects commands when game is not in progress", () => {
+    const state = createGameState({ status: "WAITING" });
+    const command: TakeTokensCommand = {
+      type: "TAKE_TOKENS",
+      gameId: state.gameId,
+      actorId: "p1",
+      expectedVersion: state.version,
+      idempotencyKey: "take-not-active",
+      payload: {
+        tokens: { diamond: 1, sapphire: 1, emerald: 1 },
+      },
+    };
+
+    const result = applyCommand({
+      state,
+      command,
+      playerOrder: ["p1", "p2"],
+      deckCardIdsByTier: {
+        1: [],
+      },
+    });
+
+    expect(result).toMatchObject({
+      ok: false,
+      code: "STATE_NOT_ACTIVE",
+    });
+  });
+
+  it("rejects malformed command envelopes", () => {
+    const state = createGameState();
+    const malformedCommand = {
+      type: "TAKE_TOKENS",
+      gameId: state.gameId,
+      actorId: "p1",
+      expectedVersion: -1,
+      idempotencyKey: "bad-version",
+      payload: {
+        tokens: { diamond: 1, sapphire: 1, emerald: 1 },
+      },
+    } as unknown as Command;
+
+    const result = applyCommand({
+      state,
+      command: malformedCommand,
+      playerOrder: ["p1", "p2"],
+      deckCardIdsByTier: {},
+    });
+
+    expect(result).toEqual({
+      ok: false,
+      code: "COMMAND_ENVELOPE_INVALID",
+      reason: "INVALID_EXPECTED_VERSION",
+    });
+  });
+
+  it("applies TAKE_TOKENS and updates wallet, bank, and event version", () => {
+    const state = createGameState({
+      players: createPlayers(
+        createPlayer("p1", {
+          tokens: createTokenWallet({
+            diamond: 2,
+            sapphire: 2,
+            emerald: 2,
+            ruby: 2,
+            onyx: 1,
+            gold: 0,
+          }),
+        }),
+        createPlayer("p2"),
+      ),
+    });
+
+    const command: TakeTokensCommand = {
+      type: "TAKE_TOKENS",
+      gameId: state.gameId,
+      actorId: "p1",
+      expectedVersion: state.version,
+      idempotencyKey: "take-with-return",
+      payload: {
+        tokens: {
+          diamond: 1,
+          sapphire: 1,
+          emerald: 1,
+        },
+        returnedTokens: {
+          ruby: 1,
+          onyx: 1,
+        },
+      },
+    };
+
+    const result = applyCommand({
+      state,
+      command,
+      playerOrder: ["p1", "p2"],
+      deckCardIdsByTier: {
+        1: [],
+      },
+    });
+
+    expect(result.ok).toBe(true);
+    if (!result.ok) {
+      return;
+    }
+
+    expect(result.events).toHaveLength(1);
+    expect(result.events[0]).toEqual({
+      type: "TOKENS_TAKEN",
+      gameId: state.gameId,
+      actorId: "p1",
+      version: state.version + 1,
+      payload: {
+        tokens: {
+          diamond: 1,
+          sapphire: 1,
+          emerald: 1,
+        },
+      },
+    });
+
+    expect(result.nextState.players.p1?.tokens).toEqual({
+      diamond: 3,
+      sapphire: 3,
+      emerald: 3,
+      ruby: 1,
+      onyx: 0,
+      gold: 0,
+    });
+    expect(result.nextState.board.bankTokens).toEqual({
+      diamond: 6,
+      sapphire: 6,
+      emerald: 6,
+      ruby: 8,
+      onyx: 8,
+      gold: 5,
+    });
+    expect(result.nextState.version).toBe(state.version + 1);
+  });
+
+  it("rejects TAKE_TOKENS from non-current player", () => {
+    const state = createGameState({ currentPlayerId: "p1" });
+    const command: TakeTokensCommand = {
+      type: "TAKE_TOKENS",
+      gameId: state.gameId,
+      actorId: "p2",
+      expectedVersion: state.version,
+      idempotencyKey: "take-wrong-turn",
+      payload: {
+        tokens: { diamond: 1, sapphire: 1, emerald: 1 },
+      },
+    };
+
+    const result = applyCommand({
+      state,
+      command,
+      playerOrder: ["p1", "p2"],
+      deckCardIdsByTier: {},
+    });
+
+    expect(result).toEqual({
+      ok: false,
+      code: "POLICY_VIOLATION",
+      policyCode: "TURN_NOT_CURRENT_PLAYER",
+      reason: undefined,
+    });
+  });
+
+  it("applies RESERVE_CARD from open market with deterministic refill", () => {
+    const state = createGameState();
+    const deckTierOne = ["t1-05", "t1-06", "t1-07"] as const;
+
+    const drawResult = selectDeckTopCardDeterministically({
+      seed: state.seed,
+      version: state.version,
+      tier: 1,
+      deckCardIds: [...deckTierOne],
+    });
+    expect(drawResult.ok).toBe(true);
+    if (!drawResult.ok) {
+      return;
+    }
+
+    const command: ReserveCardCommand = {
+      type: "RESERVE_CARD",
+      gameId: state.gameId,
+      actorId: "p1",
+      expectedVersion: state.version,
+      idempotencyKey: "reserve-open",
+      payload: {
+        target: {
+          kind: "OPEN_CARD",
+          cardId: "t1-01",
+          tier: 1,
+        },
+        takeGoldToken: true,
+      },
+    };
+
+    const result = applyCommand({
+      state,
+      command,
+      playerOrder: ["p1", "p2"],
+      deckCardIdsByTier: {
+        1: deckTierOne,
+      },
+    });
+
+    expect(result.ok).toBe(true);
+    if (!result.ok) {
+      return;
+    }
+
+    expect(result.events[0]).toMatchObject({
+      type: "CARD_RESERVED",
+      actorId: "p1",
+      payload: {
+        targetKind: "OPEN_CARD",
+        cardId: "t1-01",
+        tier: 1,
+        grantedGold: true,
+      },
+    });
+
+    expect(result.nextState.players.p1?.reservedCardIds).toContain("t1-01");
+    expect(result.nextState.players.p1?.tokens.gold).toBe(1);
+    expect(result.nextState.board.bankTokens.gold).toBe(4);
+    expect(result.nextState.board.openMarketCardIds[1]).toEqual([
+      drawResult.value.cardId,
+      "t1-02",
+      "t1-03",
+      "t1-04",
+    ]);
+  });
+
+  it("rejects OPEN_CARD reserve when deck context is missing", () => {
+    const state = createGameState();
+    const command: ReserveCardCommand = {
+      type: "RESERVE_CARD",
+      gameId: state.gameId,
+      actorId: "p1",
+      expectedVersion: state.version,
+      idempotencyKey: "reserve-open-missing-deck-context",
+      payload: {
+        target: {
+          kind: "OPEN_CARD",
+          cardId: "t1-01",
+          tier: 1,
+        },
+        takeGoldToken: true,
+      },
+    };
+
+    const result = applyCommand({
+      state,
+      command,
+      playerOrder: ["p1", "p2"],
+      deckCardIdsByTier: {},
+    });
+
+    expect(result).toEqual({
+      ok: false,
+      code: "STATE_INVARIANT_BROKEN",
+      reason: "DECK_CONTEXT_REQUIRED",
+    });
+  });
+
+  it("applies RESERVE_CARD from DECK_TOP using deterministic selection", () => {
+    const state = createGameState();
+    const deckTierTwo = ["t2-05", "t2-06", "t2-07"] as const;
+
+    const drawResult = selectDeckTopCardDeterministically({
+      seed: state.seed,
+      version: state.version,
+      tier: 2,
+      deckCardIds: [...deckTierTwo],
+    });
+    expect(drawResult.ok).toBe(true);
+    if (!drawResult.ok) {
+      return;
+    }
+
+    const command: ReserveCardCommand = {
+      type: "RESERVE_CARD",
+      gameId: state.gameId,
+      actorId: "p1",
+      expectedVersion: state.version,
+      idempotencyKey: "reserve-deck-top",
+      payload: {
+        target: {
+          kind: "DECK_TOP",
+          tier: 2,
+        },
+        takeGoldToken: false,
+      },
+    };
+
+    const result = applyCommand({
+      state,
+      command,
+      playerOrder: ["p1", "p2"],
+      deckCardIdsByTier: {
+        2: deckTierTwo,
+      },
+    });
+
+    expect(result.ok).toBe(true);
+    if (!result.ok) {
+      return;
+    }
+
+    expect(result.events[0]).toMatchObject({
+      type: "CARD_RESERVED",
+      payload: {
+        targetKind: "DECK_TOP",
+        cardId: drawResult.value.cardId,
+        tier: 2,
+        grantedGold: false,
+      },
+    });
+
+    expect(result.nextState.players.p1?.reservedCardIds).toContain(
+      drawResult.value.cardId,
+    );
+    expect(result.nextState.board.openMarketCardIds[2]).toEqual([
+      "t2-01",
+      "t2-02",
+      "t2-03",
+      "t2-04",
+    ]);
+  });
+
+  it("applies BUY_CARD from open market and updates bonus/token state", () => {
+    const state = createGameState({
+      players: createPlayers(
+        createPlayer("p1", {
+          tokens: createTokenWallet({
+            diamond: 1,
+            sapphire: 1,
+            emerald: 1,
+            ruby: 1,
+            onyx: 0,
+            gold: 0,
+          }),
+        }),
+        createPlayer("p2"),
+      ),
+    });
+
+    const deckTierOne = ["t1-05", "t1-06"] as const;
+    const drawResult = selectDeckTopCardDeterministically({
+      seed: state.seed,
+      version: state.version,
+      tier: 1,
+      deckCardIds: [...deckTierOne],
+    });
+    expect(drawResult.ok).toBe(true);
+    if (!drawResult.ok) {
+      return;
+    }
+
+    const command: BuyCardCommand = {
+      type: "BUY_CARD",
+      gameId: state.gameId,
+      actorId: "p1",
+      expectedVersion: state.version,
+      idempotencyKey: "buy-open-card",
+      payload: {
+        source: {
+          kind: "OPEN_MARKET",
+          cardId: "t1-01",
+        },
+        payment: {
+          diamond: 1,
+          sapphire: 1,
+          emerald: 1,
+          ruby: 1,
+        },
+      },
+    };
+
+    const result = applyCommand({
+      state,
+      command,
+      playerOrder: ["p1", "p2"],
+      deckCardIdsByTier: {
+        1: deckTierOne,
+      },
+    });
+
+    expect(result.ok).toBe(true);
+    if (!result.ok) {
+      return;
+    }
+
+    expect(result.events[0]).toMatchObject({
+      type: "CARD_BOUGHT",
+      payload: {
+        cardId: "t1-01",
+        gainedBonusColor: "onyx",
+        scoreDelta: 0,
+      },
+    });
+
+    expect(result.nextState.players.p1?.tokens).toEqual({
+      diamond: 0,
+      sapphire: 0,
+      emerald: 0,
+      ruby: 0,
+      onyx: 0,
+      gold: 0,
+    });
+    expect(result.nextState.players.p1?.bonuses.onyx).toBe(1);
+    expect(result.nextState.players.p1?.purchasedCardIds).toContain("t1-01");
+    expect(result.nextState.board.bankTokens).toEqual({
+      diamond: 8,
+      sapphire: 8,
+      emerald: 8,
+      ruby: 8,
+      onyx: 7,
+      gold: 5,
+    });
+    expect(result.nextState.board.openMarketCardIds[1]).toEqual([
+      drawResult.value.cardId,
+      "t1-02",
+      "t1-03",
+      "t1-04",
+    ]);
+  });
+
+  it("does not reinsert purchased card when deck context contains open cards", () => {
+    const state = createGameState({
+      players: createPlayers(
+        createPlayer("p1", {
+          tokens: createTokenWallet({
+            diamond: 1,
+            sapphire: 1,
+            emerald: 1,
+            ruby: 1,
+            onyx: 0,
+            gold: 0,
+          }),
+        }),
+        createPlayer("p2"),
+      ),
+    });
+
+    const command: BuyCardCommand = {
+      type: "BUY_CARD",
+      gameId: state.gameId,
+      actorId: "p1",
+      expectedVersion: state.version,
+      idempotencyKey: "buy-open-contract-regression",
+      payload: {
+        source: {
+          kind: "OPEN_MARKET",
+          cardId: "t1-01",
+        },
+        payment: {
+          diamond: 1,
+          sapphire: 1,
+          emerald: 1,
+          ruby: 1,
+        },
+      },
+    };
+
+    const result = applyCommand({
+      state,
+      command,
+      playerOrder: ["p1", "p2"],
+      deckCardIdsByTier: {
+        1: ["t1-01", "t1-02", "t1-03", "t1-04", "t1-05"],
+      },
+    });
+
+    expect(result.ok).toBe(true);
+    if (!result.ok) {
+      return;
+    }
+
+    expect(result.nextState.players.p1?.purchasedCardIds).toContain("t1-01");
+    expect(result.nextState.board.openMarketCardIds[1]).not.toContain("t1-01");
+    expect(new Set(result.nextState.board.openMarketCardIds[1]).size).toBe(4);
+  });
+
+  it("rejects OPEN_MARKET buy when deck context is missing", () => {
+    const state = createGameState({
+      players: createPlayers(
+        createPlayer("p1", {
+          tokens: createTokenWallet({
+            diamond: 1,
+            sapphire: 1,
+            emerald: 1,
+            ruby: 1,
+            onyx: 0,
+            gold: 0,
+          }),
+        }),
+        createPlayer("p2"),
+      ),
+    });
+
+    const command: BuyCardCommand = {
+      type: "BUY_CARD",
+      gameId: state.gameId,
+      actorId: "p1",
+      expectedVersion: state.version,
+      idempotencyKey: "buy-open-missing-deck-context",
+      payload: {
+        source: {
+          kind: "OPEN_MARKET",
+          cardId: "t1-01",
+        },
+        payment: {
+          diamond: 1,
+          sapphire: 1,
+          emerald: 1,
+          ruby: 1,
+        },
+      },
+    };
+
+    const result = applyCommand({
+      state,
+      command,
+      playerOrder: ["p1", "p2"],
+      deckCardIdsByTier: {},
+    });
+
+    expect(result).toEqual({
+      ok: false,
+      code: "STATE_INVARIANT_BROKEN",
+      reason: "DECK_CONTEXT_REQUIRED",
+    });
+  });
+
+  it("grants noble and triggers final round on BUY_CARD when target score reached", () => {
+    const state = createGameState({
+      turn: 9,
+      players: createPlayers(
+        createPlayer("p1", {
+          bonuses: createBonusWallet({
+            diamond: 3,
+            sapphire: 3,
+            emerald: 3,
+            ruby: 3,
+            onyx: 3,
+          }),
+          purchasedCardIds: ["t3-20", "t3-20", "t1-08", "t1-08"],
+          tokens: createTokenWallet(),
+        }),
+        createPlayer("p2"),
+      ),
+      board: {
+        openNobleIds: ["noble-03", "noble-01", "noble-10"],
+      },
+    });
+
+    const command: BuyCardCommand = {
+      type: "BUY_CARD",
+      gameId: state.gameId,
+      actorId: "p1",
+      expectedVersion: state.version,
+      idempotencyKey: "buy-trigger-final-round",
+      payload: {
+        source: {
+          kind: "OPEN_MARKET",
+          cardId: "t1-01",
+        },
+        payment: {},
+      },
+    };
+
+    const result = applyCommand({
+      state,
+      command,
+      playerOrder: ["p1", "p2"],
+      deckCardIdsByTier: {
+        1: [],
+      },
+    });
+
+    expect(result.ok).toBe(true);
+    if (!result.ok) {
+      return;
+    }
+
+    expect(result.nextState.players.p1?.nobleIds).toContain("noble-01");
+    expect(result.nextState.board.openNobleIds).toEqual([
+      "noble-03",
+      "noble-10",
+    ]);
+    expect(result.nextState.players.p1?.score).toBe(15);
+    expect(result.nextState.finalRound).toBe(true);
+    expect(result.nextState.endTriggeredAtTurn).toBe(9);
+    expect(result.nextState.endTriggeredByPlayerId).toBe("p1");
+    expect(result.events[0]).toMatchObject({
+      type: "CARD_BOUGHT",
+      payload: {
+        scoreDelta: 3,
+      },
+    });
+  });
+
+  it("applies END_TURN and advances turn metadata", () => {
+    const state = createGameState({
+      currentPlayerId: "p1",
+      turn: 1,
+    });
+    const command: EndTurnCommand = {
+      type: "END_TURN",
+      gameId: state.gameId,
+      actorId: "p1",
+      expectedVersion: state.version,
+      idempotencyKey: "end-turn-normal",
+      payload: {
+        reason: "ACTION_COMPLETED",
+      },
+    };
+
+    const result = applyCommand({
+      state,
+      command,
+      playerOrder: ["p1", "p2"],
+      deckCardIdsByTier: {},
+    });
+
+    expect(result.ok).toBe(true);
+    if (!result.ok) {
+      return;
+    }
+
+    expect(result.events).toHaveLength(1);
+    expect(result.events[0]).toEqual({
+      type: "TURN_ENDED",
+      gameId: state.gameId,
+      actorId: "p1",
+      version: state.version + 1,
+      payload: {
+        previousPlayerId: "p1",
+        nextPlayerId: "p2",
+        turnNumber: 2,
+        roundNumber: 1,
+      },
+    });
+    expect(result.nextState.currentPlayerId).toBe("p2");
+    expect(result.nextState.turn).toBe(2);
+    expect(result.nextState.status).toBe("IN_PROGRESS");
+    expect(result.nextState.version).toBe(state.version + 1);
+  });
+
+  it("emits TURN_ENDED and GAME_ENDED when final round closes", () => {
+    const state = createGameState({
+      version: 18,
+      turn: 18,
+      finalRound: true,
+      endTriggeredAtTurn: 17,
+      endTriggeredByPlayerId: "p1",
+      currentPlayerId: "p2",
+      players: createPlayers(
+        createPlayer("p1", {
+          purchasedCardIds: ["t3-20"],
+        }),
+        createPlayer("p2", {
+          purchasedCardIds: ["t1-08"],
+        }),
+      ),
+    });
+
+    const command: EndTurnCommand = {
+      type: "END_TURN",
+      gameId: state.gameId,
+      actorId: "p2",
+      expectedVersion: state.version,
+      idempotencyKey: "end-turn-final-round",
+      payload: {
+        reason: "ACTION_COMPLETED",
+      },
+    };
+
+    const result = applyCommand({
+      state,
+      command,
+      playerOrder: ["p1", "p2"],
+      deckCardIdsByTier: {},
+    });
+
+    expect(result.ok).toBe(true);
+    if (!result.ok) {
+      return;
+    }
+
+    expect(result.events).toHaveLength(2);
+    expect(result.events[0]?.type).toBe("TURN_ENDED");
+    expect(result.events[0]?.version).toBe(19);
+    expect(result.events[1]?.type).toBe("GAME_ENDED");
+    expect(result.events[1]?.version).toBe(20);
+
+    const gameEnded = result.events[1];
+    if (!gameEnded || gameEnded.type !== "GAME_ENDED") {
+      throw new Error("GAME_ENDED event missing");
+    }
+
+    expect(gameEnded.payload.reason).toBe("NO_MORE_ROUNDS");
+    expect(gameEnded.payload.endTriggeredAtTurn).toBe(17);
+    expect(gameEnded.payload.endTriggeredByPlayerId).toBe("p1");
+    expect(gameEnded.payload.winnerPlayerIds).toEqual(["p1"]);
+
+    expect(result.nextState.status).toBe("ENDED");
+    expect(result.nextState.version).toBe(20);
+    expect(result.nextState.winnerPlayerIds).toEqual(["p1"]);
+  });
+
+  it("rejects commands with mismatched game id", () => {
+    const state = createGameState({ gameId: "game-1" });
+    const command: TakeTokensCommand = {
+      type: "TAKE_TOKENS",
+      gameId: "game-2",
+      actorId: "p1",
+      expectedVersion: state.version,
+      idempotencyKey: "take-game-mismatch",
+      payload: {
+        tokens: { diamond: 1, sapphire: 1, emerald: 1 },
+      },
+    };
+
+    const result = applyCommand({
+      state,
+      command,
+      playerOrder: ["p1", "p2"],
+      deckCardIdsByTier: {},
+    });
+
+    expect(result).toEqual({
+      ok: false,
+      code: "STATE_INVARIANT_BROKEN",
+      reason: "GAME_ID_MISMATCH",
+    });
+  });
+});
