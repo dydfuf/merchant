@@ -6,6 +6,7 @@
 ## 핵심 문서
 
 - 아키텍처 기준: `ARCHITECTURE.md`
+- 구현 시각화: `docs/implementation-architecture-visualization.md`
 - 관심사 분리 규칙: `docs/concerns-and-boundaries.md`
 - 에이전트 운영 규칙: `docs/agent-harness.md`
 - 설계 템플릿: `docs/design-docs/TEMPLATE.md`
