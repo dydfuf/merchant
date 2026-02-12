@@ -12,7 +12,10 @@ export interface GameState {
   seed: string;
   currentPlayerId: string;
   turn: number;
+  finalRound: boolean;
   board: BoardState;
   players: Record<string, PlayerState>;
   winnerPlayerIds?: string[];
+  endTriggeredAtTurn?: number;
+  endTriggeredByPlayerId?: string;
 }

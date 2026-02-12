@@ -15,5 +15,7 @@ export interface GameEndedEvent {
     winnerPlayerIds: string[];
     finalScores: Record<string, number>;
     reason: GameEndedReason;
+    endTriggeredAtTurn: number;
+    endTriggeredByPlayerId: string;
   };
 }

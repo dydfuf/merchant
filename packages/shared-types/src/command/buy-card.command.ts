@@ -3,6 +3,16 @@ import type { IdempotencyKey } from "../common/idempotency-key.js";
 import type { Version } from "../common/version.js";
 import type { TokenColor } from "../state/player.state.js";
 
+export type BuyCardSource =
+  | {
+      kind: "OPEN_MARKET";
+      cardId: string;
+    }
+  | {
+      kind: "RESERVED";
+      cardId: string;
+    };
+
 export interface BuyCardCommand {
   type: "BUY_CARD";
   gameId: GameId;
@@ -10,8 +20,7 @@ export interface BuyCardCommand {
   expectedVersion: Version;
   idempotencyKey: IdempotencyKey;
   payload: {
-    cardId: string;
-    fromReserved: boolean;
+    source: BuyCardSource;
     payment: Partial<Record<TokenColor, number>>;
   };
 }

@@ -9,6 +9,7 @@ export interface TurnEndedEvent {
   payload: {
     previousPlayerId: string;
     nextPlayerId: string;
-    turn: number;
+    turnNumber: number;
+    roundNumber?: number;
   };
 }
