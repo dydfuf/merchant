@@ -159,6 +159,9 @@ importers:
       '@repo/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
+      '@repo/test-fixtures':
+        specifier: workspace:*
+        version: link:../test-fixtures
       '@repo/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
@@ -192,9 +195,6 @@ importers:
 
   packages/test-fixtures:
     dependencies:
-      '@repo/rule-engine':
-        specifier: workspace:*
-        version: link:../rule-engine
       '@repo/shared-types':
         specifier: workspace:*
         version: link:../shared-types

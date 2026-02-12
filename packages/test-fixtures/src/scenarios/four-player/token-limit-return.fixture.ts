@@ -4,9 +4,13 @@ import {
   buildPlayerState,
   buildTokenWallet,
 } from "../../builders/game-state.builder.js";
+import type { SingleCommandScenario } from "../scenario.types.js";
 
 export const tokenLimitReturnFixture = {
+  kind: "single-command",
   name: "four-player-token-limit-return",
+  layer: "RULE_ENGINE",
+  expectedFocus: "4인 토큰 10개 한도 초과 시 반납 규칙 적용",
   initialState: buildGameState({
     currentPlayerId: "player-1",
     players: {
@@ -25,6 +29,7 @@ export const tokenLimitReturnFixture = {
       "player-4": buildPlayerState("player-4"),
     },
   }),
+  playerOrder: ["player-1", "player-2", "player-3", "player-4"],
   command: buildTakeTokensCommand(
     {
       tokens: { diamond: 1, sapphire: 1, emerald: 1 },
@@ -35,4 +40,4 @@ export const tokenLimitReturnFixture = {
       expectedVersion: 1,
     },
   ),
-};
+} satisfies SingleCommandScenario;
