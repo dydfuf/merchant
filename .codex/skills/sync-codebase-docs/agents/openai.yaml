@@ -1,0 +1,4 @@
+interface:
+  display_name: "Codebase Docs Sync"
+  short_description: "Check repo state and sync architecture docs"
+  default_prompt: "Use $sync-codebase-docs to inspect this repository and update architecture, harness, and boundary docs to match the current codebase."
