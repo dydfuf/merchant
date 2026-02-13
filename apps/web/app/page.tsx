@@ -287,8 +287,12 @@ export default function Home() {
         </label>
 
         <div className={styles.row}>
-          <button onClick={handleConnect}>Connect WS</button>
-          <button onClick={handleCreateGame}>Create Game</button>
+          <button className={styles.button} onClick={handleConnect}>
+            Connect WS
+          </button>
+          <button className={styles.button} onClick={handleCreateGame}>
+            Create Game
+          </button>
         </div>
 
         <label className={styles.field}>
@@ -301,7 +305,9 @@ export default function Home() {
           />
         </label>
 
-        <button onClick={handleJoinGame}>Join Game</button>
+        <button className={styles.button} onClick={handleJoinGame}>
+          Join Game
+        </button>
 
         <dl className={styles.meta}>
           <div>
@@ -318,10 +324,18 @@ export default function Home() {
       <section className={styles.panel}>
         <h2>Commands</h2>
         <div className={styles.gridButtons}>
-          <button onClick={handleTakeTokens}>TAKE_TOKENS</button>
-          <button onClick={handleReserveCard}>RESERVE_CARD</button>
-          <button onClick={handleBuyReservedCard}>BUY_CARD</button>
-          <button onClick={handleEndTurn}>END_TURN</button>
+          <button className={styles.button} onClick={handleTakeTokens}>
+            TAKE_TOKENS
+          </button>
+          <button className={styles.button} onClick={handleReserveCard}>
+            RESERVE_CARD
+          </button>
+          <button className={styles.button} onClick={handleBuyReservedCard}>
+            BUY_CARD
+          </button>
+          <button className={styles.button} onClick={handleEndTurn}>
+            END_TURN
+          </button>
         </div>
       </section>
 

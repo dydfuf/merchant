@@ -66,7 +66,7 @@
   gap: 8px;
 }
 
-button {
+.button {
   border: 1px solid #1d5f93;
   border-radius: 10px;
   background: #1f6ea8;
@@ -76,7 +76,7 @@ button {
   cursor: pointer;
 }
 
-button:hover {
+.button:hover {
   background: #185c8c;
 }
 
