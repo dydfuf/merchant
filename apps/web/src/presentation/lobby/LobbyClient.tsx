@@ -4,6 +4,8 @@ import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { buildGameHref } from "../../lib/routes";
+import { toKoreanErrorMessage } from "../i18n/error-message";
+import { KO_TEXT } from "../i18n/ko";
 import { createGame, getGame } from "../../lib/game-client";
 import { GameList, type LobbyGameItem } from "./GameList";
 import { LobbyTabs, type LobbyTab } from "./LobbyTabs";
@@ -16,35 +18,39 @@ interface LobbyClientProps {
 const MOCK_GAMES: LobbyGameItem[] = [
   {
     id: "preview-your-turn-01",
-    label: "vs. @DesignGod & @MeepleMaster",
+    label: "@DesignGod, @MeepleMaster와 대전",
     turn: 12,
     playerCount: 3,
     tab: "your-turn",
-    statusText: "Your Turn",
+    statusKey: "your-turn",
+    statusLabel: KO_TEXT.lobby.status.yourTurn,
   },
   {
     id: "preview-your-turn-02",
-    label: "vs. @CryptoKing",
+    label: "@CryptoKing과 대전",
     turn: 8,
     playerCount: 2,
     tab: "your-turn",
-    statusText: "Expiring",
+    statusKey: "expiring",
+    statusLabel: KO_TEXT.lobby.status.expiring,
   },
   {
     id: "preview-waiting-01",
-    label: "vs. @GuildMaster",
+    label: "@GuildMaster와 대전",
     turn: 3,
     playerCount: 4,
     tab: "waiting",
-    statusText: "Waiting",
+    statusKey: "waiting",
+    statusLabel: KO_TEXT.lobby.status.waiting,
   },
   {
     id: "preview-completed-01",
-    label: "vs. @TableTopTitan",
+    label: "@TableTopTitan과 대전",
     turn: 24,
     playerCount: 2,
     tab: "completed",
-    statusText: "Completed",
+    statusKey: "completed",
+    statusLabel: KO_TEXT.lobby.status.completed,
   },
 ];
 
@@ -123,7 +129,7 @@ export function LobbyClient({ initialUserId }: LobbyClientProps) {
         <header className={styles.header}>
           <div className={styles.logoWrap}>
             <span className={styles.logoMark}>◆</span>
-            <h1>MERCHANT</h1>
+            <h1>머천트</h1>
           </div>
           <button
             className={styles.profileButton}
@@ -132,14 +138,14 @@ export function LobbyClient({ initialUserId }: LobbyClientProps) {
             }}
             type="button"
           >
-            Sign Out
+            로그아웃
           </button>
         </header>
 
         <LobbyTabs active={tab} onChange={setTab} />
 
         <main className={styles.listPanel}>
-          <p className={styles.listHeader}>Active Trades</p>
+          <p className={styles.listHeader}>진행 중인 매치</p>
           <GameList
             games={filteredGames}
             onOpen={(game) => {
@@ -150,7 +156,7 @@ export function LobbyClient({ initialUserId }: LobbyClientProps) {
 
         <footer className={styles.controlPanel}>
           <label className={styles.field}>
-            <span>User ID</span>
+            <span>사용자 ID</span>
             <input
               value={userId}
               onChange={(event) => {
@@ -160,19 +166,19 @@ export function LobbyClient({ initialUserId }: LobbyClientProps) {
           </label>
 
           <label className={styles.field}>
-            <span>Join by Game ID</span>
+            <span>게임 ID로 참가</span>
             <input
               value={joinGameId}
               onChange={(event) => {
                 setJoinGameId(event.target.value);
               }}
-              placeholder="merchant-local-..."
+              placeholder="예: merchant-local-..."
             />
           </label>
 
           <div className={styles.actions}>
             <button className={styles.primaryButton} disabled={pending} onClick={handleCreateGame} type="button">
-              Create Game
+              게임 생성
             </button>
             <button
               className={styles.secondaryButton}
@@ -182,11 +188,11 @@ export function LobbyClient({ initialUserId }: LobbyClientProps) {
               }}
               type="button"
             >
-              Join Game
+              게임 참가
             </button>
           </div>
 
-          {error ? <p className={styles.error}>{error}</p> : null}
+          {error ? <p className={styles.error}>{toKoreanErrorMessage(error)}</p> : null}
         </footer>
       </div>
     </section>

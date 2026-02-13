@@ -16,16 +16,16 @@ export default function LoginPage() {
       <main className={styles.main}>
         <div className={styles.brandBlock}>
           <div className={styles.brandIcon}>◆</div>
-          <p>Guild Access</p>
-          <h1>Merchant Login Access</h1>
-          <span>Authenticate your ledger identity</span>
+          <p>길드 접근 인증</p>
+          <h1>머천트 로그인</h1>
+          <span>장부 신원을 확인해 주세요</span>
         </div>
 
         <LoginForm mockAuthEnabled={mockAuthEnabled} />
 
         <div className={styles.footerLinks}>
-          <Link href="/">Back to Landing</Link>
-          <Link href="/auth/denied">View Denied State</Link>
+          <Link href="/">랜딩으로 돌아가기</Link>
+          <Link href="/auth/denied">접근 거부 화면 보기</Link>
         </div>
       </main>
     </div>

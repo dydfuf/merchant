@@ -12,8 +12,8 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Modern Merchant",
-  description: "Server-authoritative realtime board game client",
+  title: "모던 머천트",
+  description: "서버 권위 기반 실시간 보드게임 클라이언트",
 };
 
 export default function RootLayout({
@@ -22,7 +22,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="ko">
       <body className={`${geistSans.variable} ${geistMono.variable} appBody`}>
         {children}
       </body>

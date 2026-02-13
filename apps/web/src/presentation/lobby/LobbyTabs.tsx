@@ -1,4 +1,5 @@
 import styles from "./Lobby.module.css";
+import { KO_TEXT } from "../i18n/ko";
 
 export type LobbyTab = "your-turn" | "waiting" | "completed";
 
@@ -8,9 +9,9 @@ interface LobbyTabsProps {
 }
 
 const TABS: Array<{ id: LobbyTab; label: string }> = [
-  { id: "your-turn", label: "Your Turn" },
-  { id: "waiting", label: "Waiting" },
-  { id: "completed", label: "Completed" },
+  { id: "your-turn", label: KO_TEXT.lobby.tabs.yourTurn },
+  { id: "waiting", label: KO_TEXT.lobby.tabs.waiting },
+  { id: "completed", label: KO_TEXT.lobby.tabs.completed },
 ];
 
 export function LobbyTabs({ active, onChange }: LobbyTabsProps) {

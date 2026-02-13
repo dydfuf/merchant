@@ -14,7 +14,7 @@ export function AppShell({ title, subtitle, actions, children }: AppShellProps) 
     <div className={styles.page}>
       <header className={styles.header}>
         <div>
-          <p className={styles.brand}>Modern Merchant</p>
+          <p className={styles.brand}>모던 머천트</p>
           <h1 className={styles.title}>{title}</h1>
           {subtitle ? <p className={styles.subtitle}>{subtitle}</p> : null}
         </div>

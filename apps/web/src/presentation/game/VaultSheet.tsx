@@ -72,8 +72,8 @@ export function VaultSheet({ open, player, onClose }: VaultSheetProps) {
             <button className={styles.vaultDragHandle} onClick={handleClose} type="button" />
 
             <div className={styles.vaultHeaderRow}>
-              <h2 id="vault-title">Total Buying Power</h2>
-              <span>{totalTokens} / 10 Chips</span>
+              <h2 id="vault-title">총 구매력</h2>
+              <span>{totalTokens} / 10칩</span>
             </div>
 
             <div className={styles.vaultTotalsGrid}>
@@ -98,8 +98,8 @@ export function VaultSheet({ open, player, onClose }: VaultSheetProps) {
           <div className={styles.vaultBody}>
             <section className={styles.vaultSection}>
               <div className={styles.vaultSectionHeader}>
-                <h3>Reserved Holdings</h3>
-                <span>{player?.reservedCardIds.length ?? 0} / 3 Slots</span>
+                <h3>예약 카드</h3>
+                <span>{player?.reservedCardIds.length ?? 0} / 3칸</span>
               </div>
 
               <div className={styles.reservedCardsRow}>
@@ -131,28 +131,28 @@ export function VaultSheet({ open, player, onClose }: VaultSheetProps) {
                           </div>
                         </div>
                         <div className={styles.reservedCardFooter}>
-                          {affordable ? "Affordable" : "Cannot Afford"}
+                          {affordable ? "구매 가능" : "구매 불가"}
                         </div>
                       </article>
                     );
                   })
                 ) : (
-                  <div className={styles.reservedPlaceholder}>Empty Slot</div>
+                  <div className={styles.reservedPlaceholder}>빈 슬롯</div>
                 )}
               </div>
             </section>
 
             <section className={styles.vaultSection}>
               <div className={styles.vaultSectionHeader}>
-                <h3>Asset Breakdown</h3>
+                <h3>자산 상세</h3>
               </div>
 
               <div className={styles.breakdownTable}>
                 <div className={styles.breakdownHead}>
-                  <span>Resource</span>
-                  <span>Chips</span>
-                  <span>Cards</span>
-                  <span>Total</span>
+                  <span>자원</span>
+                  <span>칩</span>
+                  <span>카드</span>
+                  <span>합계</span>
                 </div>
                 {TOKEN_ORDER.map((token) => (
                   <div key={`breakdown-${token}`} className={styles.breakdownRow}>
@@ -170,8 +170,8 @@ export function VaultSheet({ open, player, onClose }: VaultSheetProps) {
 
             {totalTokens >= 8 ? (
               <div className={styles.tokenWarning}>
-                <strong>Token Limit Approaching</strong>
-                <p>Turn end limit is 10 chips. Discard extras if you exceed the cap.</p>
+                <strong>토큰 한도 임박</strong>
+                <p>턴 종료 시 최대 10칩입니다. 초과하면 남는 칩을 버려야 합니다.</p>
               </div>
             ) : null}
           </div>

@@ -83,10 +83,10 @@ export function RivalsOverlay({
         tabIndex={-1}
       >
         <header className={styles.rivalsDialogHeader}>
-          <h2 id="rivals-title">Rivals</h2>
+          <h2 id="rivals-title">상대 현황</h2>
           <button className={styles.rivalsCloseButton} onClick={handleClose} type="button">
             <span>▴</span>
-            <span>Collapse</span>
+            <span>접기</span>
           </button>
         </header>
 
@@ -101,13 +101,13 @@ export function RivalsOverlay({
                     <div className={styles.rivalAvatar}>{toInitials(player.id)}</div>
                     <div>
                       <p className={styles.rivalHandle}>{toHandle(player.id)}</p>
-                      <p className={styles.rivalMeta}>{player.reservedCardIds.length} Reserved</p>
+                      <p className={styles.rivalMeta}>예약 {player.reservedCardIds.length}장</p>
                     </div>
                   </div>
 
                   <div className={styles.rivalScoreBlock}>
                     <strong>{player.score}</strong>
-                    <span>Points</span>
+                    <span>점수</span>
                   </div>
                 </div>
 
@@ -130,10 +130,10 @@ export function RivalsOverlay({
 
         <footer className={styles.rivalsDialogLegend}>
           <span>
-            <i /> Card
+            <i /> 카드
           </span>
           <span>
-            <b /> Chip
+            <b /> 칩
           </span>
           <button className={styles.rivalsHandleButton} onClick={handleClose} type="button" />
         </footer>

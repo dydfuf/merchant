@@ -58,7 +58,7 @@ export function CardDetailModal({
         tabIndex={-1}
       >
         <header className={styles.cardDetailHeader}>
-          <span>Asset Detail</span>
+          <span>자산 상세</span>
           <button onClick={handleClose} type="button">
             ×
           </button>
@@ -69,26 +69,26 @@ export function CardDetailModal({
             <div className={styles.detailAssetTop}>
               <div>
                 <strong>{card.points}</strong>
-                <p>Prestige</p>
+                <p>명성</p>
               </div>
               <div className={styles.detailBonusBlock}>
                 <i className={styles.dot} data-color={card.bonus} />
-                <span>Bonus</span>
+                <span>보너스</span>
               </div>
             </div>
 
             <div className={styles.detailAssetArt} />
 
             <footer className={styles.detailAssetFoot}>
-              <span>Tier {card.tier} Development</span>
+              <span>티어 {card.tier} 개발 카드</span>
               <b>{cardId}</b>
             </footer>
           </article>
 
           <section className={styles.costSection}>
             <div className={styles.costSectionHeader}>
-              <h3 id="card-detail-title">Acquisition Cost</h3>
-              <span data-affordable={affordable}>{affordable ? "Affordable" : "Locked"}</span>
+              <h3 id="card-detail-title">획득 비용</h3>
+              <span data-affordable={affordable}>{affordable ? "구매 가능" : "잠김"}</span>
             </div>
 
             <div className={styles.costRows}>
@@ -101,11 +101,11 @@ export function CardDetailModal({
                     <div className={styles.costRowLeft}>
                       <i className={styles.dot} data-color={costItem.color} />
                       <strong>{costItem.amount}</strong>
-                      <span>{gemLabel(costItem.color)} Required</span>
+                      <span>{gemLabel(costItem.color)} 필요</span>
                     </div>
 
                     <div className={styles.costRowRight}>
-                      <small>You have</small>
+                      <small>보유 수량</small>
                       <b>{owned}</b>
                       <em data-enough={enough}>{enough ? "✓" : "!"}</em>
                     </div>
@@ -116,7 +116,7 @@ export function CardDetailModal({
 
             {!affordable ? (
               <p className={styles.costHint}>
-                Insufficient resources. Reserve this asset and build your vault to purchase later.
+                자원이 부족합니다. 카드를 예약하고 금고를 키운 뒤 다음 턴에 구매하세요.
               </p>
             ) : null}
           </section>
@@ -124,7 +124,7 @@ export function CardDetailModal({
 
         <footer className={styles.cardDetailFooter}>
           <button className={styles.purchaseDisabledButton} disabled type="button">
-            <span>Purchase Asset</span>
+            <span>카드 구매</span>
             <span>⛔</span>
           </button>
 
@@ -137,10 +137,10 @@ export function CardDetailModal({
             type="button"
           >
             <div>
-              <strong>Reserve</strong>
-              <small>Hold for later</small>
+              <strong>예약</strong>
+              <small>나중에 구매</small>
             </div>
-            <span>+1 Gold</span>
+            <span>+1 골드</span>
           </button>
         </footer>
       </div>

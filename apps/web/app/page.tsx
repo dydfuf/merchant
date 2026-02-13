@@ -4,24 +4,24 @@ import styles from "./page.module.css";
 
 const FEATURES = [
   {
-    title: "Deep Card Economy",
-    description: "Draft from market tiers and pivot with reserve timing.",
+    title: "정교한 카드 경제 설계",
+    description: "마켓 티어별 카드를 읽고, 예약 타이밍으로 흐름을 전환하세요.",
   },
   {
-    title: "Real-time Rival Reads",
-    description: "Track opponent tempo and steal priority windows.",
+    title: "실시간 상대 흐름 분석",
+    description: "상대 템포를 추적하고 우선권 타이밍을 선점하세요.",
   },
   {
-    title: "Guild Prestige Race",
-    description: "Secure nobles and cross 15 prestige before the table.",
+    title: "길드 명성 레이스",
+    description: "귀족을 확보하고 누구보다 먼저 명성 15점을 달성하세요.",
   },
 ];
 
 const PREVIEW_CARDS = [
-  { id: "Spell // Ruby Surge", tier: "Tier I", accent: "ruby" },
-  { id: "Asset // Sapphire Port", tier: "Tier II", accent: "sapphire" },
-  { id: "Noble // Emerald Court", tier: "Tier III", accent: "emerald" },
-  { id: "Vault // Onyx Ledger", tier: "Tier II", accent: "onyx" },
+  { id: "주문서 // 루비 파동", tier: "티어 I", accent: "ruby" },
+  { id: "자산 // 사파이어 항구", tier: "티어 II", accent: "sapphire" },
+  { id: "귀족 // 에메랄드 궁정", tier: "티어 III", accent: "emerald" },
+  { id: "금고 // 오닉스 장부", tier: "티어 II", accent: "onyx" },
 ];
 
 export default function LandingPage() {
@@ -30,10 +30,10 @@ export default function LandingPage() {
       <header className={styles.header}>
         <div className={styles.brandChip}>
           <span className={styles.brandMark}>◆</span>
-          <span>Modern Merchant</span>
+          <span>모던 머천트</span>
         </div>
         <Link className={styles.headerAction} href="/dev/local-runtime">
-          Runtime Console
+          런타임 콘솔
         </Link>
       </header>
 
@@ -41,22 +41,22 @@ export default function LandingPage() {
         <section className={styles.hero}>
           <div className={styles.heroImageLayer} aria-hidden="true" />
           <div className={styles.heroContent}>
-            <p className={styles.heroKicker}>Realtime Strategy Cardboard</p>
+            <p className={styles.heroKicker}>실시간 전략 카드보드 전장</p>
             <h1>
-              Trade Your Way
+              거래로 판을 열고
               <br />
-              <span>To Power</span>
+              <span>권력을 거머쥐세요</span>
             </h1>
             <p>
-              Build your guild economy, deny rival lines, and close the board with surgical
-              card timing.
+              길드 경제를 설계하고, 상대의 동선을 차단하며, 정밀한 카드 타이밍으로
+              승부를 마무리하세요.
             </p>
             <div className={styles.heroActions}>
               <Link className={styles.primaryCta} href="/auth/login">
-                Play Now
+                지금 시작하기
               </Link>
               <Link className={styles.secondaryCta} href="/lobby?userId=player-1">
-                View Lobby
+                로비 보기
               </Link>
             </div>
           </div>
@@ -76,7 +76,7 @@ export default function LandingPage() {
             <article key={card.id} className={styles.previewCard} data-accent={card.accent}>
               <p className={styles.previewTier}>{card.tier}</p>
               <strong>{card.id}</strong>
-              <span className={styles.previewMeta}>Market Preview</span>
+              <span className={styles.previewMeta}>마켓 미리보기</span>
             </article>
           ))}
         </section>

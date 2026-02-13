@@ -167,17 +167,17 @@ export function canAffordCost(player: PlayerState | null, cost: readonly Display
 export function gemLabel(color: TokenColor): string {
   switch (color) {
     case "ruby":
-      return "Ruby";
+      return "루비";
     case "sapphire":
-      return "Sapphire";
+      return "사파이어";
     case "emerald":
-      return "Emerald";
+      return "에메랄드";
     case "diamond":
-      return "Diamond";
+      return "다이아몬드";
     case "onyx":
-      return "Onyx";
+      return "오닉스";
     case "gold":
-      return "Gold";
+      return "골드";
     default:
       return color;
   }

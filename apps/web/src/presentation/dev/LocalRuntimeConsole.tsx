@@ -12,6 +12,7 @@ import {
   type GameSocketHandle,
   type GameSocketMessage,
 } from "../../lib/game-client";
+import { toKoreanErrorMessage } from "../i18n/error-message";
 import styles from "./local-runtime.module.css";
 
 type ConnectionState = "disconnected" | "connecting" | "connected";
@@ -270,14 +271,14 @@ export function LocalRuntimeConsole() {
   return (
     <div className={styles.page}>
       <header className={styles.header}>
-        <h1>Merchant Local Runtime</h1>
-        <p>InMemory Registry 기반 로컬 실게임 루프</p>
+        <h1>머천트 로컬 런타임</h1>
+        <p>인메모리 레지스트리 기반 로컬 실게임 루프</p>
       </header>
 
       <section className={styles.panel}>
-        <h2>Session</h2>
+        <h2>세션</h2>
         <label className={styles.field}>
-          <span>User ID</span>
+          <span>사용자 ID</span>
           <input
             value={userId}
             onChange={(event) => {
@@ -288,15 +289,15 @@ export function LocalRuntimeConsole() {
 
         <div className={styles.row}>
           <button className={styles.button} onClick={handleConnect}>
-            Connect WS
+            WS 연결
           </button>
           <button className={styles.button} onClick={handleCreateGame}>
-            Create Game
+            게임 생성
           </button>
         </div>
 
         <label className={styles.field}>
-          <span>Game ID</span>
+          <span>게임 ID</span>
           <input
             value={gameIdInput}
             onChange={(event) => {
@@ -306,79 +307,87 @@ export function LocalRuntimeConsole() {
         </label>
 
         <button className={styles.button} onClick={handleJoinGame}>
-          Join Game
+          게임 참가
         </button>
 
         <dl className={styles.meta}>
           <div>
-            <dt>Connection</dt>
-            <dd>{connectionState}</dd>
+            <dt>연결 상태</dt>
+            <dd>
+              {connectionState === "connected"
+                ? "연결됨"
+                : connectionState === "connecting"
+                  ? "연결 중"
+                  : "끊김"}
+            </dd>
           </div>
           <div>
-            <dt>Active Game</dt>
+            <dt>활성 게임</dt>
             <dd>{activeGameId ?? "-"}</dd>
           </div>
         </dl>
       </section>
 
       <section className={styles.panel}>
-        <h2>Commands</h2>
+        <h2>명령</h2>
         <div className={styles.gridButtons}>
           <button className={styles.button} onClick={handleTakeTokens}>
-            TAKE_TOKENS
+            토큰 획득 (TAKE_TOKENS)
           </button>
           <button className={styles.button} onClick={handleReserveCard}>
-            RESERVE_CARD
+            카드 예약 (RESERVE_CARD)
           </button>
           <button className={styles.button} onClick={handleBuyReservedCard}>
-            BUY_CARD
+            카드 구매 (BUY_CARD)
           </button>
           <button className={styles.button} onClick={handleEndTurn}>
-            END_TURN
+            턴 종료 (END_TURN)
           </button>
         </div>
       </section>
 
       <section className={styles.panel}>
-        <h2>Game State</h2>
+        <h2>게임 상태</h2>
         {gameState ? (
           <div className={styles.state}>
             <p>
-              <strong>Status:</strong> {gameState.status}
+              <strong>상태:</strong> {gameState.status}
             </p>
             <p>
-              <strong>Version:</strong> {gameState.version}
+              <strong>버전:</strong> {gameState.version}
             </p>
             <p>
-              <strong>Turn:</strong> {gameState.turn}
+              <strong>턴:</strong> {gameState.turn}
             </p>
             <p>
-              <strong>Current Player:</strong> {gameState.currentPlayerId}
+              <strong>현재 플레이어:</strong> {gameState.currentPlayerId}
             </p>
             <p>
-              <strong>Tier1 Open Cards:</strong>{" "}
+              <strong>티어1 공개 카드:</strong>{" "}
               {gameState.board.openMarketCardIds[1].join(", ") || "-"}
             </p>
             <p>
-              <strong>My Reserved:</strong>{" "}
+              <strong>내 예약 카드:</strong>{" "}
               {activePlayer?.reservedCardIds.join(", ") || "-"}
             </p>
             <p>
-              <strong>My Tokens:</strong> {countWallet(activePlayer?.tokens)}
+              <strong>내 토큰:</strong> {countWallet(activePlayer?.tokens)}
             </p>
             <p>
-              <strong>My Bonuses:</strong> {countWallet(activePlayer?.bonuses)}
+              <strong>내 보너스:</strong> {countWallet(activePlayer?.bonuses)}
             </p>
           </div>
         ) : (
-          <p>No game loaded</p>
+          <p>불러온 게임이 없습니다</p>
         )}
       </section>
 
       <section className={styles.panel}>
-        <h2>Result</h2>
+        <h2>결과</h2>
         <pre className={styles.result}>{lastResult}</pre>
-        {serverError ? <p className={styles.error}>{serverError}</p> : null}
+        {serverError ? (
+          <p className={styles.error}>{toKoreanErrorMessage(serverError)}</p>
+        ) : null}
       </section>
     </div>
   );

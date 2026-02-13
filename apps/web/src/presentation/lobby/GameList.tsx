@@ -1,6 +1,10 @@
 import styles from "./Lobby.module.css";
 
 import type { LobbyTab } from "./LobbyTabs";
+import {
+  resolveLobbyStatusLabel,
+  type LobbyStatusKey,
+} from "./status-label";
 
 export interface LobbyGameItem {
   id: string;
@@ -8,7 +12,8 @@ export interface LobbyGameItem {
   turn: number;
   playerCount: number;
   tab: LobbyTab;
-  statusText: string;
+  statusKey: LobbyStatusKey;
+  statusLabel: string;
 }
 
 interface GameListProps {
@@ -18,7 +23,7 @@ interface GameListProps {
 
 export function GameList({ games, onOpen }: GameListProps) {
   if (games.length === 0) {
-    return <p className={styles.empty}>현재 조건에 맞는 매치가 없습니다.</p>;
+    return <p className={styles.empty}>현재 조건에 맞는 게임이 없습니다.</p>;
   }
 
   return (
@@ -27,7 +32,7 @@ export function GameList({ games, onOpen }: GameListProps) {
         <li key={game.id}>
           <button
             className={styles.gameItem}
-            data-status={game.statusText.toLowerCase().replace(/\s+/g, "-")}
+            data-status={game.statusKey}
             type="button"
             onClick={() => {
               onOpen(game);
@@ -41,11 +46,11 @@ export function GameList({ games, onOpen }: GameListProps) {
 
             <div className={styles.gameInfo}>
               <p className={styles.gameTitle}>{game.label}</p>
-              <p className={styles.gameMeta}>Turn {game.turn} • {game.playerCount} Players</p>
+              <p className={styles.gameMeta}>턴 {game.turn} • {game.playerCount}명</p>
             </div>
 
-            <span className={styles.statusPill} data-status={game.statusText.toLowerCase().replace(/\s+/g, "-")}>
-              {index === 0 && game.statusText === "Your Turn" ? "Your Turn" : game.statusText}
+            <span className={styles.statusPill} data-status={game.statusKey}>
+              {resolveLobbyStatusLabel(game.statusKey, game.statusLabel, index)}
             </span>
           </button>
         </li>

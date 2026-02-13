@@ -40,7 +40,7 @@ export function VictorySummary({ gameId, userId }: VictorySummaryProps) {
           <Link className={styles.iconLink} href={`/games/${encodeURIComponent(gameId)}?userId=${encodeURIComponent(userId)}`}>
             ×
           </Link>
-          <span>Match #{matchLabel}</span>
+          <span>매치 #{matchLabel}</span>
         </div>
         <button className={styles.iconButton} type="button">
           ↗
@@ -49,35 +49,35 @@ export function VictorySummary({ gameId, userId }: VictorySummaryProps) {
 
       <main className={styles.main}>
         <section className={styles.heroSection}>
-          <h1>Victory</h1>
+          <h1>승리</h1>
 
           <article className={styles.winnerCard}>
             <div className={styles.winnerAvatar}>{toInitials(userId)}</div>
             <p className={styles.winnerHandle}>{handle}</p>
-            <p className={styles.winnerTitle}>Master Merchant</p>
+            <p className={styles.winnerTitle}>최고 상인</p>
 
             <div className={styles.winnerScoreRow}>
               <strong>16</strong>
               <span>
-                Prestige
+                명성
                 <br />
-                Points
+                점수
               </span>
             </div>
 
-            <div className={styles.turnBadge}>24 Turns</div>
+            <div className={styles.turnBadge}>24턴</div>
           </article>
         </section>
 
         <section className={styles.velocitySection}>
           <div className={styles.sectionHeader}>
-            <h2>Acquisition Velocity</h2>
+            <h2>획득 속도</h2>
             <div className={styles.legend}>
               <span>
-                <i data-color="you" /> You
+                <i data-color="you" /> 나
               </span>
               <span>
-                <i data-color="rival" /> Rival
+                <i data-color="rival" /> 상대
               </span>
             </div>
           </div>
@@ -96,9 +96,9 @@ export function VictorySummary({ gameId, userId }: VictorySummaryProps) {
               />
             </svg>
             <div className={styles.graphAxis}>
-              <span>T1</span>
-              <span>T12</span>
-              <span>T24</span>
+              <span>1턴</span>
+              <span>12턴</span>
+              <span>24턴</span>
             </div>
           </div>
         </section>
@@ -106,16 +106,16 @@ export function VictorySummary({ gameId, userId }: VictorySummaryProps) {
         <section className={styles.leaderboardSection}>
           <div className={styles.boardHeader}>
             <span>#</span>
-            <span>Merchant</span>
-            <span>Devs</span>
-            <span>Pts</span>
+            <span>상인</span>
+            <span>개발</span>
+            <span>점수</span>
           </div>
 
           <div className={styles.boardRow} data-you="true">
             <span>1</span>
             <span>
               <b>{handle}</b>
-              <em>You</em>
+              <em>나</em>
             </span>
             <span>14</span>
             <span>16</span>
@@ -142,11 +142,11 @@ export function VictorySummary({ gameId, userId }: VictorySummaryProps) {
 
         <section className={styles.statsGrid}>
           <article>
-            <span>Total Gems</span>
+            <span>총 보석</span>
             <strong>32</strong>
           </article>
           <article>
-            <span>Efficiency</span>
+            <span>효율</span>
             <strong>0.66</strong>
           </article>
         </section>
@@ -156,13 +156,13 @@ export function VictorySummary({ gameId, userId }: VictorySummaryProps) {
 
       <footer className={styles.footer}>
         <Link className={styles.footerSecondary} href={`/lobby?userId=${encodeURIComponent(userId)}`}>
-          Back to Lobby
+          로비로 돌아가기
         </Link>
         <Link
           className={styles.footerPrimary}
           href={`/games/${encodeURIComponent(gameId)}?userId=${encodeURIComponent(userId)}`}
         >
-          Rematch
+          다시 대전
         </Link>
       </footer>
     </div>

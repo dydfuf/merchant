@@ -13,6 +13,7 @@ import {
   type GameSocketHandle,
   type GameSocketMessage,
 } from "../../lib/game-client";
+import { toKoreanErrorMessage } from "../i18n/error-message";
 import { CardDetailModal } from "./CardDetailModal";
 import { MarketplaceBoard } from "./MarketplaceBoard";
 import { RivalsOverlay } from "./RivalsOverlay";
@@ -226,8 +227,8 @@ export default function GameScreenClient({
   if (loadError) {
     return (
       <div className={styles.errorPage}>
-        <h1>Game Not Available</h1>
-        <p>{loadError}</p>
+        <h1>게임을 불러올 수 없습니다</h1>
+        <p>{toKoreanErrorMessage(loadError)}</p>
         <button
           className={styles.commandButton}
           onClick={() => {
@@ -235,7 +236,7 @@ export default function GameScreenClient({
           }}
           type="button"
         >
-          Return to Lobby
+          로비로 돌아가기
         </button>
       </div>
     );
@@ -268,7 +269,7 @@ export default function GameScreenClient({
         {serverError || lastResult !== "-" ? (
           <section className={styles.runtimePanel}>
             <div className={styles.runtimePanelHeader}>
-              <h2>Runtime Feed</h2>
+              <h2>런타임 로그</h2>
               <button
                 className={styles.commandSubtleButton}
                 onClick={() => {
@@ -276,10 +277,12 @@ export default function GameScreenClient({
                 }}
                 type="button"
               >
-                Exit Match
+                매치 나가기
               </button>
             </div>
-            {serverError ? <p className={styles.errorText}>{serverError}</p> : null}
+            {serverError ? (
+              <p className={styles.errorText}>{toKoreanErrorMessage(serverError)}</p>
+            ) : null}
             <pre>{lastResult}</pre>
           </section>
         ) : null}

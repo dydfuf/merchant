@@ -41,11 +41,11 @@ function toInitials(playerId: string): string {
 function toConnectionLabel(connectionState: string): string {
   switch (connectionState) {
     case "connected":
-      return "12m ago";
+      return "12분 전";
     case "connecting":
-      return "syncing";
+      return "동기화 중";
     default:
-      return "offline";
+      return "오프라인";
   }
 }
 
@@ -73,17 +73,19 @@ export function MarketplaceBoard({
                 {toInitials(player.id)}
               </div>
             ))}
-            {rivals.length === 0 ? <div className={styles.avatarDisc}>AI</div> : null}
+            {rivals.length === 0 ? <div className={styles.avatarDisc}>봇</div> : null}
           </div>
           <div>
-            <p className={styles.rivalsLabel}>Rivals</p>
-                    <p className={styles.rivalsMeta}>Turn {gameState?.turn ?? "-"} • {toConnectionLabel(connectionState)}</p>
-                  </div>
-                </div>
+            <p className={styles.rivalsLabel}>상대</p>
+            <p className={styles.rivalsMeta}>
+              턴 {gameState?.turn ?? "-"} • {toConnectionLabel(connectionState)}
+            </p>
+          </div>
+        </div>
 
         <div className={styles.youSummary}>
-          <p className={styles.youLabel}>You</p>
-          <p className={styles.youScore}>{activePlayer?.score ?? 0} VP</p>
+          <p className={styles.youLabel}>나</p>
+          <p className={styles.youScore}>{activePlayer?.score ?? 0} 점</p>
           <button className={styles.iconButton} onClick={onOpenRivals} type="button">
             ▾
           </button>
@@ -93,8 +95,8 @@ export function MarketplaceBoard({
       <main className={styles.marketMain}>
         <section className={styles.noblesSection}>
           <div className={styles.sectionHeadingRow}>
-            <h2>Nobles</h2>
-            <span>Goal: 15 VP</span>
+            <h2>귀족</h2>
+            <span>목표: 15점</span>
           </div>
 
           <div className={styles.noblesRow}>
@@ -142,7 +144,7 @@ export function MarketplaceBoard({
           return (
             <section key={tier} className={styles.tierSection}>
               <div className={styles.sectionHeadingRow}>
-                <h2>Tier {tier === 1 ? "I" : tier === 2 ? "II" : "III"}</h2>
+                <h2>티어 {tier === 1 ? "I" : tier === 2 ? "II" : "III"}</h2>
                 <div className={styles.sectionRule} />
               </div>
 
@@ -183,7 +185,7 @@ export function MarketplaceBoard({
                       </div>
 
                       <div className={styles.cardBadge}>
-                        {affordable ? "check" : "lock"}
+                        {affordable ? "가능" : "잠금"}
                       </div>
                     </button>
                   );
@@ -200,7 +202,7 @@ export function MarketplaceBoard({
         {gameState?.status === "ENDED" ? (
           <section className={styles.commandTray}>
             <button className={styles.commandSubtleButton} onClick={onGoVictory} type="button">
-              Victory
+              승리 화면
             </button>
           </section>
         ) : null}

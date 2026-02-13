@@ -14,21 +14,21 @@ export default function DeniedPage() {
         </div>
 
         <div className={styles.heading}>
-          <h1>Access Refused</h1>
-          <p>Transaction Denied</p>
+          <h1>접근이 거부되었습니다</h1>
+          <p>인증 거래가 차단되었습니다</p>
         </div>
 
         <div className={styles.messageBox}>
-          <p>The Merchant&apos;s Guild could not verify your digital signature.</p>
-          <span>Error Code: 403_CREDENTIAL_MISMATCH</span>
+          <p>머천트 길드에서 디지털 서명을 확인하지 못했습니다.</p>
+          <span>오류 코드: 403_CREDENTIAL_MISMATCH</span>
         </div>
 
         <div className={styles.actions}>
           <Link className={styles.primary} href="/auth/login">
-            Re-Authenticate
+            다시 인증하기
           </Link>
           <Link className={styles.secondary} href="/">
-            Return to Landing
+            랜딩으로 이동
           </Link>
         </div>
       </section>

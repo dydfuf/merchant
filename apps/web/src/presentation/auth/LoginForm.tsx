@@ -3,6 +3,7 @@
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 
+import { toKoreanErrorMessage } from "../i18n/error-message";
 import styles from "./LoginForm.module.css";
 
 interface LoginFormProps {
@@ -35,7 +36,7 @@ export function LoginForm({ mockAuthEnabled }: LoginFormProps) {
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
       <label className={styles.field}>
-        <span>User ID</span>
+        <span>사용자 ID</span>
         <input
           autoComplete="username"
           value={userId}
@@ -43,12 +44,12 @@ export function LoginForm({ mockAuthEnabled }: LoginFormProps) {
             setUserId(event.target.value);
             setError(null);
           }}
-          placeholder="Enter your ID"
+          placeholder="아이디를 입력해 주세요"
         />
       </label>
 
       <label className={styles.field}>
-        <span>Passphrase</span>
+        <span>암호</span>
         <input
           autoComplete="current-password"
           type="password"
@@ -62,13 +63,13 @@ export function LoginForm({ mockAuthEnabled }: LoginFormProps) {
       </label>
 
       <p className={styles.mode}>
-        Auth mode: {mockAuthEnabled ? "local-mock" : "passthrough-preview"}
+        인증 모드: {mockAuthEnabled ? "로컬 모의 인증" : "패스스루 프리뷰"}
       </p>
 
-      {error ? <p className={styles.error}>{error}</p> : null}
+      {error ? <p className={styles.error}>{toKoreanErrorMessage(error)}</p> : null}
 
       <button className={styles.submit} type="submit">
-        Unlock Guild Vault
+        길드 금고 열기
       </button>
       <button
         className={styles.secondary}
@@ -77,7 +78,7 @@ export function LoginForm({ mockAuthEnabled }: LoginFormProps) {
           router.push("/auth/denied");
         }}
       >
-        Simulate Access Denied
+        접근 거부 시뮬레이션
       </button>
     </form>
   );

@@ -14,7 +14,7 @@ export function GemSupplyBar({ bankTokens, onTakeTokens, onOpenVault }: GemSuppl
     <footer className={styles.supplyDock}>
       <div className={styles.supplyActionWrap}>
         <button className={styles.supplyActionButton} onClick={onTakeTokens} type="button">
-          <span>Take 3 Gems</span>
+          <span>보석 3개 가져오기</span>
           <span>{">"}</span>
         </button>
       </div>
