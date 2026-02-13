@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Modern Merchant - Lobby</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>tailwind.config = {darkMode: "class", theme: {extend: {colors: {"merchant-black": "#111827", "merchant-bg": "#F9FAFB", "merchant-surface": "#FFFFFF", "merchant-border": "#E5E7EB", "merchant-muted": "#9CA3AF", "merchant-ruby": "#EF4444", "merchant-sapphire": "#2563EB", "merchant-emerald": "#10B981", "merchant-gold": "#F59E0B", primary: "#a236f7", "background-light": "#f7f5f8", "background-dark": "#1a1022"}, fontFamily: {display: "Inter", body: ["Inter", "sans-serif"]}, borderRadius: {DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem"}}}};</script>
+<style>
+        /* Modern Swiss Inventory Reset */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F9FAFB;
+        }
+        h1, h2, h3, h4, h5, h6, .font-display {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        
+        /* Custom Scrollbar for a cleaner look */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #E5E7EB;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-merchant-bg text-merchant-black min-h-screen flex justify-center">
+<!-- Mobile Container -->
+<div class="w-full max-w-md bg-merchant-bg min-h-screen relative flex flex-col shadow-2xl border-x border-merchant-border">
+<!-- Header -->
+<header class="h-16 bg-merchant-surface border-b border-merchant-border flex items-center justify-between px-5 sticky top-0 z-20">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 bg-merchant-black flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-[16px]">diamond</span>
+</div>
+<h1 class="text-lg font-bold tracking-tight text-merchant-black font-display">MERCHANT</h1>
+</div>
+<button class="w-10 h-10 flex items-center justify-center border border-merchant-border hover:bg-gray-50 active:bg-gray-100 transition-colors">
+<span class="material-symbols-outlined text-merchant-black">person</span>
+</button>
+</header>
+<!-- Navigation Tabs -->
+<nav class="bg-merchant-surface border-b border-merchant-border sticky top-16 z-10">
+<div class="flex w-full">
+<button class="flex-1 py-4 text-sm font-bold uppercase tracking-wide border-b-2 border-merchant-black text-merchant-black font-display relative">
+                    Your Turn
+                    <span class="absolute top-3 right-3 w-2 h-2 bg-merchant-emerald rounded-full"></span>
+</button>
+<button class="flex-1 py-4 text-sm font-medium uppercase tracking-wide border-b-2 border-transparent text-merchant-muted hover:text-merchant-black transition-colors font-display">
+                    Waiting
+                </button>
+<button class="flex-1 py-4 text-sm font-medium uppercase tracking-wide border-b-2 border-transparent text-merchant-muted hover:text-merchant-black transition-colors font-display">
+                    Completed
+                </button>
+</div>
+</nav>
+<!-- Main Content: Game List -->
+<main class="flex-1 p-0 pb-24 overflow-y-auto">
+<!-- List Header / Filters (Optional Context) -->
+<div class="px-5 py-4 flex justify-between items-end">
+<p class="text-xs text-merchant-muted uppercase font-body tracking-wider font-semibold">Active Trades (3)</p>
+<button class="text-xs text-merchant-sapphire font-bold uppercase tracking-wide hover:underline">Filter</button>
+</div>
+<!-- Game Card 1: Active Turn -->
+<div class="group bg-merchant-surface border-y border-merchant-border h-20 flex items-center px-5 hover:bg-gray-50 active:bg-gray-100 transition-colors cursor-pointer mb-[-1px]">
+<!-- Avatars -->
+<div class="flex -space-x-3 mr-4 shrink-0">
+<img alt="Opponent avatar" class="w-10 h-10 border-2 border-merchant-surface object-cover" data-alt="Portrait of a woman" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9ZpF2YMjCx1OuxGrnL4Wr5hAphs9Qn5LnpPbbAi0lGguue5l3eGvT3iDoDpJKK1U-hcRcNyuwhMBgydWCnw2kKgADUDBC6bxi4Vo8l4FtgJoRQoeIugN08C8eCzQsNl8uQLzQiU3crBkWOrCIOhvQDd7UakctEWiRYjSL9T7snsp9tuReBNUfw0SWbzACcDkiG_QQXJ8WPkO0br3EMXqHWZyZ3bq00wIOFoP0zONJpqD8tVhBGyC-myCIa2cLHSUo9IDrbUUjpw"/>
+<img alt="Opponent avatar" class="w-10 h-10 border-2 border-merchant-surface object-cover" data-alt="Portrait of a man" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJmFtLuvzOG7uF9a0iZgw6mLouccH3rUIo7SXdVyFmKYHW5Zay_9T4qMj4HoepJtBr-N2V8zZLPSgy3yZ6pWd0kHSIm609OlRtzdREhWRFp1Cri47J8ZNnYPMSuF98rqFgtQcmiSoA-oBD6Ia0VZWUI35o5GfCHPnVNsL7UQQGBLzp9k6DUwC0gsyA71wk1MlxRZt1NPZkVj4j-XDUfKJSxfD1KSpC2VPVfMMJZQc5s5rn41NscJFgothTk1bvnBuP9guB8mV2nQ"/>
+</div>
+<!-- Game Info -->
+<div class="flex-1 min-w-0 pr-4">
+<h3 class="text-sm font-semibold text-merchant-black truncate font-body">vs. @DesignGod &amp; @MeepleMaster</h3>
+<p class="text-xs text-merchant-muted mt-1 font-mono">Turn 12 • 3 Players</p>
+</div>
+<!-- Status Pill -->
+<div class="shrink-0">
+<div class="bg-merchant-emerald/10 border border-merchant-emerald/20 px-3 py-1.5 flex items-center gap-1.5">
+<div class="w-1.5 h-1.5 bg-merchant-emerald animate-pulse"></div>
+<span class="text-[10px] font-bold text-merchant-emerald uppercase tracking-wider font-display">Your Turn</span>
+</div>
+</div>
+</div>
+<!-- Game Card 2: Active Turn -->
+<div class="group bg-merchant-surface border-y border-merchant-border h-20 flex items-center px-5 hover:bg-gray-50 active:bg-gray-100 transition-colors cursor-pointer mb-[-1px]">
+<!-- Avatars -->
+<div class="flex -space-x-3 mr-4 shrink-0">
+<div class="w-10 h-10 bg-merchant-gold flex items-center justify-center border-2 border-merchant-surface text-white font-display font-bold text-sm">
+                        CK
+                    </div>
+</div>
+<!-- Game Info -->
+<div class="flex-1 min-w-0 pr-4">
+<h3 class="text-sm font-semibold text-merchant-black truncate font-body">vs. @CryptoKing</h3>
+<p class="text-xs text-merchant-muted mt-1 font-mono">Turn 8 • 2 Players</p>
+</div>
+<!-- Status Pill -->
+<div class="shrink-0">
+<div class="bg-merchant-emerald/10 border border-merchant-emerald/20 px-3 py-1.5 flex items-center gap-1.5">
+<div class="w-1.5 h-1.5 bg-merchant-emerald animate-pulse"></div>
+<span class="text-[10px] font-bold text-merchant-emerald uppercase tracking-wider font-display">Your Turn</span>
+</div>
+</div>
+</div>
+<!-- Game Card 3: Active Turn (Warning) -->
+<div class="group bg-merchant-surface border-y border-merchant-border h-20 flex items-center px-5 hover:bg-gray-50 active:bg-gray-100 transition-colors cursor-pointer mb-[-1px]">
+<!-- Avatars -->
+<div class="flex -space-x-3 mr-4 shrink-0">
+<img alt="Opponent avatar" class="w-10 h-10 border-2 border-merchant-surface object-cover" data-alt="Portrait of a smiling man with glasses" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBtL7RgLJoNb3VQp8w0-oSr2dPzoiahSyIxI3xONZoB9X-Ok9G3HG_2PxwBrJd6Sa-uDCVe7ttzYf35VlDmmUqEFMWjZ-coCzR1oAMR_lxflDhly3JmF8ke_0sC9zjRHwGdtf02wolY6I64BYA84Bz7zlSUwZLXa_nN5emPHYDWcVx1XnT8Tjr84QoAym0Vh3m0k1gg3N2xAhsQJEiJ7u7uAdb-FdI3QoWa53VD_80OQiLKVnt0aG8eFNTTtQ5phbRNWwMqS0aNZg"/>
+</div>
+<!-- Game Info -->
+<div class="flex-1 min-w-0 pr-4">
+<h3 class="text-sm font-semibold text-merchant-black truncate font-body">vs. @TableTopTitan</h3>
+<p class="text-xs text-merchant-muted mt-1 font-mono">Turn 24 • 2 Players</p>
+</div>
+<!-- Status Pill -->
+<div class="shrink-0">
+<div class="bg-merchant-ruby/10 border border-merchant-ruby/20 px-3 py-1.5 flex items-center gap-1.5">
+<span class="material-symbols-outlined text-merchant-ruby text-[10px]">warning</span>
+<span class="text-[10px] font-bold text-merchant-ruby uppercase tracking-wider font-display">Expiring</span>
+</div>
+</div>
+</div>
+<!-- Spacer for visual separation if list grows -->
+<div class="h-8"></div>
+<!-- Section: Recent Activity (Waiting) -->
+<div class="px-5 py-4">
+<p class="text-xs text-merchant-muted uppercase font-body tracking-wider font-semibold">Waiting for Opponent</p>
+</div>
+<!-- Game Card 4: Waiting -->
+<div class="group bg-merchant-surface border-y border-merchant-border h-20 flex items-center px-5 opacity-75 hover:opacity-100 transition-opacity cursor-pointer mb-[-1px]">
+<!-- Avatars -->
+<div class="flex -space-x-3 mr-4 shrink-0">
+<img alt="Opponent avatar" class="w-10 h-10 border-2 border-merchant-surface object-cover grayscale" data-alt="Portrait of a woman with short hair" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCIOyjjtD7R0p4rebJWIKoC5S0Ofev427hnLKiNvmxWgru_lcw4lwqZ3IetCNXwMjjMLRhq8cFHTvx-yt6EZsyZeZktM175oA3fNnCOV0hFDcscgZ2gynrNVhW0nITk1u6s_DT4oBITXJhV36CzrVWeoPYp_9LzT1lj_TCdkunjaqhSRfsm9C6KN9-v5RPju7-3cExDeLxcg3K_Syk9FUd5Mnh5UGAe3hLdpSfvBzjm81g_ZoMy09Wlgp5EI8O6NmAFIk-ICCKWjQ"/>
+<img alt="Opponent avatar" class="w-10 h-10 border-2 border-merchant-surface object-cover grayscale" data-alt="Portrait of a man looking sideways" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRKCocbVXhXbuEf-QgxVFTNi2ub5wTmdCRHznnJMewOtel2lWk0h0pVIMP3ARlbbXJNX5oejxPmldbLU2G-hj9tGVY7aLaUBeu6ZXvSruQKm22-M0eKHjXZFlhNBBlwJil0W6BC7MjtcF0Kxdl1zT3gWReLjKp42PJyRUHiPZB5216pUd_Nfq1CtG9ZE5Rmo3rIn5M400TveHLlZSi0RBEw3fZmf4tziV8xGsea_XJHNKeF3kX2cNJ-XnLuPfe4KfdYIXhfH3pyw"/>
+<div class="w-10 h-10 bg-merchant-muted flex items-center justify-center border-2 border-merchant-surface text-white font-display font-bold text-xs">
+                        +1
+                    </div>
+</div>
+<!-- Game Info -->
+<div class="flex-1 min-w-0 pr-4">
+<h3 class="text-sm font-semibold text-merchant-black truncate font-body">vs. @GuildMaster &amp; Co.</h3>
+<p class="text-xs text-merchant-muted mt-1 font-mono">Turn 3 • 4 Players</p>
+</div>
+<!-- Status Pill -->
+<div class="shrink-0">
+<div class="bg-gray-100 border border-gray-200 px-3 py-1.5 flex items-center gap-1.5">
+<span class="material-symbols-outlined text-merchant-muted text-[12px]">schedule</span>
+<span class="text-[10px] font-bold text-merchant-muted uppercase tracking-wider font-display">2h ago</span>
+</div>
+</div>
+</div>
+<!-- Game Card 5: Waiting -->
+<div class="group bg-merchant-surface border-y border-merchant-border h-20 flex items-center px-5 opacity-75 hover:opacity-100 transition-opacity cursor-pointer mb-[-1px]">
+<!-- Avatars -->
+<div class="flex -space-x-3 mr-4 shrink-0">
+<div class="w-10 h-10 bg-merchant-sapphire flex items-center justify-center border-2 border-merchant-surface text-white font-display font-bold text-sm">
+                        JS
+                    </div>
+</div>
+<!-- Game Info -->
+<div class="flex-1 min-w-0 pr-4">
+<h3 class="text-sm font-semibold text-merchant-black truncate font-body">vs. @JohnSmith</h3>
+<p class="text-xs text-merchant-muted mt-1 font-mono">Turn 1 • 2 Players</p>
+</div>
+<!-- Status Pill -->
+<div class="shrink-0">
+<div class="bg-gray-100 border border-gray-200 px-3 py-1.5 flex items-center gap-1.5">
+<span class="material-symbols-outlined text-merchant-muted text-[12px]">schedule</span>
+<span class="text-[10px] font-bold text-merchant-muted uppercase tracking-wider font-display">5m ago</span>
+</div>
+</div>
+</div>
+</main>
+<!-- Floating Action Button -->
+<div class="absolute bottom-6 right-6 z-30">
+<button class="w-14 h-14 bg-merchant-black text-white flex items-center justify-center hover:bg-gray-900 active:scale-95 transition-all shadow-none">
+<span class="material-symbols-outlined text-3xl">add</span>
+</button>
+</div>
+</div>
+</body></html>

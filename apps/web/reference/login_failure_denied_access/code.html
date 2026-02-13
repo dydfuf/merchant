@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Modern Merchant - Access Denied</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#a236f7",
+                        "background-light": "#f7f5f8",
+                        "background-dark": "#0d0812", // Slightly deeper than 1a1022 for contrast
+                        "error-red": "#ef4444",
+                        "merchant-gold": "#d4af37",
+                        "neutral-slate": "#2d1b3d"
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #0d0812;
+            overflow: hidden;
+        }
+        .merchant-grid {
+            background-image: linear-gradient(to right, rgba(162, 54, 247, 0.05) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(162, 54, 247, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        .glow-red {
+            box-shadow: 0 0 30px rgba(239, 68, 68, 0.15);
+        }
+        .merchant-card-border {
+            border: 1px solid transparent;
+            border-image: linear-gradient(to bottom, #d4af37, transparent) 1;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display text-white selection:bg-primary/30">
+<!-- iOS Status Bar Mock -->
+<div class="fixed top-0 w-full h-11 flex justify-between items-center px-6 z-50">
+<span class="text-xs font-semibold">9:41</span>
+<div class="flex items-center space-x-1.5">
+<span class="material-icons text-xs">signal_cellular_alt</span>
+<span class="material-icons text-xs">wifi</span>
+<span class="material-icons text-xs rotate-90">battery_full</span>
+</div>
+</div>
+<!-- Main Container -->
+<main class="relative min-h-screen flex flex-col items-center justify-center p-6 bg-background-light dark:bg-background-dark merchant-grid">
+<!-- Abstract Background Decorative Element -->
+<div class="absolute inset-0 overflow-hidden pointer-events-none">
+<div class="absolute top-[-10%] right-[-10%] w-64 h-64 bg-primary/10 rounded-full blur-[100px]"></div>
+<div class="absolute bottom-[-10%] left-[-10%] w-64 h-64 bg-error-red/10 rounded-full blur-[100px]"></div>
+</div>
+<!-- Content Card -->
+<div class="w-full max-w-sm flex flex-col items-center z-10">
+<!-- Denied Icon -->
+<div class="mb-8 relative">
+<div class="absolute inset-0 bg-error-red/20 blur-2xl rounded-full"></div>
+<div class="relative w-24 h-24 border border-error-red/50 rounded-full flex items-center justify-center bg-background-dark/80 backdrop-blur-sm">
+<span class="material-icons text-5xl text-error-red">gpp_maybe</span>
+</div>
+<!-- Merchant Seal Detail -->
+<div class="absolute -bottom-1 -right-1 w-8 h-8 rounded-full bg-merchant-gold/90 flex items-center justify-center text-background-dark border border-white/20">
+<span class="material-icons text-sm">lock_person</span>
+</div>
+</div>
+<!-- Error Title -->
+<div class="text-center mb-4">
+<h1 class="text-2xl font-bold tracking-[0.2em] text-white uppercase mb-1">Access Refused</h1>
+<div class="flex items-center justify-center space-x-2">
+<div class="h-px w-8 bg-merchant-gold/40"></div>
+<span class="text-[10px] uppercase tracking-widest text-merchant-gold font-semibold">Transaction Denied</span>
+<div class="h-px w-8 bg-merchant-gold/40"></div>
+</div>
+</div>
+<!-- Error Message Box -->
+<div class="w-full mb-10 p-5 bg-error-red/5 border border-error-red/20 rounded-xl backdrop-blur-md relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1 h-full bg-error-red"></div>
+<p class="text-sm text-error-red/90 leading-relaxed font-medium">
+                    The Merchant’s Guild could not verify your digital signature. Your credentials do not match the ledger records.
+                </p>
+<div class="mt-4 flex items-center text-[10px] text-error-red/60 uppercase tracking-tighter font-bold">
+<span class="material-icons text-xs mr-1">report_problem</span>
+                    Error Code: 403_CREDENTIAL_MISMATCH
+                </div>
+</div>
+<!-- Action Buttons -->
+<div class="w-full space-y-4">
+<button class="w-full py-4 bg-primary hover:bg-primary/90 text-white font-bold rounded-xl tracking-widest uppercase transition-all flex items-center justify-center space-x-2 shadow-lg shadow-primary/20">
+<span class="material-icons text-sm">refresh</span>
+<span>Re-Authenticate</span>
+</button>
+<button class="w-full py-4 bg-neutral-slate/50 hover:bg-neutral-slate/80 text-merchant-gold font-semibold rounded-xl border border-merchant-gold/30 transition-all flex items-center justify-center space-x-2">
+<span class="material-icons text-sm">vpn_key</span>
+<span>Vault Recovery</span>
+</button>
+</div>
+<!-- Footer Links -->
+<div class="mt-12 flex flex-col items-center space-y-4">
+<a class="text-xs text-white/40 hover:text-white transition-colors underline decoration-primary/30 underline-offset-4 uppercase tracking-widest font-medium" href="#">
+                    Contact Support
+                </a>
+<div class="pt-8">
+<img alt="Modern Merchant Brand" class="w-12 h-12 rounded-lg opacity-40 grayscale contrast-125" data-alt="Abstract purple and gold geometric logo pattern" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJfBtm_UgFSoEpiyqvPYzt-iBRsPuJ3tUkqSGgvUGlbkWyvIE06k43sWfT3T1kn2PRfR6WXgqa8Z9tYZy7zEVdM1-qYJgw46lmk5VHzi3uYZg8PzWoFUvQxzlGts43LPIdVNCt-5FqU2Hg3WyaavXEh4DqyYhWpYz13q41nqESuRkoyfk2AargN-ocoaQ2iVpfBaJDIgjNtiq9mFiNDEF1bxg0vE3O5B32KLDKQaWhcz6wdn8Ao7-srVPBRv5iVe14yAg40MTgHg"/>
+</div>
+</div>
+</div>
+<!-- iOS Home Indicator -->
+<div class="fixed bottom-2 w-32 h-1.5 bg-white/20 rounded-full left-1/2 -translate-x-1/2"></div>
+</main>
+<!-- Overlay Decoration for TCG Aesthetic -->
+<div class="fixed inset-0 pointer-events-none border-[12px] border-background-dark"></div>
+<div class="fixed top-3 left-3 right-3 bottom-3 pointer-events-none border border-merchant-gold/10 rounded-xl"></div>
+</body></html>

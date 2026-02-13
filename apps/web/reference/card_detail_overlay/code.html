@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Modern Merchant - Card Detail</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {primary: "#a236f7", ruby: "#EF4444", sapphire: "#2563EB", emerald: "#10B981", diamond: "#E5E7EB", onyx: "#1F2937", gold: "#F59E0B", "background-light": "#f7f5f8", surface: "#FFFFFF", muted: "#9CA3AF", "background-dark": "#1a1022"}, fontFamily: {display: "Inter", body: ["Inter", "sans-serif"]}, borderRadius: {DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem"}, spacing: {"18": "4.5rem"}}}};</script>
+<style>
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #E5E7EB;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        h1, h2, h3, h4, h5, h6, .font-display {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light text-onyx h-screen w-full flex flex-col overflow-hidden relative selection:bg-sapphire/20">
+<!-- Mock Background Interface (The Marketplace) behind the overlay -->
+<div class="absolute inset-0 z-0 opacity-20 pointer-events-none flex flex-col gap-4 p-4 overflow-hidden blur-[2px]">
+<!-- Rivals Bar Mock -->
+<div class="h-12 border-b border-diamond flex items-center justify-between px-2">
+<div class="flex gap-2">
+<div class="w-8 h-8 bg-gray-300 rounded-none"></div>
+<div class="w-8 h-8 bg-gray-300 rounded-none"></div>
+</div>
+</div>
+<!-- Nobles Mock -->
+<div class="flex gap-2 overflow-x-hidden">
+<div class="w-16 h-16 bg-gray-200 border border-gray-300 shrink-0"></div>
+<div class="w-16 h-16 bg-gray-200 border border-gray-300 shrink-0"></div>
+<div class="w-16 h-16 bg-gray-200 border border-gray-300 shrink-0"></div>
+</div>
+<!-- Cards Mock -->
+<div class="grid grid-cols-4 gap-2 opacity-50">
+<div class="aspect-[2/3] bg-white border border-gray-300"></div>
+<div class="aspect-[2/3] bg-white border border-gray-300"></div>
+<div class="aspect-[2/3] bg-white border border-gray-300"></div>
+<div class="aspect-[2/3] bg-white border border-gray-300"></div>
+<div class="aspect-[2/3] bg-white border border-gray-300"></div>
+<div class="aspect-[2/3] bg-white border border-gray-300"></div>
+</div>
+</div>
+<!-- Overlay Backdrop -->
+<div class="absolute inset-0 z-10 bg-onyx/80 backdrop-blur-sm flex items-center justify-center p-4">
+<!-- Modal Container -->
+<div class="w-full max-w-sm bg-background-light shadow-2xl flex flex-col max-h-[90vh] animate-in fade-in zoom-in-95 duration-200">
+<!-- Modal Header -->
+<div class="flex items-center justify-between p-4 border-b border-diamond bg-surface sticky top-0 z-20">
+<span class="text-xs font-body font-medium uppercase tracking-widest text-muted">Asset Detail</span>
+<button class="p-2 -mr-2 text-onyx hover:bg-diamond/30 transition-colors">
+<span class="material-symbols-outlined !text-[24px]">close</span>
+</button>
+</div>
+<!-- Scrollable Content -->
+<div class="overflow-y-auto flex-1 p-6 space-y-8">
+<!-- The Card Asset -->
+<div class="relative w-full aspect-[3/4] bg-surface border border-diamond shadow-sm flex flex-col justify-between p-6">
+<!-- Top Row: Points & Bonus -->
+<div class="flex justify-between items-start">
+<div class="flex flex-col">
+<span class="font-display font-bold text-6xl leading-none tracking-tighter text-onyx">5</span>
+<span class="font-body text-xs font-medium text-muted mt-1 uppercase tracking-wide">Prestige</span>
+</div>
+<!-- Bonus Gem Indicator (Sapphire) -->
+<div class="flex flex-col items-end gap-1">
+<div class="w-12 h-12 bg-sapphire flex items-center justify-center text-white shadow-sm">
+<span class="material-symbols-outlined !text-[28px]">diamond</span>
+</div>
+<span class="font-body text-[10px] font-medium text-sapphire uppercase tracking-widest">Bonus</span>
+</div>
+</div>
+<!-- Middle: Geometric Illustration -->
+<div class="flex-1 flex items-center justify-center py-4">
+<div class="w-24 h-24 rounded-full border border-diamond flex items-center justify-center bg-background-light relative overflow-hidden">
+<!-- Abstract geometric pattern representing a mine or shipyard -->
+<div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-sapphire/5 to-transparent"></div>
+<div class="w-16 h-16 border border-sapphire/20 rotate-45"></div>
+<div class="w-12 h-12 border border-sapphire/40 absolute"></div>
+</div>
+</div>
+<!-- Bottom: Tier Label -->
+<div class="w-full border-t border-diamond pt-3 flex justify-between items-end">
+<span class="font-body text-xs text-muted uppercase tracking-widest">Tier III Development</span>
+<span class="font-display text-sm font-bold text-onyx">ID #842</span>
+</div>
+</div>
+<!-- Acquisition Cost Section -->
+<div class="space-y-4">
+<div class="flex items-center justify-between">
+<h3 class="font-display font-bold text-lg text-onyx">Acquisition Cost</h3>
+<span class="text-xs font-body text-emerald font-medium bg-emerald/10 px-2 py-1">Affordable</span>
+</div>
+<div class="grid gap-3">
+<!-- Cost Item: Ruby -->
+<div class="flex items-center justify-between p-3 bg-surface border border-diamond group">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 bg-ruby flex items-center justify-center text-white">
+<span class="material-symbols-outlined !text-[18px]">stat_minus_1</span>
+</div>
+<span class="font-display font-bold text-lg">3</span>
+<span class="font-body text-sm text-muted">Ruby Required</span>
+</div>
+<!-- User Inventory Status -->
+<div class="flex items-center gap-2">
+<span class="text-xs font-body text-muted uppercase tracking-wide">You have</span>
+<span class="font-display font-bold text-lg text-onyx">4</span>
+<span class="material-symbols-outlined text-emerald !text-[20px]">check_circle</span>
+</div>
+</div>
+<!-- Cost Item: Onyx -->
+<div class="flex items-center justify-between p-3 bg-surface border border-diamond group">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 bg-onyx flex items-center justify-center text-white">
+<span class="material-symbols-outlined !text-[18px]">stat_minus_1</span>
+</div>
+<span class="font-display font-bold text-lg">7</span>
+<span class="font-body text-sm text-muted">Onyx Required</span>
+</div>
+<!-- User Inventory Status -->
+<div class="flex items-center gap-2">
+<span class="text-xs font-body text-muted uppercase tracking-wide">You have</span>
+<span class="font-display font-bold text-lg text-ruby">3</span>
+<!-- Missing Indicator -->
+<span class="material-symbols-outlined text-ruby !text-[20px]">error</span>
+</div>
+</div>
+<!-- Helper Text for Missing Resources -->
+<div class="px-1 flex items-start gap-2">
+<span class="material-symbols-outlined text-ruby !text-[16px] mt-0.5">info</span>
+<p class="text-xs text-ruby leading-tight">Insufficient resources. You need 4 more Onyx gems or gold tokens to purchase this asset.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Sticky Action Footer -->
+<div class="p-4 bg-surface border-t border-diamond space-y-3">
+<!-- Purchase Button (Disabled State Logic shown visually) -->
+<button class="w-full h-14 bg-diamond text-muted flex items-center justify-center gap-3 font-display font-bold text-lg uppercase tracking-wide cursor-not-allowed opacity-70" disabled="">
+<span>Purchase Asset</span>
+<span class="material-symbols-outlined">lock</span>
+</button>
+<!-- Reserve Button -->
+<button class="w-full h-14 bg-gold hover:bg-yellow-500 active:bg-yellow-600 text-onyx flex items-center justify-between px-6 transition-colors group">
+<div class="flex flex-col items-start">
+<span class="font-display font-bold text-base uppercase tracking-wide">Reserve</span>
+<span class="font-body text-[10px] opacity-80 uppercase tracking-widest">Hold for later</span>
+</div>
+<div class="flex items-center gap-2 bg-black/10 px-3 py-1">
+<span class="font-display font-bold text-sm">+1</span>
+<div class="w-4 h-4 rounded-full bg-gold border border-black/20"></div>
+</div>
+</button>
+</div>
+</div>
+</div>
+<!-- Optional: Add a texture overlay to the background to give it that 'paper' feel if desired, though clean is requested. Kept clean. -->
+</body></html>

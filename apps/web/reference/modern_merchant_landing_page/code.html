@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Modern Merchant - TCG Landing Page</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#a336f7", 
+                        "primary-dark": "#7a22bf",
+                        "accent": "#FFD700", /* Gold */
+                        "background-light": "#f7f5f8",
+                        "background-dark": "#120b18", /* Deep charcoal/black */
+                        "surface-dark": "#1e1425",
+                        "border-dark": "#3d2b4d",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "sans": ["Inter", "sans-serif"],
+                    },
+                    backgroundImage: {
+                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+                        'mystic-glow': 'conic-gradient(from 180deg at 50% 50%, #1e1425 0deg, #2d1b36 180deg, #1e1425 360deg)',
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for horizontal sections */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .card-shine {
+            position: relative;
+            overflow: hidden;
+        }
+        .card-shine::after {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0) 40%,
+                rgba(255, 255, 255, 0.1) 50%,
+                rgba(255, 255, 255, 0) 60%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            transform: rotate(30deg);
+            pointer-events: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display antialiased selection:bg-primary selection:text-white">
+<div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden max-w-md mx-auto shadow-2xl border-x border-border-dark/30">
+<!-- Navbar -->
+<header class="sticky top-0 z-50 flex items-center bg-background-dark/90 backdrop-blur-md p-4 pb-2 justify-between border-b border-white/5">
+<div class="text-primary flex size-10 shrink-0 items-center justify-center rounded-full bg-primary/10">
+<span class="material-symbols-outlined text-[24px]">diamond</span>
+</div>
+<h2 class="text-white text-lg font-bold leading-tight tracking-tight flex-1 text-center pr-10 uppercase">
+                Modern Merchant
+            </h2>
+<button class="text-white/70 hover:text-white transition-colors">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</header>
+<!-- Hero Section -->
+<div class="@container">
+<div class="relative p-4 pb-8">
+<!-- Decorative Glow -->
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-primary/20 blur-[80px] rounded-full pointer-events-none"></div>
+<div class="relative flex min-h-[460px] flex-col gap-6 bg-cover bg-center bg-no-repeat rounded-2xl items-center justify-end p-6 border border-white/10 overflow-hidden group" data-alt="Mystical dark fantasy merchant table with glowing coins and cards" style='background-image: linear-gradient(to bottom, rgba(18, 11, 24, 0.1) 0%, rgba(18, 11, 24, 0.8) 60%, rgba(18, 11, 24, 1) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuBxUYIAN1wD1W3AvHKvrosP2huGKrCUJyzBPqV8OstFcPaQM2J-Bfp2hZ_D5wqGhhnWgUf7B-W-C10Z-4skgG7KFlkWzfq91henQQxYIrXgS9CWYF9J1YK_aHl5n6whSxVkpELgSc-A_il1F4kPvhhq2BnzuuGp0ENigUm67Z7cJyqloGA_gBQGaXh6EfYO2Nv4zlxY1awV91ccQsAXW9a69uTpDiQqzvix8G8mdYHIhmY4oKqsZAiFVA5TJ9o4xF9G2OQu2gxh8A");'>
+<div class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent opacity-90"></div>
+<div class="relative z-10 flex flex-col gap-3 text-center items-center w-full">
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-accent/10 border border-accent/20 backdrop-blur-sm mb-2">
+<span class="material-symbols-outlined text-accent text-[14px]">bolt</span>
+<span class="text-accent text-xs font-bold tracking-wide uppercase">Season 2 Live</span>
+</div>
+<h1 class="text-white text-4xl font-black leading-[1.1] tracking-tight drop-shadow-lg">
+                            Trade Your Way<br/> <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-purple-400 to-primary bg-[length:200%_auto] animate-pulse">To Power</span>
+</h1>
+<p class="text-gray-300 text-sm font-medium leading-relaxed max-w-[280px] drop-shadow-md">
+                            Build your empire in the ultimate dark fantasy trading card game.
+                        </p>
+<button class="mt-4 w-full max-w-[240px] group relative flex items-center justify-center overflow-hidden rounded-lg bg-primary py-3.5 px-6 text-white transition-all hover:bg-primary-dark hover:shadow-[0_0_20px_rgba(163,54,247,0.4)] active:scale-95">
+<div class="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]"></div>
+<span class="text-sm font-bold uppercase tracking-wide">Play Now - Free Entry</span>
+<span class="material-symbols-outlined ml-2 text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Stats / Social Proof Strip -->
+<div class="flex items-center justify-evenly py-4 border-y border-white/5 bg-surface-dark/50 backdrop-blur-sm mx-4 rounded-lg mb-8">
+<div class="flex flex-col items-center">
+<span class="text-white font-bold text-lg">100k+</span>
+<span class="text-white/40 text-[10px] uppercase tracking-wider">Traders</span>
+</div>
+<div class="h-8 w-px bg-white/10"></div>
+<div class="flex flex-col items-center">
+<span class="text-white font-bold text-lg">500+</span>
+<span class="text-white/40 text-[10px] uppercase tracking-wider">Unique Cards</span>
+</div>
+<div class="h-8 w-px bg-white/10"></div>
+<div class="flex flex-col items-center">
+<span class="text-accent font-bold text-lg">4.9</span>
+<span class="text-white/40 text-[10px] uppercase tracking-wider">Rating</span>
+</div>
+</div>
+<!-- How to Play Section -->
+<div class="flex flex-col gap-6 px-4 py-6">
+<div class="flex flex-col gap-2">
+<h3 class="text-white text-xl font-bold tracking-tight">Master the Trade</h3>
+<p class="text-white/60 text-sm leading-relaxed">Learn the basics of arcane economics and treachery.</p>
+</div>
+<div class="grid grid-cols-1 gap-4">
+<!-- Step 1 -->
+<div class="group flex items-center gap-4 rounded-xl border border-border-dark bg-surface-dark p-4 transition-all hover:border-primary/50 hover:bg-surface-dark/80">
+<div class="flex size-12 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[24px]">style</span>
+</div>
+<div class="flex flex-col gap-1">
+<h4 class="text-white text-base font-bold">Build Inventory</h4>
+<p class="text-white/50 text-xs">Draft your deck from hundreds of unique asset cards.</p>
+</div>
+</div>
+<!-- Step 2 -->
+<div class="group flex items-center gap-4 rounded-xl border border-border-dark bg-surface-dark p-4 transition-all hover:border-primary/50 hover:bg-surface-dark/80">
+<div class="flex size-12 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[24px]">candlestick_chart</span>
+</div>
+<div class="flex flex-col gap-1">
+<h4 class="text-white text-base font-bold">Market Manipulation</h4>
+<p class="text-white/50 text-xs">Buy low, sell high, and crash your opponent's stock.</p>
+</div>
+</div>
+<!-- Step 3 -->
+<div class="group flex items-center gap-4 rounded-xl border border-border-dark bg-surface-dark p-4 transition-all hover:border-primary/50 hover:bg-surface-dark/80">
+<div class="flex size-12 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[24px]">security</span>
+</div>
+<div class="flex flex-col gap-1">
+<h4 class="text-white text-base font-bold">Defend Cargo</h4>
+<p class="text-white/50 text-xs">Protect your trade routes from monsters and thieves.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Featured Cards Section -->
+<div class="py-8 bg-gradient-to-b from-transparent to-surface-dark/30">
+<div class="flex items-center justify-between px-4 mb-4">
+<h3 class="text-white text-lg font-bold tracking-tight flex items-center gap-2">
+<span class="material-symbols-outlined text-accent text-[20px]">workspace_premium</span>
+                    Weekly Featured Assets
+                </h3>
+<a class="text-primary text-xs font-bold uppercase tracking-wide hover:text-white transition-colors" href="#">View All</a>
+</div>
+<div class="flex w-full overflow-x-auto hide-scrollbar px-4 pb-8 pt-2 gap-4 snap-x snap-mandatory">
+<!-- Card 1 -->
+<div class="snap-center shrink-0 flex flex-col gap-3 w-36 group cursor-pointer">
+<div class="relative w-full aspect-[2/3] rounded-lg overflow-hidden border border-border-dark shadow-lg transition-transform duration-300 group-hover:-translate-y-2 group-hover:shadow-[0_10px_20px_-5px_rgba(163,54,247,0.3)] card-shine">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Dark robed mystical figure holding a glowing potion" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCEtzlUNAohLzjrqvMU8_IMsemkn8vuwJFB1hUG6QBXtKC3RD5iwyw0qo0S4k5JjSjsKUeK68LzbQz6tPIlbLi1FRJzBXlRAcTxsJxuuwjQGDeZYGGU-4DXWXjiMDIvkinfyjM3ThOaLwLgdpcpS8B-62EO0NVmu5cAPCULQGoKi8RDBU-S66yKzEhvjCej8KNcLEShO86UG3tJiVbf3G-R89PgjmK8idMz7Ff4e0l6sZKFyKxhgR1ZrWw1I7QnMBeOGSQxqltnHQ");'></div>
+<div class="absolute bottom-0 w-full bg-gradient-to-t from-black to-transparent p-3 pt-8"></div>
+<!-- Rarity Badge -->
+<div class="absolute top-2 right-2 bg-accent/90 text-background-dark text-[9px] font-black px-1.5 py-0.5 rounded uppercase">
+                            Legendary
+                        </div>
+</div>
+<div class="text-center">
+<p class="text-white text-sm font-bold truncate">The Alchemist</p>
+<p class="text-primary text-xs">Unit - Mage</p>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="snap-center shrink-0 flex flex-col gap-3 w-36 group cursor-pointer">
+<div class="relative w-full aspect-[2/3] rounded-lg overflow-hidden border border-primary/30 shadow-lg transition-transform duration-300 group-hover:-translate-y-2 group-hover:shadow-[0_10px_20px_-5px_rgba(163,54,247,0.3)] card-shine">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Glowing ethereal coins floating in dark space" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAjxj-Cq04QMIj55-JOqPhQ6QSAWgr4vQXfcUAv_AATSoiUKCGh5-YMX4_nzEkT8syqGu3bQBHbaaSHlv5JFR-UQ9eFBq2T5xb2CYhCI2fg9QI6QzhUOW1BPfBzU-ZhjOabczAbUkWMkJeESth7QMXmqMQnRZD4mMC09alDExV0iIf7_F4fFkl4HEyLJ-hUannPS32LRPudmAP-qJzRpf9G2JZc2sLbAgQvQjeaAqepkfGELtF6SLdzqNOg216Xu6q1sKqjBKXVdw");'></div>
+<div class="absolute bottom-0 w-full bg-gradient-to-t from-black to-transparent p-3 pt-8"></div>
+<div class="absolute top-2 right-2 bg-primary/90 text-white text-[9px] font-black px-1.5 py-0.5 rounded uppercase">
+                            Rare
+                        </div>
+</div>
+<div class="text-center">
+<p class="text-white text-sm font-bold truncate">Shadow Currency</p>
+<p class="text-primary text-xs">Spell - Economy</p>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="snap-center shrink-0 flex flex-col gap-3 w-36 group cursor-pointer">
+<div class="relative w-full aspect-[2/3] rounded-lg overflow-hidden border border-border-dark shadow-lg transition-transform duration-300 group-hover:-translate-y-2 group-hover:shadow-[0_10px_20px_-5px_rgba(163,54,247,0.3)] card-shine">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Camel caravan crossing a golden desert at night" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB6gcolq3EKC4hfZccn0-E9CzfKKpdmIux2EbUtVf0EgDO5XYzW_91eK2jQN2GZXqxJhfvj-EQE6-JbTaRsAN7q9afOeQY8icNCSsQx_kMR0QIgb0FNlWGF56oWA3sE9BK3GIlbyYpAAI4AgNzDLGIG3zdwBWPmN_Yw3SXUtI3ROkXfKoeGjfSZ3ry6iG0yC98Ob-j6Euw8zyOTiHmlWZcr0duHlB1LHBynS3XmoHGTt1UMCu0Bu8P-2KnOQCVO3U-Icmzsh8emqA");'></div>
+<div class="absolute bottom-0 w-full bg-gradient-to-t from-black to-transparent p-3 pt-8"></div>
+<div class="absolute top-2 right-2 bg-slate-600/90 text-white text-[9px] font-black px-1.5 py-0.5 rounded uppercase">
+                            Common
+                        </div>
+</div>
+<div class="text-center">
+<p class="text-white text-sm font-bold truncate">Golden Caravan</p>
+<p class="text-primary text-xs">Unit - Transport</p>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="snap-center shrink-0 flex flex-col gap-3 w-36 group cursor-pointer">
+<div class="relative w-full aspect-[2/3] rounded-lg overflow-hidden border border-border-dark shadow-lg transition-transform duration-300 group-hover:-translate-y-2 group-hover:shadow-[0_10px_20px_-5px_rgba(163,54,247,0.3)] card-shine">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Mystical bazaar tent with glowing lanterns" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBY4bhEtxC2VYzN3ao8w9_PEJi4uecvWcpJKzrTfEr_jqVYT6vUrl4z1z32w_ym3sITAPtqPnh_bTxhZt0SnVZAuLlgVoQksbq3s7-jnZoALVpr6-QSdaCcqSSBaZdrUgxm4yyAjsDnUjDf0G7FH6kTyf5Bc7tTXBJ67R2sc9UWNApHP3KUiV67lxHMWAYz_1CTZt8zsauaifinnJsOk-L415OOD_hn7atiEIPxt59V0B5gXcbPY3WBsgH6CqOKFmeW9bN419EAfg");'></div>
+<div class="absolute bottom-0 w-full bg-gradient-to-t from-black to-transparent p-3 pt-8"></div>
+<div class="absolute top-2 right-2 bg-slate-600/90 text-white text-[9px] font-black px-1.5 py-0.5 rounded uppercase">
+                            Common
+                        </div>
+</div>
+<div class="text-center">
+<p class="text-white text-sm font-bold truncate">Mystic Bazaar</p>
+<p class="text-primary text-xs">Location</p>
+</div>
+</div>
+</div>
+</div>
+<!-- CTA Footer -->
+<div class="p-4 pt-0 mb-8">
+<div class="rounded-xl bg-gradient-to-r from-primary to-primary-dark p-6 text-center relative overflow-hidden">
+<div class="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+<div class="relative z-10 flex flex-col items-center gap-4">
+<h2 class="text-white text-xl font-black uppercase tracking-tight">Ready to Deal?</h2>
+<p class="text-white/80 text-sm max-w-[260px]">Join thousands of merchants vying for the ultimate prize.</p>
+<button class="bg-white text-primary font-bold py-3 px-8 rounded-full shadow-lg hover:bg-gray-100 transition-colors w-full max-w-[200px]">
+                        Start Trading
+                    </button>
+</div>
+</div>
+</div>
+<!-- Simple Footer Links -->
+<footer class="flex justify-center gap-6 py-6 border-t border-white/5 bg-background-dark text-white/40 text-xs">
+<a class="hover:text-white transition-colors" href="#">Terms</a>
+<a class="hover:text-white transition-colors" href="#">Privacy</a>
+<a class="hover:text-white transition-colors" href="#">Support</a>
+</footer>
+</div>
+</body></html>

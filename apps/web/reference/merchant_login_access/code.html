@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Merchant Login Access - Modern Merchant</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#a236f7",
+                        "background-light": "#f7f5f8",
+                        "background-dark": "#1a1022",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom subtle texture for background */
+        .merchant-bg {
+            background-color: #1a1022;
+            background-image: 
+                radial-gradient(at 0% 0%, hsla(273,56%,28%,0.3) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, hsla(273,56%,28%,0.3) 0px, transparent 50%),
+                url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23a236f7' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        
+        /* Glassmorphism utilities */
+        .glass-panel {
+            background: rgba(40, 24, 52, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(162, 54, 247, 0.1);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .glass-input {
+            background: rgba(26, 16, 34, 0.6);
+            border: 1px solid rgba(162, 54, 247, 0.3);
+            color: white;
+        }
+        
+        .glass-input:focus {
+            border-color: #a236f7;
+            box-shadow: 0 0 0 2px rgba(162, 54, 247, 0.2);
+            outline: none;
+        }
+
+        /* Input autofill fix for dark mode */
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover, 
+        input:-webkit-autofill:focus, 
+        input:-webkit-autofill:active{
+            -webkit-box-shadow: 0 0 0 30px #281834 inset !important;
+            -webkit-text-fill-color: white !important;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="merchant-bg min-h-screen font-display antialiased text-white selection:bg-primary selection:text-white flex flex-col items-center justify-center p-6">
+<!-- Hero / Background Imagery (Subtle) -->
+<!-- Ideally positioned absolute to not interfere with layout flow on small screens -->
+<div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+<div class="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-primary/20 blur-[100px]"></div>
+<div class="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-primary/10 blur-[100px]"></div>
+</div>
+<!-- Main Content Container -->
+<main class="w-full max-w-[400px] relative z-10 flex flex-col gap-8 animate-fade-in-up">
+<!-- Logo Section -->
+<div class="flex flex-col items-center justify-center gap-4 py-8">
+<div class="relative w-24 h-24 flex items-center justify-center rounded-2xl bg-gradient-to-br from-primary/20 to-transparent border border-primary/30 shadow-[0_0_30px_rgba(162,54,247,0.3)]">
+<!-- Logo Icon -->
+<span class="material-symbols-outlined text-5xl text-primary drop-shadow-[0_0_10px_rgba(162,54,247,0.8)]">
+                    diamond
+                </span>
+</div>
+<div class="text-center">
+<h1 class="text-3xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-purple-100 to-primary/80">
+                    MODERN MERCHANT
+                </h1>
+<p class="text-white/50 text-sm mt-1 uppercase tracking-widest font-medium">Trading Card Market</p>
+</div>
+</div>
+<!-- Login Form Card -->
+<div class="glass-panel p-6 sm:p-8 rounded-xl shadow-2xl flex flex-col gap-6">
+<div class="space-y-5">
+<!-- Merchant ID Input -->
+<label class="flex flex-col gap-2 group">
+<span class="text-sm font-medium text-purple-200/80 uppercase tracking-wider text-xs ml-1">Merchant ID</span>
+<div class="relative flex items-center">
+<div class="absolute left-4 text-primary/70 flex items-center pointer-events-none">
+<span class="material-symbols-outlined">badge</span>
+</div>
+<input class="glass-input w-full py-4 pl-12 pr-4 rounded-lg placeholder-white/20 transition-all duration-300" placeholder="Enter your ID" type="text"/>
+</div>
+</label>
+<!-- Passphrase Input -->
+<label class="flex flex-col gap-2 group">
+<div class="flex justify-between items-end">
+<span class="text-sm font-medium text-purple-200/80 uppercase tracking-wider text-xs ml-1">Passphrase</span>
+</div>
+<div class="relative flex items-center">
+<div class="absolute left-4 text-primary/70 flex items-center pointer-events-none">
+<span class="material-symbols-outlined">lock</span>
+</div>
+<input class="glass-input w-full py-4 pl-12 pr-12 rounded-lg placeholder-white/20 transition-all duration-300" placeholder="••••••••" type="password"/>
+<button class="absolute right-4 text-white/40 hover:text-white flex items-center transition-colors" type="button">
+<span class="material-symbols-outlined text-xl">visibility</span>
+</button>
+</div>
+</label>
+</div>
+<!-- Action Button -->
+<button class="relative w-full overflow-hidden group bg-primary hover:bg-primary/90 text-white font-bold py-4 px-6 rounded-lg transition-all duration-300 shadow-[0_0_20px_rgba(162,54,247,0.4)] hover:shadow-[0_0_30px_rgba(162,54,247,0.6)] transform hover:-translate-y-0.5 active:translate-y-0 active:shadow-none">
+<div class="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]"></div>
+<span class="flex items-center justify-center gap-2 tracking-widest uppercase">
+                    Enter the Market
+                    <span class="material-symbols-outlined text-lg">arrow_forward</span>
+</span>
+</button>
+<!-- Links -->
+<div class="flex flex-col items-center gap-4 text-sm mt-2">
+<a class="text-white/60 hover:text-primary transition-colors hover:underline decoration-primary/50 underline-offset-4" href="#">
+                    Lost your credentials?
+                </a>
+<div class="w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
+<p class="text-white/40">
+                    New to the trade? 
+                    <a class="text-primary font-semibold hover:text-white transition-colors ml-1" href="#">Create Account</a>
+</p>
+</div>
+</div>
+<!-- Decorative Card Elements (Floating visual context) -->
+<div class="hidden sm:block absolute -right-24 bottom-20 w-32 h-44 bg-[#1a1022] border border-primary/20 rounded-lg -z-10 opacity-40 rotate-12 blur-[1px]"></div>
+<div class="hidden sm:block absolute -left-20 top-40 w-32 h-44 bg-[#1a1022] border border-primary/20 rounded-lg -z-10 opacity-30 -rotate-12 blur-[2px]"></div>
+</main>
+<!-- Bottom texture / footer visual anchor -->
+<div class="fixed bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background-dark to-transparent z-0 pointer-events-none"></div>
+<script>
+        // Simple shimmer animation definition for Tailwind config injection is messy, using inline style fallback or style tag
+    </script>
+<style>
+        @keyframes shimmer {
+            100% {
+                transform: translateX(100%);
+            }
+        }
+        @keyframes fade-in-up {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .animate-fade-in-up {
+            animation: fade-in-up 0.6s ease-out forwards;
+        }
+    </style>
+</body></html>

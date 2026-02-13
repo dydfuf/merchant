@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The Vault - Modern Merchant</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {primary: "#a236f7", "background-light": "#f7f5f8", "background-dark": "#1a1022", "merchant-ruby": "#EF4444", "merchant-emerald": "#10B981", "merchant-onyx": "#1F2937", "merchant-diamond": "#E5E7EB", "merchant-gold": "#F59E0B", "merchant-text": "#111827"}, fontFamily: {display: "Inter", ui: ["Inter", "sans-serif"]}, borderRadius: {DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem"}}}};</script>
+<style>
+        /* Custom scrollbar for horizontal scrolling */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-ui text-merchant-text h-screen w-full overflow-hidden relative selection:bg-primary/20">
+<!-- Mock Background: The Marketplace (Blurred to simulate open sheet focus) -->
+<div aria-hidden="true" class="absolute inset-0 flex flex-col p-4 opacity-30 pointer-events-none filter blur-sm">
+<!-- Rivals Bar Mock -->
+<div class="h-12 border-b border-gray-200 flex items-center justify-between mb-6">
+<div class="flex gap-2">
+<div class="w-8 h-8 rounded-full bg-gray-300"></div>
+<div class="w-8 h-8 rounded-full bg-gray-300"></div>
+</div>
+<span class="text-xl font-display font-bold">12 VP</span>
+</div>
+<!-- Game Board Mock -->
+<div class="grid grid-cols-4 gap-2 mb-8">
+<div class="aspect-square bg-gray-200"></div>
+<div class="aspect-square bg-gray-200"></div>
+<div class="aspect-square bg-gray-200"></div>
+<div class="aspect-square bg-gray-200"></div>
+</div>
+<!-- Cards Mock -->
+<div class="space-y-4">
+<div class="h-24 bg-white border border-gray-200 w-full"></div>
+<div class="h-24 bg-white border border-gray-200 w-full"></div>
+<div class="h-24 bg-white border border-gray-200 w-full"></div>
+</div>
+</div>
+<!-- The Vault: Bottom Sheet Container -->
+<!-- Positioned at the bottom, z-index high to sit over content -->
+<div class="absolute bottom-0 left-0 right-0 z-50 flex flex-col items-center justify-end h-[85vh] pointer-events-none">
+<!-- Backdrop Shadow/Gradient for depth -->
+<div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none h-20 -top-20"></div>
+<!-- The Sheet Itself -->
+<!-- Pointer events auto to re-enable interaction within the sheet -->
+<div class="w-full bg-white dark:bg-[#1a202c] shadow-[0_-4px_20px_rgba(0,0,0,0.1)] rounded-t-xl flex flex-col pointer-events-auto h-full max-h-[600px] transition-transform duration-300 ease-out translate-y-[calc(100%-90px)] hover:translate-y-0 group" id="vault-sheet">
+<!-- Handle -->
+<div class="w-full flex justify-center pt-3 pb-1 cursor-grab active:cursor-grabbing">
+<div class="w-12 h-1.5 rounded-full bg-gray-200 dark:bg-gray-700 group-hover:bg-primary/50 transition-colors"></div>
+</div>
+<!-- COLLAPSED STATE CONTENT (Always Visible Header Area) -->
+<div class="px-4 pb-4 pt-2 border-b border-gray-100 dark:border-gray-800">
+<div class="flex items-center justify-between mb-2">
+<h2 class="text-xs font-bold uppercase tracking-widest text-gray-400 font-ui">Total Buying Power</h2>
+<span class="text-xs font-medium text-primary bg-primary/10 px-2 py-0.5 rounded-sm">8 / 10 Chips</span>
+</div>
+<!-- Total Power Grid -->
+<div class="grid grid-cols-6 gap-1 sm:gap-2">
+<!-- Ruby -->
+<div class="flex flex-col items-center p-1.5 rounded-sm bg-red-50 dark:bg-red-900/20 border border-transparent hover:border-merchant-ruby transition-colors cursor-pointer group/gem">
+<div class="w-3 h-3 rounded-full bg-merchant-ruby mb-1 shadow-sm"></div>
+<span class="text-xl font-display font-bold leading-none text-merchant-text dark:text-white">4</span>
+<span class="text-[10px] font-medium text-gray-500 dark:text-gray-400 font-ui group-hover/gem:text-merchant-ruby">(2+2)</span>
+</div>
+<!-- Emerald -->
+<div class="flex flex-col items-center p-1.5 rounded-sm bg-emerald-50 dark:bg-emerald-900/20 border border-transparent hover:border-merchant-emerald transition-colors cursor-pointer group/gem">
+<div class="w-3 h-3 rounded-full bg-merchant-emerald mb-1 shadow-sm"></div>
+<span class="text-xl font-display font-bold leading-none text-merchant-text dark:text-white">5</span>
+<span class="text-[10px] font-medium text-gray-500 dark:text-gray-400 font-ui group-hover/gem:text-merchant-emerald">(3+2)</span>
+</div>
+<!-- Sapphire (Primary Theme Color) -->
+<div class="flex flex-col items-center p-1.5 rounded-sm bg-blue-50 dark:bg-blue-900/20 border border-transparent hover:border-primary transition-colors cursor-pointer group/gem">
+<div class="w-3 h-3 rounded-full bg-primary mb-1 shadow-sm"></div>
+<span class="text-xl font-display font-bold leading-none text-merchant-text dark:text-white">3</span>
+<span class="text-[10px] font-medium text-gray-500 dark:text-gray-400 font-ui group-hover/gem:text-primary">(1+2)</span>
+</div>
+<!-- Onyx -->
+<div class="flex flex-col items-center p-1.5 rounded-sm bg-gray-100 dark:bg-gray-800 border border-transparent hover:border-merchant-onyx transition-colors cursor-pointer group/gem">
+<div class="w-3 h-3 rounded-full bg-merchant-onyx mb-1 shadow-sm"></div>
+<span class="text-xl font-display font-bold leading-none text-merchant-text dark:text-white">1</span>
+<span class="text-[10px] font-medium text-gray-500 dark:text-gray-400 font-ui group-hover/gem:text-merchant-onyx">(0+1)</span>
+</div>
+<!-- Diamond -->
+<div class="flex flex-col items-center p-1.5 rounded-sm bg-gray-50 dark:bg-gray-700/50 border border-transparent hover:border-gray-400 transition-colors cursor-pointer group/gem">
+<div class="w-3 h-3 rounded-full bg-white border border-gray-300 mb-1 shadow-sm"></div>
+<span class="text-xl font-display font-bold leading-none text-merchant-text dark:text-white">2</span>
+<span class="text-[10px] font-medium text-gray-500 dark:text-gray-400 font-ui group-hover/gem:text-gray-600">(0+2)</span>
+</div>
+<!-- Gold -->
+<div class="flex flex-col items-center p-1.5 rounded-sm bg-amber-50 dark:bg-amber-900/20 border border-transparent hover:border-merchant-gold transition-colors cursor-pointer group/gem">
+<div class="w-3 h-3 rounded-full bg-merchant-gold mb-1 shadow-sm"></div>
+<span class="text-xl font-display font-bold leading-none text-merchant-text dark:text-white">2</span>
+<span class="text-[10px] font-medium text-gray-500 dark:text-gray-400 font-ui group-hover/gem:text-merchant-gold">(2+0)</span>
+</div>
+</div>
+</div>
+<!-- EXPANDED STATE CONTENT (Scrollable Area) -->
+<div class="flex-1 overflow-y-auto w-full bg-gray-50/50 dark:bg-black/20">
+<div class="p-6">
+<!-- Reserved Cards Header -->
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-sm font-bold text-merchant-text dark:text-white font-display flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">lock</span>
+                            RESERVED HOLDINGS
+                        </h3>
+<span class="text-xs font-medium text-gray-500 bg-white dark:bg-gray-800 px-2 py-1 rounded border border-gray-200 dark:border-gray-700">1 / 3 Slots</span>
+</div>
+<!-- Horizontal Scroll List -->
+<div class="flex gap-4 overflow-x-auto pb-4 hide-scrollbar snap-x">
+<!-- Card 1: Affordable -->
+<div class="snap-center shrink-0 w-[240px] bg-white dark:bg-gray-800 border border-primary/30 rounded-sm shadow-sm flex flex-col overflow-hidden relative group/card">
+<!-- Top Stripe (Bonus) -->
+<div class="h-1.5 w-full bg-merchant-emerald"></div>
+<div class="p-4 flex-1 flex flex-col">
+<div class="flex justify-between items-start mb-3">
+<span class="text-4xl font-display font-bold text-merchant-text dark:text-white">4</span>
+<div class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center">
+<div class="w-4 h-4 rounded-full bg-merchant-emerald"></div>
+</div>
+</div>
+<!-- Cost -->
+<div class="mt-auto space-y-1.5">
+<div class="flex items-center justify-between text-xs font-medium">
+<div class="flex items-center gap-1.5">
+<div class="w-3 h-3 rounded-full bg-primary"></div>
+<span class="text-gray-600 dark:text-gray-300">Sapphire</span>
+</div>
+<span class="font-display font-bold">3</span>
+</div>
+<div class="flex items-center justify-between text-xs font-medium">
+<div class="flex items-center gap-1.5">
+<div class="w-3 h-3 rounded-full bg-merchant-onyx"></div>
+<span class="text-gray-600 dark:text-gray-300">Onyx</span>
+</div>
+<span class="font-display font-bold">3</span>
+</div>
+</div>
+</div>
+<!-- Action Footer -->
+<div class="p-3 border-t border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50">
+<button class="w-full py-2 bg-merchant-text hover:bg-black text-white text-xs font-bold uppercase tracking-wide rounded-sm flex items-center justify-center gap-2 transition-colors">
+                                    Purchase
+                                    <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+<!-- Affordable Badge -->
+<div class="absolute top-3 right-3 bg-emerald-100 text-emerald-800 text-[10px] font-bold px-1.5 py-0.5 rounded-sm border border-emerald-200">
+                                AFFORDABLE
+                            </div>
+</div>
+<!-- Card 2: Expensive -->
+<div class="snap-center shrink-0 w-[240px] bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-sm shadow-sm flex flex-col overflow-hidden opacity-90">
+<!-- Top Stripe (Bonus) -->
+<div class="h-1.5 w-full bg-merchant-ruby"></div>
+<div class="p-4 flex-1 flex flex-col">
+<div class="flex justify-between items-start mb-3">
+<span class="text-4xl font-display font-bold text-gray-400 dark:text-gray-500">5</span>
+<div class="w-8 h-8 rounded-full bg-red-50 flex items-center justify-center grayscale opacity-50">
+<div class="w-4 h-4 rounded-full bg-merchant-ruby"></div>
+</div>
+</div>
+<!-- Cost -->
+<div class="mt-auto space-y-1.5">
+<div class="flex items-center justify-between text-xs font-medium text-gray-400">
+<div class="flex items-center gap-1.5">
+<div class="w-3 h-3 rounded-full bg-white border border-gray-300"></div>
+<span>Diamond</span>
+</div>
+<span class="font-display font-bold">7</span>
+</div>
+<div class="flex items-center justify-between text-xs font-medium text-gray-400">
+<div class="flex items-center gap-1.5">
+<div class="w-3 h-3 rounded-full bg-primary"></div>
+<span>Sapphire</span>
+</div>
+<span class="font-display font-bold">3</span>
+</div>
+</div>
+</div>
+<!-- Action Footer -->
+<div class="p-3 border-t border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50">
+<button class="w-full py-2 bg-gray-200 text-gray-400 cursor-not-allowed text-xs font-bold uppercase tracking-wide rounded-sm flex items-center justify-center gap-2" disabled="">
+                                    Cannot Afford
+                                    <span class="material-symbols-outlined text-[14px]">lock</span>
+</button>
+</div>
+</div>
+<!-- Empty Slot Placeholder -->
+<div class="snap-center shrink-0 w-[240px] border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-sm flex flex-col items-center justify-center p-8 gap-3 group/empty hover:border-primary/50 hover:bg-primary/5 transition-all cursor-pointer">
+<div class="w-12 h-12 rounded-full bg-gray-50 dark:bg-gray-800 flex items-center justify-center group-hover/empty:scale-110 transition-transform">
+<span class="material-symbols-outlined text-gray-400 group-hover/empty:text-primary">add</span>
+</div>
+<span class="text-xs font-medium text-gray-400 text-center uppercase tracking-wide">Empty Slot</span>
+</div>
+</div>
+<!-- Inventory Breakdown Section -->
+<div class="mt-8">
+<h3 class="text-sm font-bold text-merchant-text dark:text-white font-display flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-[18px]">analytics</span>
+                            ASSET BREAKDOWN
+                        </h3>
+<div class="bg-white dark:bg-gray-800 rounded-sm border border-gray-200 dark:border-gray-700 p-4">
+<div class="flex items-center justify-between text-xs mb-3 border-b border-gray-100 dark:border-gray-700 pb-2">
+<span class="text-gray-500 uppercase font-medium">Resource</span>
+<div class="flex gap-8">
+<span class="text-gray-500 uppercase font-medium w-8 text-center">Chips</span>
+<span class="text-gray-500 uppercase font-medium w-8 text-center">Cards</span>
+<span class="text-gray-900 dark:text-white uppercase font-bold w-8 text-center">Total</span>
+</div>
+</div>
+<!-- Row 1 -->
+<div class="flex items-center justify-between text-sm py-1.5">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-merchant-ruby"></div>
+<span class="font-medium">Ruby</span>
+</div>
+<div class="flex gap-8 font-display">
+<span class="text-gray-500 w-8 text-center">2</span>
+<span class="text-primary w-8 text-center font-bold">2</span>
+<span class="text-merchant-text dark:text-white font-bold w-8 text-center">4</span>
+</div>
+</div>
+<!-- Row 2 -->
+<div class="flex items-center justify-between text-sm py-1.5 bg-gray-50/50 dark:bg-gray-700/30 -mx-4 px-4">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-merchant-emerald"></div>
+<span class="font-medium">Emerald</span>
+</div>
+<div class="flex gap-8 font-display">
+<span class="text-gray-500 w-8 text-center">3</span>
+<span class="text-primary w-8 text-center font-bold">2</span>
+<span class="text-merchant-text dark:text-white font-bold w-8 text-center">5</span>
+</div>
+</div>
+<!-- Row 3 -->
+<div class="flex items-center justify-between text-sm py-1.5">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<span class="font-medium">Sapphire</span>
+</div>
+<div class="flex gap-8 font-display">
+<span class="text-gray-500 w-8 text-center">1</span>
+<span class="text-primary w-8 text-center font-bold">2</span>
+<span class="text-merchant-text dark:text-white font-bold w-8 text-center">3</span>
+</div>
+</div>
+</div>
+<!-- Return Tokens Action (Contextual) -->
+<div class="mt-4 p-3 bg-orange-50 dark:bg-orange-900/20 border border-orange-100 dark:border-orange-800 rounded-sm flex items-start gap-3">
+<span class="material-symbols-outlined text-orange-500 text-[20px] mt-0.5">warning</span>
+<div>
+<p class="text-xs font-bold text-orange-800 dark:text-orange-200 mb-0.5">Token Limit Approaching</p>
+<p class="text-[10px] text-orange-700 dark:text-orange-300 leading-relaxed">
+                                    You have 8/10 chips. You must discard chips if you exceed 10 at the end of your turn.
+                                </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body></html>
