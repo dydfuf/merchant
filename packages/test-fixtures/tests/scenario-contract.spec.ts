@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 
 import {
   allSplendorScenarios,
+  gameServerScenarios,
   MAX_SCENARIO_COMMAND_COUNT,
   MAX_SCENARIO_DECK_CONTEXT_PER_TIER,
   ruleEngineScenarios,
@@ -84,6 +85,63 @@ describe("시나리오 계약", () => {
     expect(coveredPlayerCounts.has(2)).toBe(true);
     expect(coveredPlayerCounts.has(3)).toBe(true);
     expect(coveredPlayerCounts.has(4)).toBe(true);
+  });
+
+  it("시나리오 기대 결과는 레이어/명령 수와 정합성을 가진다", () => {
+    for (const scenario of allSplendorScenarios) {
+      expect(scenario.expected.layer).toBe(scenario.layer);
+
+      const commandCount = getScenarioCommands(scenario).length;
+      expect(scenario.expected.steps.length).toBe(commandCount);
+      expect(scenario.expected.finalState.version).toBeGreaterThanOrEqual(
+        scenario.initialState.version,
+      );
+      expect(scenario.expected.finalState.currentPlayerId.length).toBeGreaterThan(0);
+
+      const scenarioPlayerIds = Object.keys(scenario.initialState.players).sort();
+      const snapshotPlayerIds = Object.keys(
+        scenario.expected.finalState.playerSnapshots,
+      ).sort();
+      expect(snapshotPlayerIds).toEqual(scenarioPlayerIds);
+
+      for (const playerId of snapshotPlayerIds) {
+        const snapshot = scenario.expected.finalState.playerSnapshots[playerId];
+        if (!snapshot) {
+          throw new Error(`player snapshot is missing: ${scenario.name}:${playerId}`);
+        }
+
+        expect(Number.isInteger(snapshot.tokenCount)).toBe(true);
+        expect(Number.isInteger(snapshot.bonusCount)).toBe(true);
+        expect(Number.isInteger(snapshot.reservedCardCount)).toBe(true);
+        expect(snapshot.tokenCount).toBeGreaterThanOrEqual(0);
+        expect(snapshot.bonusCount).toBeGreaterThanOrEqual(0);
+        expect(snapshot.reservedCardCount).toBeGreaterThanOrEqual(0);
+      }
+    }
+  });
+
+  it("RULE_ENGINE 기대 결과는 이벤트 타입 목록을 가진다", () => {
+    for (const scenario of ruleEngineScenarios) {
+      if (scenario.expected.layer !== "RULE_ENGINE") {
+        throw new Error(`RULE_ENGINE expected layer mismatch: ${scenario.name}`);
+      }
+
+      for (const eventType of scenario.expected.eventTypes) {
+        expect(typeof eventType).toBe("string");
+        expect(eventType.length).toBeGreaterThan(0);
+      }
+    }
+  });
+
+  it("GAME_SERVER 기대 결과는 persist 호출 횟수를 정의한다", () => {
+    for (const scenario of gameServerScenarios) {
+      if (scenario.expected.layer !== "GAME_SERVER") {
+        throw new Error(`GAME_SERVER expected layer mismatch: ${scenario.name}`);
+      }
+
+      expect(Number.isInteger(scenario.expected.persistCallCount)).toBe(true);
+      expect(scenario.expected.persistCallCount).toBeGreaterThanOrEqual(0);
+    }
   });
 });
 

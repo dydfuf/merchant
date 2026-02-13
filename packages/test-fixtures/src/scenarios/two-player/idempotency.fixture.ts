@@ -11,6 +11,28 @@ export const idempotencyFixture = {
   expectedFocus: "멱등성 중복키 처리(서버 오케스트레이션 범위)",
   initialState: buildGameState(),
   playerOrder: ["player-1", "player-2"],
+  expected: {
+    layer: "GAME_SERVER",
+    steps: [{ kind: "accepted" }, { kind: "replayed" }],
+    finalState: {
+      version: 2,
+      status: "IN_PROGRESS",
+      currentPlayerId: "player-1",
+      playerSnapshots: {
+        "player-1": {
+          tokenCount: 3,
+          bonusCount: 0,
+          reservedCardCount: 0,
+        },
+        "player-2": {
+          tokenCount: 0,
+          bonusCount: 0,
+          reservedCardCount: 0,
+        },
+      },
+    },
+    persistCallCount: 1,
+  },
   commands: [
     buildTakeTokensCommand(
       {
@@ -29,4 +51,4 @@ export const idempotencyFixture = {
       },
     ),
   ],
-} satisfies CommandSequenceScenario;
+} satisfies CommandSequenceScenario<"GAME_SERVER">;

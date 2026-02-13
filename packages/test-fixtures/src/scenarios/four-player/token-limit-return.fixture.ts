@@ -30,6 +30,38 @@ export const tokenLimitReturnFixture = {
     },
   }),
   playerOrder: ["player-1", "player-2", "player-3", "player-4"],
+  expected: {
+    layer: "RULE_ENGINE",
+    steps: [{ result: "ok" }],
+    eventTypes: ["TOKENS_TAKEN"],
+    finalState: {
+      version: 2,
+      status: "IN_PROGRESS",
+      currentPlayerId: "player-1",
+      playerSnapshots: {
+        "player-1": {
+          tokenCount: 10,
+          bonusCount: 0,
+          reservedCardCount: 0,
+        },
+        "player-2": {
+          tokenCount: 0,
+          bonusCount: 0,
+          reservedCardCount: 0,
+        },
+        "player-3": {
+          tokenCount: 0,
+          bonusCount: 0,
+          reservedCardCount: 0,
+        },
+        "player-4": {
+          tokenCount: 0,
+          bonusCount: 0,
+          reservedCardCount: 0,
+        },
+      },
+    },
+  },
   command: buildTakeTokensCommand(
     {
       tokens: { diamond: 1, sapphire: 1, emerald: 1 },
@@ -40,4 +72,4 @@ export const tokenLimitReturnFixture = {
       expectedVersion: 1,
     },
   ),
-} satisfies SingleCommandScenario;
+} satisfies SingleCommandScenario<"RULE_ENGINE">;

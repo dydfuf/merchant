@@ -14,6 +14,33 @@ export const basicTwoPlayerFlowFixture = {
   expectedFocus: "2인 기본 흐름 상태전이와 이벤트/스냅샷 동기화",
   initialState: buildGameState(),
   playerOrder: ["player-1", "player-2"],
+  expected: {
+    layer: "RULE_ENGINE",
+    steps: [
+      { result: "ok" },
+      { result: "ok" },
+      { result: "ok" },
+      { result: "ok" },
+    ],
+    eventTypes: ["TOKENS_TAKEN", "CARD_RESERVED", "CARD_BOUGHT", "TURN_ENDED"],
+    finalState: {
+      version: 5,
+      status: "IN_PROGRESS",
+      currentPlayerId: "player-2",
+      playerSnapshots: {
+        "player-1": {
+          tokenCount: 0,
+          bonusCount: 1,
+          reservedCardCount: 0,
+        },
+        "player-2": {
+          tokenCount: 0,
+          bonusCount: 0,
+          reservedCardCount: 0,
+        },
+      },
+    },
+  },
   deckCardIdsByTier: {
     1: ["t1-05", "t1-06", "t1-07", "t1-08"],
   },
@@ -31,4 +58,4 @@ export const basicTwoPlayerFlowFixture = {
     }),
     buildEndTurnCommand({ reason: "ACTION_COMPLETED" }),
   ],
-} satisfies CommandSequenceScenario;
+} satisfies CommandSequenceScenario<"RULE_ENGINE">;

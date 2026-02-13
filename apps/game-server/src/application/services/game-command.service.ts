@@ -17,7 +17,11 @@ export type GameCommandRejectedReason =
   | "IDEMPOTENCY_PAYLOAD_MISMATCH"
   | "STATE_NOT_FOUND"
   | "VERSION_CONFLICT"
+  | "COMMAND_ENVELOPE_INVALID"
   | "POLICY_VIOLATION"
+  | "STATE_NOT_ACTIVE"
+  | "STATE_INVARIANT_BROKEN"
+  | "TRANSITION_BUILD_FAILED"
   | "ENGINE_FAILURE"
   | "INFRA_FAILURE";
 
@@ -186,11 +190,25 @@ export class GameCommandService {
   }
 
   #mapEngineFailure(result: ApplyCommandFailure): GameCommandServiceResult {
-    if (result.code === "POLICY_VIOLATION") {
-      return reject("POLICY_VIOLATION", false, result.policyCode, result.reason);
+    switch (result.code) {
+      case "POLICY_VIOLATION":
+        return reject("POLICY_VIOLATION", false, result.policyCode, result.reason);
+      case "COMMAND_ENVELOPE_INVALID":
+        return reject("COMMAND_ENVELOPE_INVALID", false, undefined, result.reason);
+      case "STATE_NOT_ACTIVE":
+        return reject("STATE_NOT_ACTIVE", false, undefined, result.reason);
+      case "STATE_INVARIANT_BROKEN":
+        return reject("STATE_INVARIANT_BROKEN", false, undefined, result.reason);
+      case "TRANSITION_BUILD_FAILED":
+        return reject("TRANSITION_BUILD_FAILED", false, undefined, result.reason);
+      default:
+        return reject(
+          "ENGINE_FAILURE",
+          false,
+          undefined,
+          `${result.code}:${result.reason ?? ""}`,
+        );
     }
-
-    return reject("ENGINE_FAILURE", false, undefined, `${result.code}:${result.reason ?? ""}`);
   }
 }
 
