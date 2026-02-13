@@ -1,6 +1,6 @@
 # Implementation Architecture Visualization
 
-기준일: 2026-02-12
+기준일: 2026-02-13
 
 이 문서는 현재 `merchant` 레포의 **구현 기준 아키텍처(스캐폴딩 포함)**를 시각화한다.
 실제 코드 구현 여부와 무관하게, 현재 고정된 경계/의존 흐름을 보여준다.
@@ -14,8 +14,8 @@ flowchart LR
   P --> A["apps/game-server application services"]
   A --> R["packages/rule-engine"]
   A --> I["packages/infra-firestore"]
-  I --> F[("Firestore")]
-  F --> W
+  I --> S[("Storage (InMemory | Firestore)")]
+  S --> W
 ```
 
 ## 2) Monorepo Package Dependency View
@@ -52,6 +52,7 @@ flowchart LR
   subgraph Presentation["presentation layer"]
     HTTP["http/health"]
     WS["ws/game.gateway"]
+    RT["runtime/local-server"]
   end
 
   subgraph Application["application layer"]
@@ -67,6 +68,8 @@ flowchart LR
 
   HTTP --> SVC
   WS --> SVC
+  RT --> WS
+  RT --> HTTP
   SVC --> CMD
   SVC --> POL
   SVC --> AUTH
@@ -84,7 +87,7 @@ sequenceDiagram
   participant App as game-server application
   participant Rule as rule-engine
   participant Infra as infra-firestore
-  participant DB as Firestore
+  participant DB as Storage (InMemory or Firestore)
 
   Player->>Web: Input action
   Web->>Gateway: Send Command
@@ -93,7 +96,7 @@ sequenceDiagram
   App->>App: Version conflict check
   App->>Rule: Validate/apply rules
   App->>Infra: Persist event + snapshot
-  Infra->>DB: Transaction write
+  Infra->>DB: Transaction write (events + snapshot)
   DB-->>Web: Realtime update
 ```
 
@@ -146,6 +149,6 @@ flowchart LR
 
 ## 7) Notes
 
-- 현재는 스캐폴딩 단계이므로 일부 계층은 빈 파일/최소 타입 중심이다.
-- Firestore 저장소 구현 경계는 `packages/infra-firestore` 단일 위치로 정리했다.
+- 로컬 개발 경로에서는 `packages/infra-firestore`의 InMemory Registry를 사용한다.
+- Firestore 저장소 구현 경계는 `packages/infra-firestore` 단일 위치로 유지한다.
 - `apps/game-server`의 `application`/`presentation`은 ESLint로 infra 직접 import를 제한한다.

@@ -57,14 +57,14 @@ flowchart LR
   G[Realtime Gateway]
   A[Game Application Service]
   R[Rule Engine]
-  F[(Firestore)]
+  S[(Storage Adapter)]
 
   C -->|Command| G
   G --> A
   A --> R
   R -->|Apply result| A
-  A -->|Tx: events + snapshot| F
-  F -->|Realtime subscribe| C
+  A -->|Tx: events + snapshot| S
+  S -->|Realtime subscribe| C
 ```
 
 ### 구성 요소 설명
@@ -73,18 +73,36 @@ flowchart LR
 - `Realtime Gateway`: 인증/세션 검사, 명령 수신/팬아웃
 - `Game Application Service`: 트랜잭션 경계, 버전 검증, 멱등성 처리
 - `Rule Engine`: 게임 규칙 계산(순수 로직)
-- `Firestore`: 게임 스냅샷/이벤트/명령 로그 저장 및 구독
+- `Storage Adapter`: 게임 스냅샷/이벤트/명령 로그 저장 및 구독
 
-## 4. Turborepo 구조 (2026-02-12 기준)
+### 3.1 로컬 개발 모드 (InMemory Registry)
+
+로컬 개발에서는 Firestore 대신 `packages/infra-firestore`의 InMemory Registry를 사용한다.
+핵심은 저장 구현만 바꾸고, `game-server`의 오케스트레이션 순서와 룰엔진 호출 경계는 유지하는 것이다.
+
+```mermaid
+flowchart LR
+  C[Web Client]
+  G[Game Server HTTP/WS]
+  A[Application Service]
+  R[Rule Engine]
+  M[(InMemory Registry)]
+
+  C --> G --> A --> R
+  R --> A --> M
+  M --> C
+```
+
+## 4. Turborepo 구조 (2026-02-13 기준)
 
 ### 현재 상태
 
 - `apps/web`: 플레이어 클라이언트
-- `apps/game-server`: Realtime Gateway + Application Service 스캐폴딩
+- `apps/game-server`: Realtime Gateway + Application Service + 로컬 HTTP/WS 런타임
 - `packages/ui`: 공용 UI 컴포넌트
 - `packages/shared-types`: Command/Event/State 타입 경계
 - `packages/rule-engine`: 순수 룰 엔진 계층
-- `packages/infra-firestore`: Firestore adapter 계층(저장소 구현 단일 위치)
+- `packages/infra-firestore`: Storage adapter 계층(로컬 InMemory/Firestore 구현 단일 위치)
 - `packages/test-fixtures`: 테스트 시나리오/빌더 계층
 - `packages/eslint-config`
 - `packages/typescript-config`
@@ -131,7 +149,7 @@ games/{gameId}/events/{eventId}
 3. Application Service가 `idempotencyKey` 중복 검사
 4. 최신 `games` 스냅샷과 `expectedVersion` 비교
 5. Rule Engine으로 유효성 검사 + 이벤트 산출
-6. Firestore 트랜잭션으로 `events` append + `games` snapshot 갱신
+6. Storage 트랜잭션으로 `events` append + `games` snapshot 갱신
 7. 구독 중인 클라이언트에 상태 반영
 
 ## 7. 동시성 및 충돌 전략
@@ -145,7 +163,8 @@ games/{gameId}/events/{eventId}
 
 ### 인증
 
-- Firebase Auth 또는 동등한 토큰 기반 인증 사용
+- 운영 모드: Firebase Auth 또는 동등한 토큰 기반 인증 사용
+- 로컬 모드: `x-user-id` 기반 mock 인증 사용
 - 모든 Command는 `actorId == auth.uid`를 강제
 
 ### Firestore Security Rules
