@@ -1,16 +1,13 @@
-import type { GameId } from "../common/game-id.js";
-import type { IdempotencyKey } from "../common/idempotency-key.js";
-import type { Version } from "../common/version.js";
+import type { BaseCommand } from "./base-command.js";
+import { COMMAND_TYPE } from "./command.constants.js";
 import type { GemColor, TokenColor } from "../state/player.state.js";
 
-export interface TakeTokensCommand {
-  type: "TAKE_TOKENS";
-  gameId: GameId;
-  actorId: string;
-  expectedVersion: Version;
-  idempotencyKey: IdempotencyKey;
-  payload: {
-    tokens: Partial<Record<GemColor, number>>;
-    returnedTokens?: Partial<Record<TokenColor, number>>;
-  };
-}
+export type TakeTokensPayload = {
+  tokens: Partial<Record<GemColor, number>>;
+  returnedTokens?: Partial<Record<TokenColor, number>>;
+};
+
+export type TakeTokensCommand = BaseCommand<
+  (typeof COMMAND_TYPE)["TAKE_TOKENS"],
+  TakeTokensPayload
+>;
