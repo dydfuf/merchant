@@ -26,6 +26,29 @@ export const finalRoundTieBreakFixture = {
     },
   }),
   playerOrder: ["player-1", "player-2"],
+  expected: {
+    layer: "RULE_ENGINE",
+    steps: [{ result: "ok" }],
+    eventTypes: ["TURN_ENDED", "GAME_ENDED"],
+    finalState: {
+      version: 20,
+      status: "ENDED",
+      currentPlayerId: "player-1",
+      winnerPlayerIds: ["player-1"],
+      playerSnapshots: {
+        "player-1": {
+          tokenCount: 0,
+          bonusCount: 0,
+          reservedCardCount: 0,
+        },
+        "player-2": {
+          tokenCount: 0,
+          bonusCount: 0,
+          reservedCardCount: 0,
+        },
+      },
+    },
+  },
   command: buildEndTurnCommand(
     { reason: "ACTION_COMPLETED" },
     {
@@ -33,4 +56,4 @@ export const finalRoundTieBreakFixture = {
       expectedVersion: 18,
     },
   ),
-} satisfies SingleCommandScenario;
+} satisfies SingleCommandScenario<"RULE_ENGINE">;

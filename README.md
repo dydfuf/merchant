@@ -1,7 +1,7 @@
 # Merchant
 
 스플렌더 보드게임을 웹 기술로 구현하는 Turborepo 모노레포입니다.
-현재 단계는 **아키텍처와 경계 정의를 먼저 고정**하는 것을 목표로 합니다.
+현재 단계는 **서버 권위 아키텍처를 유지한 로컬 실게임 루프(InMemory Registry)**를 우선 동작시키는 것입니다.
 
 ## 핵심 문서
 
@@ -16,13 +16,13 @@
 ## 모노레포 구조
 
 - `apps/web`: 플레이어 클라이언트(Next.js)
-- `apps/game-server`: 실시간 게임 서버(애플리케이션/프레젠테이션 스캐폴딩)
+- `apps/game-server`: 실시간 게임 서버(로컬 HTTP/WS 런타임 + 애플리케이션 오케스트레이션)
 - `packages/ui`: 공유 UI 컴포넌트
 - `packages/eslint-config`: ESLint 설정
 - `packages/typescript-config`: TypeScript 설정
 - `packages/rule-engine`: 순수 룰 엔진
 - `packages/shared-types`: 공유 타입
-- `packages/infra-firestore`: Firestore 어댑터(저장소 구현 위치)
+- `packages/infra-firestore`: 저장소 어댑터(로컬 InMemory Registry + Firestore 구현 경계)
 - `packages/test-fixtures`: 테스트 픽스처
 
 ## 실행 명령
@@ -44,3 +44,24 @@ pnpm test:coverage
 - 룰 엔진은 순수 함수 + 결정론 보장
 - 이벤트 로그 + 스냅샷 모델 유지
 - 관심사 분리 규칙은 lint/test로 강제
+
+## 로컬 실게임 실행
+
+기본 포트:
+
+- Web: `http://localhost:3000`
+- Game Server: `http://127.0.0.1:4010`
+- WS Endpoint: `ws://127.0.0.1:4010/ws`
+
+실행:
+
+```bash
+pnpm install
+pnpm dev
+```
+
+옵션 환경변수:
+
+- `GAME_SERVER_HOST` (기본 `127.0.0.1`)
+- `GAME_SERVER_PORT` (기본 `4010`)
+- `NEXT_PUBLIC_GAME_SERVER_URL` (기본 `http://127.0.0.1:4010`)

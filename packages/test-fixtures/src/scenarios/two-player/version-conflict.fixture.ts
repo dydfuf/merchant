@@ -11,6 +11,31 @@ export const versionConflictFixture = {
     version: 3,
   }),
   playerOrder: ["player-1", "player-2"],
+  expected: {
+    layer: "GAME_SERVER",
+    steps: [
+      { kind: "accepted" },
+      { kind: "rejected", reason: "VERSION_CONFLICT" },
+    ],
+    finalState: {
+      version: 4,
+      status: "IN_PROGRESS",
+      currentPlayerId: "player-1",
+      playerSnapshots: {
+        "player-1": {
+          tokenCount: 3,
+          bonusCount: 0,
+          reservedCardCount: 0,
+        },
+        "player-2": {
+          tokenCount: 0,
+          bonusCount: 0,
+          reservedCardCount: 0,
+        },
+      },
+    },
+    persistCallCount: 1,
+  },
   commands: [
     buildTakeTokensCommand(
       {
@@ -29,4 +54,4 @@ export const versionConflictFixture = {
       },
     ),
   ],
-} satisfies CommandSequenceScenario;
+} satisfies CommandSequenceScenario<"GAME_SERVER">;
