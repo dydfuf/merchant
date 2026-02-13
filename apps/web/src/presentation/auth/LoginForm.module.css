@@ -1,0 +1,79 @@
+.form {
+  display: grid;
+  gap: 14px;
+  width: 100%;
+  padding: 22px;
+  border: 1px solid rgba(162, 54, 247, 0.28);
+  background: rgba(34, 20, 49, 0.62);
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.35);
+}
+
+.field {
+  display: grid;
+  gap: 6px;
+}
+
+.field span {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #cab1ec;
+  font-weight: 700;
+}
+
+.field input {
+  border: 1px solid rgba(162, 54, 247, 0.35);
+  border-radius: 12px;
+  min-height: 46px;
+  padding: 0 12px;
+  font-size: 14px;
+  color: #ffffff;
+  background: rgba(20, 10, 31, 0.6);
+}
+
+.field input::placeholder {
+  color: rgba(217, 198, 242, 0.48);
+}
+
+.field input:focus {
+  outline: none;
+  border-color: rgba(192, 108, 255, 0.8);
+  box-shadow: 0 0 0 2px rgba(162, 54, 247, 0.28);
+}
+
+.mode {
+  font-size: 12px;
+  color: #cab9e6;
+}
+
+.error {
+  color: #ff6b6b;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.submit,
+.secondary {
+  border-radius: 12px;
+  min-height: 46px;
+  font-weight: 800;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 12px;
+}
+
+.submit {
+  border: none;
+  background: #a236f7;
+  color: #ffffff;
+  box-shadow: 0 10px 24px rgba(162, 54, 247, 0.4);
+}
+
+.secondary {
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  background: rgba(37, 25, 52, 0.7);
+  color: #e9d89f;
+}

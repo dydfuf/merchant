@@ -60,6 +60,15 @@ pnpm install
 pnpm dev
 ```
 
+웹 주요 진입 경로:
+
+- `/` : 랜딩
+- `/auth/login` : 로그인
+- `/lobby` : 로비
+- `/games/[gameId]` : 게임 보드
+- `/games/[gameId]/victory` : 승리 화면
+- `/dev/local-runtime` : 기존 로컬 런타임 진단 콘솔
+
 옵션 환경변수:
 
 - `GAME_SERVER_HOST` (기본 `127.0.0.1`)

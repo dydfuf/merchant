@@ -1,0 +1,141 @@
+.page {
+  min-height: 100svh;
+  padding: 24px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  background: linear-gradient(180deg, #f4f7f9 0%, #e9f2f8 100%);
+  color: #14212f;
+  font-family: var(--font-geist-sans), sans-serif;
+}
+
+.header {
+  grid-column: 1 / -1;
+  background: #ffffff;
+  border: 1px solid #d7e2ec;
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.header h1 {
+  font-size: 28px;
+  margin-bottom: 8px;
+}
+
+.header p {
+  color: #37556f;
+}
+
+.panel {
+  background: #ffffff;
+  border: 1px solid #d7e2ec;
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.panel h2 {
+  font-size: 18px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field span {
+  font-size: 12px;
+  color: #45627b;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.field input {
+  border: 1px solid #b8c8d6;
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 14px;
+  background: #f9fcff;
+}
+
+.row {
+  display: flex;
+  gap: 8px;
+}
+
+.button {
+  border: 1px solid #1d5f93;
+  border-radius: 10px;
+  background: #1f6ea8;
+  color: #ffffff;
+  padding: 10px 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.button:hover {
+  background: #185c8c;
+}
+
+.gridButtons {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.meta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.meta div {
+  background: #f7fbff;
+  border: 1px solid #d3e2ef;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.meta dt {
+  font-size: 11px;
+  text-transform: uppercase;
+  color: #4d667d;
+  margin-bottom: 4px;
+}
+
+.meta dd {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 13px;
+}
+
+.state {
+  display: grid;
+  gap: 6px;
+  font-size: 14px;
+}
+
+.result {
+  border-radius: 10px;
+  border: 1px solid #d3e2ef;
+  background: #f7fbff;
+  padding: 12px;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 12px;
+  overflow: auto;
+  min-height: 140px;
+}
+
+.error {
+  color: #9b1f1f;
+  font-weight: 600;
+}
+
+@media (max-width: 960px) {
+  .page {
+    grid-template-columns: 1fr;
+    padding: 16px;
+  }
+}

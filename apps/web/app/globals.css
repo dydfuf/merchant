@@ -1,13 +1,16 @@
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --surface-0: #0d121b;
+  --surface-1: #111a27;
+  --surface-2: #1b2a3d;
+  --ink-strong: #0f1824;
+  --ink-on-dark: #ecf3ff;
+  --ink-muted: #7f93b3;
+  --border-soft: #d9e2ef;
+  --accent-ruby: #ef4444;
+  --accent-sapphire: #2563eb;
+  --accent-emerald: #10b981;
+  --accent-gold: #f59e0b;
+  --card-bg: #ffffff;
 }
 
 html,
@@ -17,8 +20,8 @@ body {
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
+  color: var(--ink-strong);
+  background: #eef3fa;
 }
 
 * {
@@ -32,19 +35,16 @@ a {
   text-decoration: none;
 }
 
-.imgDark {
-  display: none;
+.appBody {
+  font-family: var(--font-geist-sans), sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-
-  .imgLight {
-    display: none;
-  }
-  .imgDark {
-    display: unset;
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
   }
 }

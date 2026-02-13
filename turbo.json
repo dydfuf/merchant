@@ -1,6 +1,7 @@
 {
   "$schema": "https://turborepo.dev/schema.json",
   "ui": "tui",
+  "globalEnv": ["NODE_ENV", "ENABLE_LOCAL_AUTH_MOCK"],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
