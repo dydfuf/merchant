@@ -533,7 +533,14 @@
   z-index: 40;
   background: rgba(8, 12, 20, 0.72);
   backdrop-filter: blur(4px);
+}
+
+.overlayViewport {
+  position: fixed;
+  inset: 0;
+  z-index: 41;
   display: grid;
+  pointer-events: none;
 }
 
 .rivalsDialog {
@@ -546,6 +553,7 @@
   display: grid;
   grid-template-rows: auto 1fr auto;
   overflow: hidden;
+  pointer-events: auto;
 }
 
 .rivalsDialogHeader {
@@ -747,6 +755,7 @@
   width: min(420px, 100%);
   margin: 0 auto;
   align-self: end;
+  pointer-events: none;
 }
 
 .vaultSheet {
@@ -757,6 +766,7 @@
   display: grid;
   grid-template-rows: auto 1fr;
   overflow: hidden;
+  pointer-events: auto;
 }
 
 .vaultHeader {
@@ -1007,6 +1017,7 @@
   grid-template-rows: auto 1fr auto;
   overflow: hidden;
   border: 1px solid #d1d5db;
+  pointer-events: auto;
 }
 
 .cardDetailHeader {

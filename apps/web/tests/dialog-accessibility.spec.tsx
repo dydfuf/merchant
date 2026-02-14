@@ -1,61 +1,114 @@
 import React, { act, useState } from "react";
 import { createRoot, type Root } from "react-dom/client";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import type { PlayerState } from "@repo/shared-types";
 
-import { useDialogAccessibility } from "../src/presentation/game/useDialogAccessibility";
+import { CardDetailModal } from "../src/presentation/game/CardDetailModal";
+import { RivalsOverlay } from "../src/presentation/game/RivalsOverlay";
+import { VaultSheet } from "../src/presentation/game/VaultSheet";
 
 const reactActGlobal = globalThis as typeof globalThis & {
   IS_REACT_ACT_ENVIRONMENT?: boolean;
 };
 reactActGlobal.IS_REACT_ACT_ENVIRONMENT = true;
 
-interface HarnessProps {
-  open: boolean;
-  onClose(): void;
-}
+const PLAYER_FIXTURE: PlayerState = {
+  id: "player-1",
+  score: 3,
+  tokens: {
+    diamond: 1,
+    sapphire: 2,
+    emerald: 1,
+    ruby: 0,
+    onyx: 0,
+    gold: 1,
+  },
+  bonuses: {
+    diamond: 0,
+    sapphire: 1,
+    emerald: 0,
+    ruby: 0,
+    onyx: 0,
+  },
+  reservedCardIds: ["tier-2-card-a"],
+  purchasedCardIds: [],
+  nobleIds: [],
+};
 
-function DialogHarness({ open, onClose }: HarnessProps) {
-  const [dialogElement, setDialogElement] = useState<HTMLDivElement | null>(null);
-
-  useDialogAccessibility({
-    open,
-    dialogElement,
-    backgroundId: "game-shell",
-    onClose,
-  });
-
-  if (!open) {
-    return null;
-  }
+function CardDetailHarness({ onClose }: { onClose(): void }) {
+  const [open, setOpen] = useState(false);
 
   return (
-    <div ref={setDialogElement} role="dialog" tabIndex={-1}>
-      <button id="first-button" type="button">
-        First
+    <>
+      <button id="card-trigger" onClick={() => setOpen(true)} type="button">
+        카드 상세 열기
       </button>
-      <button id="last-button" type="button">
-        Last
-      </button>
-    </div>
+      <CardDetailModal
+        cardId="tier-2-card-a"
+        onClose={() => {
+          setOpen(false);
+          onClose();
+        }}
+        onReserve={() => {}}
+        open={open}
+        player={PLAYER_FIXTURE}
+      />
+    </>
   );
 }
 
-describe("게임 오버레이 접근성 훅", () => {
+function RivalsHarness({ onClose }: { onClose(): void }) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <>
+      <button id="rivals-trigger" onClick={() => setOpen(true)} type="button">
+        상대 현황 열기
+      </button>
+      <RivalsOverlay
+        currentPlayerId="player-1"
+        onClose={() => {
+          setOpen(false);
+          onClose();
+        }}
+        open={open}
+        players={[PLAYER_FIXTURE]}
+      />
+    </>
+  );
+}
+
+function VaultHarness({ onClose }: { onClose(): void }) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <>
+      <button id="vault-trigger" onClick={() => setOpen(true)} type="button">
+        금고 시트 열기
+      </button>
+      <VaultSheet
+        onClose={() => {
+          setOpen(false);
+          onClose();
+        }}
+        open={open}
+        player={PLAYER_FIXTURE}
+      />
+    </>
+  );
+}
+
+describe("게임 오버레이 접근성 동작", () => {
   let container: HTMLDivElement;
   let root: Root;
-  let background: HTMLDivElement;
 
-  function renderDialog(props: HarnessProps) {
+  function renderNode(node: React.ReactNode) {
     act(() => {
-      root.render(<DialogHarness {...props} />);
+      root.render(node);
     });
   }
 
   beforeEach(() => {
-    background = document.createElement("div");
-    background.id = "game-shell";
-    document.body.appendChild(background);
-
     container = document.createElement("div");
     document.body.appendChild(container);
     root = createRoot(container);
@@ -65,27 +118,20 @@ describe("게임 오버레이 접근성 훅", () => {
     act(() => {
       root.unmount();
     });
-    background.remove();
     container.remove();
   });
 
-  it("오버레이 열기/닫기에서 배경 inert 속성을 토글한다", () => {
-    renderDialog({ open: true, onClose: vi.fn() });
-
-    expect(background.getAttribute("inert")).toBe("");
-    expect(background.getAttribute("aria-hidden")).toBe("true");
-
-    renderDialog({ open: false, onClose: vi.fn() });
-
-    expect(background.hasAttribute("inert")).toBe(false);
-    expect(background.hasAttribute("aria-hidden")).toBe(false);
-  });
-
-  it("Escape 키 입력 시 onClose를 호출한다", () => {
+  it("카드 상세 오버레이에서 Escape 입력 시 닫기 콜백을 호출한다", () => {
     const onClose = vi.fn();
-    renderDialog({ open: true, onClose });
+    renderNode(<CardDetailHarness onClose={onClose} />);
 
-    const dialog = container.querySelector("[role='dialog']") as HTMLDivElement;
+    const trigger = document.querySelector("#card-trigger") as HTMLButtonElement;
+
+    act(() => {
+      trigger.click();
+    });
+
+    const dialog = document.querySelector("[role='dialog']") as HTMLElement;
 
     act(() => {
       dialog.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
@@ -94,55 +140,70 @@ describe("게임 오버레이 접근성 훅", () => {
     expect(onClose).toHaveBeenCalledTimes(1);
   });
 
-  it("Tab과 Shift+Tab으로 포커스가 대화상자 내부에서 순환한다", () => {
-    renderDialog({ open: true, onClose: vi.fn() });
+  it("카드 상세 오버레이를 닫으면 트리거 버튼으로 포커스가 돌아온다", async () => {
+    const onClose = vi.fn();
+    renderNode(<CardDetailHarness onClose={onClose} />);
 
-    const dialog = container.querySelector("[role='dialog']") as HTMLDivElement;
-    const firstButton = container.querySelector("#first-button") as HTMLButtonElement;
-    const lastButton = container.querySelector("#last-button") as HTMLButtonElement;
-
-    act(() => {
-      lastButton.focus();
-    });
-
-    act(() => {
-      dialog.dispatchEvent(new KeyboardEvent("keydown", { key: "Tab", bubbles: true }));
-    });
-
-    expect(document.activeElement).toBe(firstButton);
-
-    act(() => {
-      firstButton.focus();
-    });
-
-    act(() => {
-      dialog.dispatchEvent(
-        new KeyboardEvent("keydown", {
-          key: "Tab",
-          shiftKey: true,
-          bubbles: true,
-        }),
-      );
-    });
-
-    expect(document.activeElement).toBe(lastButton);
-  });
-
-  it("오버레이 종료 시 이전 포커스 요소로 복귀한다", () => {
-    const trigger = document.createElement("button");
-    trigger.type = "button";
-    trigger.textContent = "open";
-    document.body.appendChild(trigger);
+    const trigger = document.querySelector("#card-trigger") as HTMLButtonElement;
 
     act(() => {
       trigger.focus();
+      trigger.click();
     });
 
-    renderDialog({ open: true, onClose: vi.fn() });
-    renderDialog({ open: false, onClose: vi.fn() });
+    const dialog = document.querySelector("[role='dialog']") as HTMLElement;
+
+    act(() => {
+      dialog.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
+    });
+
+    await act(async () => {
+      await Promise.resolve();
+    });
 
     expect(document.activeElement).toBe(trigger);
+    expect(onClose).toHaveBeenCalledTimes(1);
+  });
 
-    trigger.remove();
+  it("상대 현황 오버레이 닫기 버튼이 콜백을 호출한다", () => {
+    const onClose = vi.fn();
+    renderNode(<RivalsHarness onClose={onClose} />);
+
+    const trigger = document.querySelector("#rivals-trigger") as HTMLButtonElement;
+
+    act(() => {
+      trigger.click();
+    });
+
+    const closeButton = document.querySelector(
+      '[aria-label="상대 현황 닫기"]',
+    ) as HTMLButtonElement;
+
+    act(() => {
+      closeButton.click();
+    });
+
+    expect(onClose).toHaveBeenCalledTimes(1);
+  });
+
+  it("금고 시트 닫기 핸들을 누르면 닫기 콜백을 호출한다", () => {
+    const onClose = vi.fn();
+    renderNode(<VaultHarness onClose={onClose} />);
+
+    const trigger = document.querySelector("#vault-trigger") as HTMLButtonElement;
+
+    act(() => {
+      trigger.click();
+    });
+
+    const closeButton = document.querySelector(
+      '[aria-label="금고 시트 닫기"]',
+    ) as HTMLButtonElement;
+
+    act(() => {
+      closeButton.click();
+    });
+
+    expect(onClose).toHaveBeenCalledTimes(1);
   });
 });

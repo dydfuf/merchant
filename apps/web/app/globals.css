@@ -22,6 +22,7 @@ body {
 body {
   color: var(--ink-strong);
   background: #eef3fa;
+  isolation: isolate;
 }
 
 * {

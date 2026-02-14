@@ -1,0 +1,61 @@
+@import "tailwindcss";
+
+:root {
+  --background: var(--card-bg);
+  --foreground: var(--ink-strong);
+  --card: var(--card-bg);
+  --card-foreground: var(--ink-strong);
+  --popover: var(--card-bg);
+  --popover-foreground: var(--ink-strong);
+  --primary: var(--accent-sapphire);
+  --primary-foreground: var(--ink-on-dark);
+  --secondary: var(--surface-1);
+  --secondary-foreground: var(--ink-on-dark);
+  --muted: var(--surface-2);
+  --muted-foreground: var(--ink-muted);
+  --accent: var(--accent-emerald);
+  --accent-foreground: var(--ink-on-dark);
+  --destructive: var(--accent-ruby);
+  --destructive-foreground: var(--ink-on-dark);
+  --border: var(--border-soft);
+  --input: var(--border-soft);
+  --ring: var(--accent-sapphire);
+  --radius: 0.625rem;
+}
+
+.dark {
+  --background: var(--surface-0);
+  --foreground: var(--ink-on-dark);
+  --card: var(--surface-1);
+  --card-foreground: var(--ink-on-dark);
+  --popover: var(--surface-1);
+  --popover-foreground: var(--ink-on-dark);
+  --secondary: var(--surface-2);
+  --secondary-foreground: var(--ink-on-dark);
+  --muted: var(--surface-2);
+  --muted-foreground: var(--ink-muted);
+  --border: color-mix(in srgb, var(--border-soft) 40%, transparent);
+  --input: color-mix(in srgb, var(--border-soft) 40%, transparent);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+}

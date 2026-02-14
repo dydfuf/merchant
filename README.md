@@ -17,7 +17,7 @@
 
 - `apps/web`: 플레이어 클라이언트(Next.js)
 - `apps/game-server`: 실시간 게임 서버(로컬 HTTP/WS 런타임 + 애플리케이션 오케스트레이션)
-- `packages/ui`: 공유 UI 컴포넌트
+- `packages/ui`: 공유 UI 컴포넌트(shadcn 스타일 레이어 + Base UI headless primitives)
 - `packages/eslint-config`: ESLint 설정
 - `packages/typescript-config`: TypeScript 설정
 - `packages/rule-engine`: 순수 룰 엔진
@@ -44,6 +44,8 @@ pnpm test:coverage
 - 룰 엔진은 순수 함수 + 결정론 보장
 - 이벤트 로그 + 스냅샷 모델 유지
 - 관심사 분리 규칙은 lint/test로 강제
+- headless 상호작용(overlay/dialog/drawer)은 Base UI로 통일
+- 컬러 시스템은 `apps/web/app/globals.css` 토큰을 semantic token으로 브릿지
 
 ## 로컬 실게임 실행
 

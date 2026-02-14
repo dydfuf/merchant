@@ -20,6 +20,12 @@ pnpm dev
 
 브라우저에서 [http://localhost:3000](http://localhost:3000) 접속.
 
+## UI Stack
+
+- 스타일 레이어: `@repo/ui` (shadcn 스타일 컴포넌트 + Tailwind v4)
+- headless 레이어: Base UI primitives(`@repo/ui/base-dialog`, `@repo/ui/base-drawer-preview`)
+- 컬러 토큰 소스: `app/globals.css`의 기존 토큰(`--surface-*`, `--ink-*`, `--accent-*`)
+
 ## Environment Variables
 
 - `NEXT_PUBLIC_GAME_SERVER_URL` : 게임 서버 HTTP URL (기본: `http://127.0.0.1:4010`)
